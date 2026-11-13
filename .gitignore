@@ -1,7 +1,11 @@
 .env
 config/agent.toml
 *.db
+*.db.lock
+*.db-journal
 *.sqlite
+*.sqlite.lock
+*.sqlite-journal
 __pycache__/
 .venv/
 .mypy_cache/
