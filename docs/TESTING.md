@@ -23,6 +23,7 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 - `test_invalid_log_level_is_rejected`
 
 **Phase A interfaces and startup** (DEP-1/DEP-4 foundations)
+- `test_application_network_sockets_remain_blocked` (IPv4 and IPv6; Windows asyncio's internal numeric-loopback pair is the only TCP IPC exception)
 - `test_fake_adapters_run_deterministically_with_network_blocked`
 - `test_fake_audio_requires_start_and_replays_frames_on_restart`
 - `test_fake_model_keeps_source_data_separate_and_never_interprets_it` (fixed-response fixture, not a real model injection evaluation)

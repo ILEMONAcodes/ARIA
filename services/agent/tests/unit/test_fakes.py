@@ -1,7 +1,9 @@
 import asyncio
+import socket
 from datetime import timedelta
 
 import pytest
+from pytest_socket import SocketBlockedError
 
 from agent.contracts.events import SpeakerInfo
 from agent.contracts.plan import Plan
@@ -20,6 +22,12 @@ from agent.fakes.tools import EchoInput
 from agent.interfaces.models import DataBlock, ModelMessage, ModelRequest
 from agent.security.keys import KeyUnavailableError
 from agent.tools.base import ToolRegistry
+
+
+@pytest.mark.parametrize("family", [socket.AF_INET, socket.AF_INET6])
+def test_application_network_sockets_remain_blocked(family):
+    with pytest.warns(UserWarning, match="socket.socket"), pytest.raises(SocketBlockedError):
+        socket.socket(family, socket.SOCK_STREAM)
 
 
 def test_fake_adapters_run_deterministically_with_network_blocked(tmp_path, monkeypatch):

@@ -13,6 +13,7 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - Run `scripts/check_backend.py`, also used locally and by pre-commit: ruff lint and format checks, mypy per service, pytest unit tests per service with network sockets blocked, and a read-only schema freshness check
 - The required job is `ci-backend / check`; update branch protection if it required the former matrix/contract jobs
 - `store-platform` additionally installs the locked dependencies on Windows and macOS and runs storage, key-provider, fake-adapter and startup lifecycle tests against real SQLCipher with fake vaults. Native OS vault authorization is reserved for manual platform smoke tests; unit tests never read real credentials.
+- Windows asyncio uses a local TCP pair internally. The unit-test harness supplies only that ephemeral loopback pair; application socket creation and DNS remain blocked, with IPv4/IPv6 guard regression tests. No real mail, model or other service is contacted.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
 
 Install the local hook with `uv run --locked --all-packages --all-extras pre-commit install`.

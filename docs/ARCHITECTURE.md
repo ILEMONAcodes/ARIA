@@ -195,7 +195,7 @@ backend CI. A3 adds the SQLCipher store, native-vault key provider, checksummed
 migrations and retention cleanup, with 101 backend unit tests passing locally.
 Hosted backend CI and the Windows/macOS storage checks pass. Native vault
 authorization still needs manual platform smoke tests before deployment. A4
-adds interfaces, deterministic fakes and startup assembly, with 124 backend
+adds interfaces, deterministic fakes and startup assembly, with 126 backend
 unit tests passing locally. It connects settings, logging and encrypted storage
 and schedules daily retention with safe shutdown. A4's platform CI is pending.
 The CLI is foundation-only: it does not enable a voice loop or serve requests.
