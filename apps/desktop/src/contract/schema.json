@@ -1,0 +1,1040 @@
+{
+  "agent_events": {
+    "$defs": {
+      "ActivityEntry": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "ts": {
+            "title": "Ts",
+            "type": "string"
+          },
+          "type": {
+            "const": "activity.entry",
+            "default": "activity.entry",
+            "title": "Type",
+            "type": "string"
+          },
+          "undoable": {
+            "default": false,
+            "title": "Undoable",
+            "type": "boolean"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id",
+          "ts",
+          "text"
+        ],
+        "title": "ActivityEntry",
+        "type": "object"
+      },
+      "Citation": {
+        "properties": {
+          "date": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Date"
+          },
+          "doc": {
+            "title": "Doc",
+            "type": "string"
+          },
+          "file_path": {
+            "title": "File Path",
+            "type": "string"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "passage": {
+            "title": "Passage",
+            "type": "string"
+          }
+        },
+        "required": [
+          "doc",
+          "passage",
+          "file_path"
+        ],
+        "title": "Citation",
+        "type": "object"
+      },
+      "CloudApprovalRequest": {
+        "properties": {
+          "approval_id": {
+            "title": "Approval Id",
+            "type": "string"
+          },
+          "payload_preview": {
+            "title": "Payload Preview",
+            "type": "string"
+          },
+          "type": {
+            "const": "cloud.approval_request",
+            "default": "cloud.approval_request",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "approval_id",
+          "payload_preview"
+        ],
+        "title": "CloudApprovalRequest",
+        "type": "object"
+      },
+      "ConfirmDetails": {
+        "properties": {
+          "attachments": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Attachments",
+            "type": "array"
+          },
+          "recipients": {
+            "default": [],
+            "items": {
+              "type": "string"
+            },
+            "title": "Recipients",
+            "type": "array"
+          },
+          "subject": {
+            "anyOf": [
+              {
+                "type": "string"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Subject"
+          }
+        },
+        "title": "ConfirmDetails",
+        "type": "object"
+      },
+      "ConfirmRequest": {
+        "properties": {
+          "confirm_id": {
+            "title": "Confirm Id",
+            "type": "string"
+          },
+          "details": {
+            "$ref": "#/$defs/ConfirmDetails",
+            "default": {
+              "attachments": [],
+              "recipients": [],
+              "subject": null
+            }
+          },
+          "dry_run_text": {
+            "title": "Dry Run Text",
+            "type": "string"
+          },
+          "needs_click": {
+            "default": true,
+            "title": "Needs Click",
+            "type": "boolean"
+          },
+          "risk": {
+            "enum": [
+              "local_write",
+              "external_send",
+              "destructive"
+            ],
+            "title": "Risk",
+            "type": "string"
+          },
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "confirm.request",
+            "default": "confirm.request",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "confirm_id",
+          "task_id",
+          "risk",
+          "dry_run_text"
+        ],
+        "title": "ConfirmRequest",
+        "type": "object"
+      },
+      "ErrorEvent": {
+        "properties": {
+          "code": {
+            "title": "Code",
+            "type": "string"
+          },
+          "message": {
+            "title": "Message",
+            "type": "string"
+          },
+          "type": {
+            "const": "error",
+            "default": "error",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "code",
+          "message"
+        ],
+        "title": "ErrorEvent",
+        "type": "object"
+      },
+      "OutboxItem": {
+        "properties": {
+          "attempts": {
+            "default": 0,
+            "title": "Attempts",
+            "type": "integer"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "status": {
+            "enum": [
+              "queued",
+              "sending",
+              "sent",
+              "retrying",
+              "failed"
+            ],
+            "title": "Status",
+            "type": "string"
+          },
+          "subject": {
+            "title": "Subject",
+            "type": "string"
+          },
+          "to": {
+            "items": {
+              "type": "string"
+            },
+            "title": "To",
+            "type": "array"
+          }
+        },
+        "required": [
+          "id",
+          "status",
+          "to",
+          "subject"
+        ],
+        "title": "OutboxItem",
+        "type": "object"
+      },
+      "OutboxUpdate": {
+        "properties": {
+          "items": {
+            "items": {
+              "$ref": "#/$defs/OutboxItem"
+            },
+            "title": "Items",
+            "type": "array"
+          },
+          "type": {
+            "const": "outbox.update",
+            "default": "outbox.update",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "items"
+        ],
+        "title": "OutboxUpdate",
+        "type": "object"
+      },
+      "PlanPreview": {
+        "properties": {
+          "summary": {
+            "title": "Summary",
+            "type": "string"
+          },
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "plan.preview",
+            "default": "plan.preview",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "task_id",
+          "summary"
+        ],
+        "title": "PlanPreview",
+        "type": "object"
+      },
+      "ReplyText": {
+        "properties": {
+          "spoken": {
+            "default": true,
+            "title": "Spoken",
+            "type": "boolean"
+          },
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "reply.text",
+            "default": "reply.text",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "task_id",
+          "text"
+        ],
+        "title": "ReplyText",
+        "type": "object"
+      },
+      "ResultAnswer": {
+        "properties": {
+          "citations": {
+            "default": [],
+            "items": {
+              "$ref": "#/$defs/Citation"
+            },
+            "title": "Citations",
+            "type": "array"
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "result.answer",
+            "default": "result.answer",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "ResultAnswer",
+        "type": "object"
+      },
+      "ResultDocument": {
+        "properties": {
+          "path": {
+            "title": "Path",
+            "type": "string"
+          },
+          "title": {
+            "title": "Title",
+            "type": "string"
+          },
+          "type": {
+            "const": "result.document",
+            "default": "result.document",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "path",
+          "title"
+        ],
+        "title": "ResultDocument",
+        "type": "object"
+      },
+      "SpeakerConfirmRequest": {
+        "properties": {
+          "name": {
+            "title": "Name",
+            "type": "string"
+          },
+          "type": {
+            "const": "speaker.confirm_request",
+            "default": "speaker.confirm_request",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "name"
+        ],
+        "title": "SpeakerConfirmRequest",
+        "type": "object"
+      },
+      "SpeakerInfo": {
+        "properties": {
+          "confidence": {
+            "maximum": 1,
+            "minimum": 0,
+            "title": "Confidence",
+            "type": "number"
+          },
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "name": {
+            "title": "Name",
+            "type": "string"
+          }
+        },
+        "required": [
+          "id",
+          "name",
+          "confidence"
+        ],
+        "title": "SpeakerInfo",
+        "type": "object"
+      },
+      "Status": {
+        "properties": {
+          "online": {
+            "title": "Online",
+            "type": "boolean"
+          },
+          "profile": {
+            "enum": [
+              "hosted",
+              "local"
+            ],
+            "title": "Profile",
+            "type": "string"
+          },
+          "state": {
+            "enum": [
+              "idle",
+              "listening",
+              "thinking",
+              "working"
+            ],
+            "title": "State",
+            "type": "string"
+          },
+          "type": {
+            "const": "status",
+            "default": "status",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "state",
+          "online",
+          "profile"
+        ],
+        "title": "Status",
+        "type": "object"
+      },
+      "TranscriptFinal": {
+        "properties": {
+          "speaker": {
+            "anyOf": [
+              {
+                "$ref": "#/$defs/SpeakerInfo"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null
+          },
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "transcript.final",
+            "default": "transcript.final",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TranscriptFinal",
+        "type": "object"
+      },
+      "TranscriptPartial": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "transcript.partial",
+            "default": "transcript.partial",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TranscriptPartial",
+        "type": "object"
+      }
+    },
+    "discriminator": {
+      "mapping": {
+        "activity.entry": "#/$defs/ActivityEntry",
+        "cloud.approval_request": "#/$defs/CloudApprovalRequest",
+        "confirm.request": "#/$defs/ConfirmRequest",
+        "error": "#/$defs/ErrorEvent",
+        "outbox.update": "#/$defs/OutboxUpdate",
+        "plan.preview": "#/$defs/PlanPreview",
+        "reply.text": "#/$defs/ReplyText",
+        "result.answer": "#/$defs/ResultAnswer",
+        "result.document": "#/$defs/ResultDocument",
+        "speaker.confirm_request": "#/$defs/SpeakerConfirmRequest",
+        "status": "#/$defs/Status",
+        "transcript.final": "#/$defs/TranscriptFinal",
+        "transcript.partial": "#/$defs/TranscriptPartial"
+      },
+      "propertyName": "type"
+    },
+    "oneOf": [
+      {
+        "$ref": "#/$defs/Status"
+      },
+      {
+        "$ref": "#/$defs/TranscriptPartial"
+      },
+      {
+        "$ref": "#/$defs/TranscriptFinal"
+      },
+      {
+        "$ref": "#/$defs/SpeakerConfirmRequest"
+      },
+      {
+        "$ref": "#/$defs/PlanPreview"
+      },
+      {
+        "$ref": "#/$defs/CloudApprovalRequest"
+      },
+      {
+        "$ref": "#/$defs/ConfirmRequest"
+      },
+      {
+        "$ref": "#/$defs/ReplyText"
+      },
+      {
+        "$ref": "#/$defs/ResultAnswer"
+      },
+      {
+        "$ref": "#/$defs/ResultDocument"
+      },
+      {
+        "$ref": "#/$defs/OutboxUpdate"
+      },
+      {
+        "$ref": "#/$defs/ActivityEntry"
+      },
+      {
+        "$ref": "#/$defs/ErrorEvent"
+      }
+    ]
+  },
+  "contract_version": 1,
+  "plan": {
+    "$defs": {
+      "PlanStep": {
+        "properties": {
+          "args": {
+            "additionalProperties": true,
+            "default": {},
+            "title": "Args",
+            "type": "object"
+          },
+          "tool": {
+            "title": "Tool",
+            "type": "string"
+          }
+        },
+        "required": [
+          "tool"
+        ],
+        "title": "PlanStep",
+        "type": "object"
+      }
+    },
+    "properties": {
+      "confidence": {
+        "maximum": 1,
+        "minimum": 0,
+        "title": "Confidence",
+        "type": "number"
+      },
+      "intent": {
+        "title": "Intent",
+        "type": "string"
+      },
+      "missing": {
+        "default": [],
+        "items": {
+          "type": "string"
+        },
+        "title": "Missing",
+        "type": "array"
+      },
+      "needs_confirmation": {
+        "default": false,
+        "title": "Needs Confirmation",
+        "type": "boolean"
+      },
+      "needs_network": {
+        "default": false,
+        "title": "Needs Network",
+        "type": "boolean"
+      },
+      "risk": {
+        "default": "none",
+        "enum": [
+          "none",
+          "local_write",
+          "external_send",
+          "destructive"
+        ],
+        "title": "Risk",
+        "type": "string"
+      },
+      "slots": {
+        "additionalProperties": true,
+        "default": {},
+        "title": "Slots",
+        "type": "object"
+      },
+      "steps": {
+        "default": [],
+        "items": {
+          "$ref": "#/$defs/PlanStep"
+        },
+        "title": "Steps",
+        "type": "array"
+      }
+    },
+    "required": [
+      "intent",
+      "confidence"
+    ],
+    "title": "Plan",
+    "type": "object"
+  },
+  "ui_events": {
+    "$defs": {
+      "ActivityUndo": {
+        "properties": {
+          "id": {
+            "title": "Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "activity.undo",
+            "default": "activity.undo",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "id"
+        ],
+        "title": "ActivityUndo",
+        "type": "object"
+      },
+      "ApprovalResponse": {
+        "properties": {
+          "approval_id": {
+            "title": "Approval Id",
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "type": {
+            "const": "approval.response",
+            "default": "approval.response",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "approval_id",
+          "decision"
+        ],
+        "title": "ApprovalResponse",
+        "type": "object"
+      },
+      "ConfirmResponse": {
+        "properties": {
+          "confirm_id": {
+            "title": "Confirm Id",
+            "type": "string"
+          },
+          "decision": {
+            "enum": [
+              "yes",
+              "no"
+            ],
+            "title": "Decision",
+            "type": "string"
+          },
+          "type": {
+            "const": "confirm.response",
+            "default": "confirm.response",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          },
+          "via": {
+            "enum": [
+              "click",
+              "key"
+            ],
+            "title": "Via",
+            "type": "string"
+          }
+        },
+        "required": [
+          "confirm_id",
+          "decision",
+          "via"
+        ],
+        "title": "ConfirmResponse",
+        "type": "object"
+      },
+      "PttStart": {
+        "properties": {
+          "type": {
+            "const": "ptt.start",
+            "default": "ptt.start",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "title": "PttStart",
+        "type": "object"
+      },
+      "PttStop": {
+        "properties": {
+          "type": {
+            "const": "ptt.stop",
+            "default": "ptt.stop",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "title": "PttStop",
+        "type": "object"
+      },
+      "SourceOpen": {
+        "properties": {
+          "file_path": {
+            "title": "File Path",
+            "type": "string"
+          },
+          "page": {
+            "anyOf": [
+              {
+                "type": "integer"
+              },
+              {
+                "type": "null"
+              }
+            ],
+            "default": null,
+            "title": "Page"
+          },
+          "type": {
+            "const": "source.open",
+            "default": "source.open",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "file_path"
+        ],
+        "title": "SourceOpen",
+        "type": "object"
+      },
+      "SpeakerConfirmResponse": {
+        "properties": {
+          "accept": {
+            "title": "Accept",
+            "type": "boolean"
+          },
+          "type": {
+            "const": "speaker.confirm_response",
+            "default": "speaker.confirm_response",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "accept"
+        ],
+        "title": "SpeakerConfirmResponse",
+        "type": "object"
+      },
+      "TaskCancel": {
+        "properties": {
+          "task_id": {
+            "title": "Task Id",
+            "type": "string"
+          },
+          "type": {
+            "const": "task.cancel",
+            "default": "task.cancel",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "task_id"
+        ],
+        "title": "TaskCancel",
+        "type": "object"
+      },
+      "TextInput": {
+        "properties": {
+          "text": {
+            "title": "Text",
+            "type": "string"
+          },
+          "type": {
+            "const": "text.input",
+            "default": "text.input",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "required": [
+          "text"
+        ],
+        "title": "TextInput",
+        "type": "object"
+      },
+      "TtsStop": {
+        "properties": {
+          "type": {
+            "const": "tts.stop",
+            "default": "tts.stop",
+            "title": "Type",
+            "type": "string"
+          },
+          "v": {
+            "default": 1,
+            "title": "V",
+            "type": "integer"
+          }
+        },
+        "title": "TtsStop",
+        "type": "object"
+      }
+    },
+    "discriminator": {
+      "mapping": {
+        "activity.undo": "#/$defs/ActivityUndo",
+        "approval.response": "#/$defs/ApprovalResponse",
+        "confirm.response": "#/$defs/ConfirmResponse",
+        "ptt.start": "#/$defs/PttStart",
+        "ptt.stop": "#/$defs/PttStop",
+        "source.open": "#/$defs/SourceOpen",
+        "speaker.confirm_response": "#/$defs/SpeakerConfirmResponse",
+        "task.cancel": "#/$defs/TaskCancel",
+        "text.input": "#/$defs/TextInput",
+        "tts.stop": "#/$defs/TtsStop"
+      },
+      "propertyName": "type"
+    },
+    "oneOf": [
+      {
+        "$ref": "#/$defs/PttStart"
+      },
+      {
+        "$ref": "#/$defs/PttStop"
+      },
+      {
+        "$ref": "#/$defs/TextInput"
+      },
+      {
+        "$ref": "#/$defs/ConfirmResponse"
+      },
+      {
+        "$ref": "#/$defs/ApprovalResponse"
+      },
+      {
+        "$ref": "#/$defs/SpeakerConfirmResponse"
+      },
+      {
+        "$ref": "#/$defs/TaskCancel"
+      },
+      {
+        "$ref": "#/$defs/TtsStop"
+      },
+      {
+        "$ref": "#/$defs/ActivityUndo"
+      },
+      {
+        "$ref": "#/$defs/SourceOpen"
+      }
+    ]
+  }
+}

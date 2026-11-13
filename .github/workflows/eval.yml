@@ -1,0 +1,31 @@
+name: eval
+# Calls the real model. Never runs on every pull request.
+on:
+  workflow_dispatch:
+    inputs:
+      model:
+        description: "Gemma 4 model to test"
+        default: "gemma-4-26b-a4b"
+  schedule:
+    - cron: "0 4 * * 0"   # weekly
+
+jobs:
+  eval:
+    runs-on: ubuntu-latest
+    if: ${{ hashFiles('tests/evals/run_evals.py') != '' }}
+    env:
+      GATEWAY_PROVIDER_API_KEY: ${{ secrets.EVAL_PROVIDER_API_KEY }}
+      GATEWAY_MODEL: ${{ github.event.inputs.model || 'gemma-4-26b-a4b' }}
+      EVAL_SPEND_CAP_USD: "2.00"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - run: pip install -e "services/agent[dev]" -e "services/gateway[dev]"
+      - name: Run 30-question set, summary set and latency benchmark
+        run: python tests/evals/run_evals.py --out eval-results.json
+      - uses: actions/upload-artifact@v4
+        with:
+          name: eval-results
+          path: eval-results.json

@@ -1,0 +1,18 @@
+{
+  "questions": [
+    {
+      "id": "Q001",
+      "question": "What does the circular say about annual leave carry-over?",
+      "answerable": true,
+      "expected_points": ["up to five days carried over", "unused days lapse after 31 March"],
+      "expected_citations": [{"doc": "Leave Circular 2024", "page": 3}]
+    },
+    {
+      "id": "Q021",
+      "question": "What is the policy on staff parking fees?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    }
+  ]
+}

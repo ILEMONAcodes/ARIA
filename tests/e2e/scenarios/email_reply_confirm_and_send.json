@@ -1,0 +1,18 @@
+{
+  "name": "email_reply_confirm_and_send",
+  "description": "E2E-05: reply drafted, read back, user confirms with a click, email goes to the outbox and is sent",
+  "steps": [
+    {"send": {"v": 1, "type": "status", "state": "listening", "online": true, "profile": "hosted"}, "delay_ms": 200},
+    {"send": {"v": 1, "type": "transcript.final", "text": "Reply to Mr Bello's email and say we will meet on Monday.", "speaker": {"id": "u1", "name": "Amina", "confidence": 0.95}}, "delay_ms": 400},
+    {"send": {"v": 1, "type": "status", "state": "working", "online": true, "profile": "hosted"}, "delay_ms": 100},
+    {"send": {"v": 1, "type": "cloud.approval_request", "approval_id": "a1", "payload_preview": "Thread from Mr Bello, subject: Monday meeting. Instruction: say we will meet on Monday."}, "delay_ms": 300},
+    {"wait_for": "approval.response"},
+    {"send": {"v": 1, "type": "confirm.request", "confirm_id": "c1", "task_id": "t1", "risk": "external_send", "dry_run_text": "Send a reply to Mr Bello (bello@example.org), subject: Re: Monday meeting. Body: Thank you for your email. We will meet on Monday.", "details": {"recipients": ["bello@example.org"], "subject": "Re: Monday meeting", "attachments": []}, "needs_click": true}, "delay_ms": 600},
+    {"wait_for": "confirm.response"},
+    {"send": {"v": 1, "type": "outbox.update", "items": [{"id": "o1", "status": "sending", "to": ["bello@example.org"], "subject": "Re: Monday meeting", "attempts": 1}]}, "delay_ms": 300},
+    {"send": {"v": 1, "type": "outbox.update", "items": [{"id": "o1", "status": "sent", "to": ["bello@example.org"], "subject": "Re: Monday meeting", "attempts": 1}]}, "delay_ms": 600},
+    {"send": {"v": 1, "type": "activity.entry", "id": "act1", "ts": "2026-01-01T09:00:00Z", "text": "Sent a reply to Mr Bello about the Monday meeting.", "undoable": false}, "delay_ms": 50},
+    {"send": {"v": 1, "type": "reply.text", "task_id": "t1", "text": "Your reply to Mr Bello has been sent.", "spoken": true}, "delay_ms": 100},
+    {"send": {"v": 1, "type": "status", "state": "idle", "online": true, "profile": "hosted"}, "delay_ms": 100}
+  ]
+}

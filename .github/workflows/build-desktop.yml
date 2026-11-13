@@ -1,0 +1,38 @@
+name: build-desktop
+on:
+  pull_request:
+    paths:
+      - "apps/desktop/**"
+      - "services/agent/**"
+      - ".github/workflows/build-desktop.yml"
+
+jobs:
+  build:
+    if: ${{ hashFiles('apps/desktop/package.json') != '' }}
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 9
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 20
+      - uses: dtolnay/rust-toolchain@stable
+      - name: Build agent sidecar
+        run: |
+          pip install -e "services/agent" pyinstaller
+          # TODO (backend, phase I): build the sidecar and place it where Tauri expects it
+          echo "sidecar build placeholder"
+      - name: Build Tauri app (no signing on pull requests)
+        working-directory: apps/desktop
+        run: |
+          pnpm install --frozen-lockfile
+          pnpm tauri build
+      - uses: actions/upload-artifact@v4
+        with:
+          name: installer
+          path: apps/desktop/src-tauri/target/release/bundle/**
