@@ -192,7 +192,8 @@ constants or model labels as verified provider capabilities.
 Phase A is in progress. A1 tooling and A2 settings/logging have passing hosted
 backend CI. A3 adds the SQLCipher store, native-vault key provider, checksummed
 migrations and retention cleanup, with 101 backend unit tests passing locally.
-Its Windows/macOS storage checks still need hosted CI. This is not evidence
+Hosted backend CI and the Windows/macOS storage checks pass. Native vault
+authorization still needs manual platform smoke tests before deployment. This is not evidence
 that Phase A's full gate has passed. A4 interfaces, fakes and real-agent startup
 assembly are next, followed by A5. Startup will connect settings, logging and
 storage and schedule recurring retention cleanup; opening the database already
