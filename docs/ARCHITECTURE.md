@@ -52,6 +52,7 @@ ARIA/
 ├── .pre-commit-config.yaml          [existing] required backend checks
 ├── .env.example                     [existing] variable names, no secrets
 ├── .github/workflows/               [existing] CI/release scaffolding
+├── config/agent.example.toml        [existing] credential-free settings example
 ├── apps/desktop/                    [existing] frontend-owned scaffold
 │   └── src/contract/schema.json      [existing] generated from Pydantic
 ├── services/agent/                  staff PC service; detailed below
@@ -83,8 +84,8 @@ services/agent/
 │   ├── __init__.py                  [existing]
 │   ├── __main__.py                  [planned A] real agent entry point
 │   ├── bootstrap.py                 [planned A] dependency assembly/lifecycle
-│   ├── config.py                    [planned A] validated file/env settings
-│   ├── logging_config.py            [planned A] structured JSON logs
+│   ├── config.py                    [existing] validated file/env settings
+│   ├── logging_config.py            [existing] structured JSON logs
 │   ├── interfaces/                  [planned A] protocols and shared value types
 │   ├── fakes/                       [planned A] deterministic interface doubles
 │   ├── contracts/                   [existing] public Pydantic contracts
@@ -127,7 +128,7 @@ services/agent/
 │   ├── files/                       [planned F] filename/content index
 │   ├── activity/                    [planned F] user-readable history and undo
 │   └── identity/                    [planned G] enrollment, matching, profiles
-├── tests/unit/                      [existing] 28 tests, including schema-check guards
+├── tests/unit/                      [existing] contracts, config, logs, mock, router, tools
 └── packaging/                       [planned I] Windows sidecar build inputs
 ```
 
@@ -189,10 +190,11 @@ constants or model labels as verified provider capabilities.
 | I | Sidecar, bundled/checksummed models, warmup and signed installer; DEP-1–2 | Clean Windows PC installs and starts offline, ready within 90 seconds |
 
 Phase A is in progress. A1 has a workspace lockfile, shared check command,
-pre-commit configuration and backend CI configuration. There are 37 backend
-unit tests (the original 34 plus three schema-check guards). Local lint/types
-and schema checks pass; hosted CI must still validate this change. This is not
-evidence that Phase A's full gate has passed. A2 is next, followed by A3–A5.
+pre-commit hook and passing hosted backend CI. A2 adds validated TOML/environment
+settings and content-free JSON diagnostic logging, with 71 backend unit tests
+passing locally across the two services. A2 still needs hosted CI. This is not
+evidence that Phase A's full gate has passed. A3 is next, followed by A4–A5;
+A4 will wire settings/logging into real-agent startup.
 TypeScript generation/compilation requires coordination with the
 frontend-owned scaffold. Do not start Phase B until Phase A's gate passes.
 

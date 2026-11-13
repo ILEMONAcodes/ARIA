@@ -1,0 +1,14 @@
+# Copy to config/agent.toml for local settings. Never put credentials here.
+# Environment variables override this file. Paths are relative to this file.
+[agent]
+profile = "hosted"
+cloud_enabled = true
+library_path = "../library"
+db_path = "../aria.db"
+db_key_source = "os_vault"
+vad_silence_ms = 700
+cloud_timeout_s = 8
+confidence_threshold = 0.6
+log_level = "INFO"
+# Set gateway_url only once the gateway is provisioned; HTTPS is required.
+# Supply ARIA_INSTALL_TOKEN in the environment, never in this file.
