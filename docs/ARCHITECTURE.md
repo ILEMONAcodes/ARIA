@@ -197,7 +197,8 @@ Hosted backend CI and the Windows/macOS storage checks pass. Native vault
 authorization still needs manual platform smoke tests before deployment. A4
 adds interfaces, deterministic fakes and startup assembly, with 126 backend
 unit tests passing locally. It connects settings, logging and encrypted storage
-and schedules daily retention with safe shutdown. A4's platform CI is pending.
+and schedules daily retention with safe shutdown. Hosted backend CI and the
+Windows/macOS storage, fake-adapter and startup checks pass.
 The CLI is foundation-only: it does not enable a voice loop or serve requests.
 Real adapters arrive in B/C/G; fake adapters are used only when explicitly
 injected or selected by `--fake`, which uses in-memory storage. A5 contract and
