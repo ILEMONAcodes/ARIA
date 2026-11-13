@@ -1,4 +1,5 @@
 .env
+config/agent.toml
 *.db
 *.sqlite
 __pycache__/

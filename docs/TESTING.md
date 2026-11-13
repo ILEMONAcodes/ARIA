@@ -6,6 +6,22 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 
 ## 8.1 Backend unit tests (pytest)
 
+**Phase A settings and diagnostics** (DEP-1/DEP-4 foundations; PRD section 7)
+- `test_defaults_can_load_offline_without_creating_files`
+- `test_environment_overrides_file_then_defaults`
+- `test_file_paths_are_relative_to_settings_file_and_env_paths_to_cwd`
+- `test_install_token_is_environment_only_and_not_serialized`
+- `test_environment_reads_only_agent_variables_and_accepts_https_gateway`
+- `test_invalid_settings_fail_without_exposing_values` (profiles, bounds, booleans, HTTPS and embedded credentials)
+- `test_malformed_or_unknown_file_settings_are_rejected`
+- `test_missing_explicit_settings_file_is_an_error`
+- `test_real_environment_is_used_when_no_mapping_is_supplied`
+- `test_log_is_json_with_utc_time_and_expected_metadata`
+- `test_logs_omit_messages_args_exceptions_and_unapproved_fields`
+- `test_invalid_metadata_falls_back_to_safe_values`
+- `test_reconfiguration_does_not_duplicate_logs_and_respects_level`
+- `test_invalid_log_level_is_rejected`
+
 **Audio and VAD**
 - `test_vad_waits_configured_silence_before_endpoint` (500 to 800 ms setting respected)
 - `test_vad_does_not_cut_off_slow_speaker_with_long_pause`
