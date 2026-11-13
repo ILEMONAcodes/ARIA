@@ -54,7 +54,7 @@ normal installs use `--locked` so dependency declarations cannot silently drift.
 
 Start with the phase order and file map in `docs/ARCHITECTURE.md`. The Phase A
 foundation gate passed backend/contract CI, the live mock replay and platform
-checks on the handoff branch. The work remains in draft PRs for review. A coding
+checks, and its implementation is merged into main. A coding
 agent will ask which role you are working as. The desktop UI is still a frontend F0 task.
 
 ## Agent settings and diagnostic logs

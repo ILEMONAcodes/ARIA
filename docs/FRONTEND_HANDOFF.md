@@ -7,7 +7,7 @@ opening occur in the mock.
 
 The Phase A foundation gate passed hosted backend/contract CI, including strict
 type compilation, a live localhost policy replay, and Windows/macOS mock tests.
-The changes are in draft PRs for review; the actual app/voice loop and installer
+The implementation is merged into main; the actual app/voice loop and installer
 are not complete.
 
 ## Set up the development tools

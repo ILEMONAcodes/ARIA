@@ -199,8 +199,8 @@ with 156 Python unit tests, two generator tests, strict TypeScript compilation,
 all four mock replay tests, and a successful live localhost policy replay.
 A5's hosted CI passed: backend checks, the live localhost policy replay, strict
 TypeScript generation/consumer checks, and Windows/macOS mock/startup tests.
-The backend role's Phase A foundation gate is passed on the handoff branch;
-the work remains in draft PRs for review and is not merged or deployment-ready.
+The backend role's Phase A foundation gate is passed, and the implementation
+has been merged into main. This does not establish deployment readiness.
 
 Generated TypeScript lives alongside the JSON Schema. A separate tool package
 under scripts/contract verifies the types without building the frontend-owned
