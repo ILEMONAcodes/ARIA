@@ -78,6 +78,15 @@ See VOICE_LOOP.md for the separate `scripts/bench_voice.py` evaluation and gate.
 - `test_delete_profile_removes_embeddings_history_and_queue` (ID-4)
 
 **Planner and LLM adapter**
+
+Phase C1's `test_plan_validation.py` exercises the internal strict ingestion
+boundary without model calls or tool execution: JSON duplicates/non-finite
+values, unknown/nested fields, argument types, registered risk/network policy,
+clarification and content-free failures. `test_tools.py` additionally checks
+declaration types, duplicate registration, immutable policy capture and fresh
+schema export. Provider retry, grounding, approval and actual execution tests
+below remain later Phase C work; see PLAN_VALIDATION.md.
+
 - `test_valid_plan_parses`
 - `test_invalid_plan_is_retried_once_then_asks_rephrase`
 - `test_confidence_below_0_6_asks_instead_of_acting`
