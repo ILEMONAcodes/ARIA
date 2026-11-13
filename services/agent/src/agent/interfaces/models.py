@@ -4,7 +4,7 @@ from __future__ import annotations
 
 from dataclasses import dataclass, field
 from datetime import datetime
-from typing import Literal
+from typing import Any, Literal
 
 from agent.contracts.plan import Plan
 
@@ -58,6 +58,8 @@ class ModelRequest:
     max_tokens: int = 600
     temperature: float = 0.2
     reasoning: bool = False
+    json_schema: dict[str, Any] | None = field(default=None, repr=False)
+    client_request_id: str | None = None
 
 
 @dataclass(frozen=True)

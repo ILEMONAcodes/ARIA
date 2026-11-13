@@ -5,11 +5,13 @@ import time
 from collections import defaultdict
 from typing import Any, Literal
 
+import httpx
 from fastapi import Depends, FastAPI, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
 
 from gateway.config import Settings
 from gateway.llm import FakeLLM, LLMClient, ProviderLLM
+from gateway.prompting import DATA_RULE, render_block
 
 log = logging.getLogger("gateway")
 
@@ -99,14 +101,23 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None) -
         state.calls[token] = recent
 
         messages = [m.model_dump() for m in req.messages]
+        if req.data_blocks and not any(
+            m["role"] == "system" and DATA_RULE in m["content"] for m in messages
+        ):
+            messages.insert(0, {"role": "system", "content": DATA_RULE})
         for block in req.data_blocks:
             messages.append(
                 {
                     "role": "user",
-                    "content": f'<data id="{block.id}" label="{block.label}">\n{block.text}\n</data>',
+                    "content": render_block(block.id, block.label, block.text),
                 }
             )
-        result = llm.complete(messages, req.params.model_dump())
+        try:
+            result = llm.complete(messages, req.params.model_dump())
+        except (TimeoutError, httpx.TimeoutException):
+            raise error(504, "provider_timeout", "The model provider timed out") from None
+        except Exception:  # noqa: BLE001 - provider diagnostics must never expose source text or keys
+            raise error(502, "provider_error", "The model provider did not answer") from None
         cost = (
             result.input_tokens * settings.input_price_per_m
             + result.output_tokens * settings.output_price_per_m

@@ -127,4 +127,10 @@ Rewrite the draft below following the instruction. Change only what the instruct
 
 ## Prompt tests
 
+C3 packages the data-block rule in `agent/planner/prompts/data_rule.txt` and adds
+it before generating the exact gateway approval preview. The gateway also
+enforces this rule and escapes source/metadata before rendering data tags.
+Gateway/client unit tests verify these boundaries with fictional source text;
+they do not establish real-model prompt-injection resistance or grounded output.
+
 Each prompt has a unit test that checks the template renders with no leftover placeholders, includes the data block rule, and keeps data blocks out of the instruction part. Behaviour is checked by the eval sets in docs/TESTING.md section 8.4.

@@ -102,6 +102,16 @@ below remain later Phase C work; see PLAN_VALIDATION.md.
 - `test_fake_adapter_is_deterministic`
 
 **Gateway**
+
+C3's `test_gateway_client.py` and `test_cloud_flow.py` use in-memory HTTPX
+transports and the actual gateway ASGI app with a fake provider; no socket or
+paid model call occurs. They check exact-payload approval, replay/decline,
+policy/network rechecks, one shared timeout/retry budget, response limits,
+cancellation, invalid-plan retry/rephrase and the `gateway_retry_fallback`
+fixture's event flow. Gateway tests also check escaped source wrappers and
+sanitized provider errors. See GATEWAY_INTEGRATION.md; live provider setup,
+actual dispatcher/tool execution and real-model evaluation remain open.
+
 - `test_request_without_valid_token_is_rejected`
 - `test_rate_limit_returns_429`
 - `test_spending_cap_blocks_requests_when_exceeded`
