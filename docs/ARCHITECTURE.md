@@ -108,7 +108,7 @@ services/agent/
 │   ├── security/keys.py             [existing] native vault and key-provider interface
 │   ├── audio/                       [existing B] buffers, capture, local speech adapters, pipeline
 │   ├── voice/                       [existing B] authenticated echo transport and CLI
-│   ├── planner/                     [existing C1] strict plan validation; keyword/model work pending
+│   ├── planner/                     [existing C1/C2] validation and local keywords; model work pending
 │   ├── llm/                         [planned C] gateway adapter and fake adapter
 │   ├── router/
 │   │   ├── decision.py              [existing] pure route decision

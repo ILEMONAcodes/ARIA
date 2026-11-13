@@ -54,7 +54,10 @@ See [VOICE_LOOP.md](VOICE_LOOP.md). The user has deferred the remaining voice
 setup and evaluation (decision 26). Phase C has started with C1: strict plan
 validation and tool registration/policy checks, using text inputs and fake tools
 while voice work stays open. See [PLAN_VALIDATION.md](PLAN_VALIDATION.md).
-Next: the local keyword planner, then gateway integration and router execution.
+C2 adds the internal [local keyword planner](KEYWORD_PLANNER.md) for configured
+apps, today's calendar and cancellation, with clarification and no-match outcomes.
+Next: gateway/model integration and router execution; real tool/runtime/UI
+integration and the Phase C acceptance gate remain open.
 
 ## Deferred work: return before the MVP pilot
 

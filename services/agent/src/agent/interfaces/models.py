@@ -6,6 +6,23 @@ from dataclasses import dataclass, field
 from datetime import datetime
 from typing import Literal
 
+from agent.contracts.plan import Plan
+
+
+@dataclass(frozen=True)
+class KeywordResult:
+    """Internal local-match outcome, never authorization to execute or call cloud."""
+
+    kind: Literal["plan", "cancel", "clarify", "no_match", "unavailable"]
+    plan: Plan | None = field(default=None, repr=False)
+    question: str | None = field(default=None, repr=False)
+
+    def __post_init__(self) -> None:
+        if (self.kind == "plan") != (self.plan is not None):
+            raise ValueError("Only plan outcomes carry a plan")
+        if (self.kind == "clarify") != bool(self.question):
+            raise ValueError("Only clarification outcomes carry a question")
+
 
 @dataclass(frozen=True)
 class HistoryEntry:

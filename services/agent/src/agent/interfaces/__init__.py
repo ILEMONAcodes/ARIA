@@ -15,7 +15,13 @@ from typing import Protocol
 
 from agent.contracts.events import SpeakerInfo
 from agent.contracts.plan import Plan
-from agent.interfaces.models import HistoryEntry, ModelRequest, ModelResponse, PurgeResult
+from agent.interfaces.models import (
+    HistoryEntry,
+    KeywordResult,
+    ModelRequest,
+    ModelResponse,
+    PurgeResult,
+)
 from agent.security.keys import DatabaseKeyProvider as DatabaseKeyProvider
 from agent.tools.base import Tool as Tool
 
@@ -64,6 +70,10 @@ class Speaker(Component, Protocol):
 
 class Planner(Component, Protocol):
     async def plan(self, text: str) -> Plan: ...
+
+
+class KeywordMatcher(Protocol):
+    def match(self, text: str) -> KeywordResult: ...
 
 
 class LLMAdapter(Component, Protocol):

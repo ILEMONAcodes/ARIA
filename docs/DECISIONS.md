@@ -35,6 +35,8 @@ Add one line here whenever we make a choice or something surprises us. Move requ
 
 27. **C1 validates plans without execution or public contract changes.** Harden tool registration, capture immutable policy metadata, forbid duplicate tool names, and validate untrusted plans/arguments strictly with registered risk and network requirements as authority. Reject invalid plans with content-free errors and return clarification state for low confidence, missing slots or empty steps. Keep v1 models/generated schemas unchanged. Result bindings fail closed until the executor resolves and revalidates them; approval, timeouts, retries, grounding and runtime wiring remain later C work. Require Pydantic 2.12+ for per-call extra-field enforcement. The user-authorized voice deferral remains recorded in decision 26.
 
+28. **C2 keeps keyword matching bounded and local.** Recognize configured app opening, today’s calendar and exact stop/cancel controls through a separate KeywordMatcher interface. Use RapidFuzz only for one-edit corrections of the open verb; names/aliases must be configured rather than guessed. Resolve today with an injected aware clock and explicit timezone. Preserve registered tool policy and validate generated plans through C1. Return explicit clarification, cancellation, no-match and unavailable outcomes without executing tools or triggering cloud use. Keep the v1 contract and voice echo runtime unchanged; dispatcher, tool adapters, file matching and AI/approval integration remain later work.
+
 ## To decide after testing
 
 - Gemma 4 API provider and spending cap
