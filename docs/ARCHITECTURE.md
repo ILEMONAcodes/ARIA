@@ -41,6 +41,7 @@ ARIA/
 │   ├── PRD.md                        [existing] requirement IDs
 │   ├── TECH_SPEC.md                  [existing] technical behavior
 │   ├── API_CONTRACT.md               [existing] UI/agent messages
+│   ├── FRONTEND_HANDOFF.md           [existing] generated types and authenticated mock setup
 │   ├── ROADMAP.md                    [existing] shared phase gates
 │   ├── TESTING.md                    [existing] required tests and evaluations
 │   ├── CICD.md                       [existing] CI and release policy
@@ -54,13 +55,15 @@ ARIA/
 ├── .github/workflows/               [existing] CI/release scaffolding
 ├── config/agent.example.toml        [existing] credential-free settings example
 ├── apps/desktop/                    [existing] frontend-owned scaffold
-│   └── src/contract/schema.json      [existing] generated from Pydantic
+│   └── src/contract/                 [existing] generated JSON Schema and TypeScript
 ├── services/agent/                  staff PC service; detailed below
 ├── services/gateway/                cloud service; detailed below
 ├── library/                         [existing] sample library scaffolding
 ├── scripts/
 │   ├── gen_contract.py              [existing] JSON Schema generation
 │   ├── check_backend.py             [existing] shared local/CI check command
+│   ├── contract/                    [existing] pinned generator, TS compiler and consumer checks
+│   ├── smoke_mock.py                [existing] separate live localhost integration check
 │   ├── benchmark_wer.py             [planned B] transcription accuracy
 │   ├── evaluate_kb.py               [planned D] golden-set scoring
 │   └── benchmark_latency.py         [planned H] PRD speed measurements
@@ -93,8 +96,9 @@ services/agent/
 │   │   └── plan.py                  [existing] plan and risk schema
 │   ├── mock/                        [existing] scenario-driven fake server
 │   │   ├── __main__.py              [existing] mock CLI
-│   │   └── server.py                [existing] replay and validation
-│   ├── api/                         [planned A] authenticated localhost transport
+│   │   ├── server.py                [existing] replay and validation
+│   │   └── scenarios.py             [existing] typed fixture and response validation
+│   ├── api/                         [planned B] real-agent localhost transport and voice events
 │   ├── store/                       [existing] encrypted persistence boundary
 │   │   ├── database.py              SQLCipher connections and transactions
 │   │   ├── local.py                 lifecycle adapter; open/purge/close
@@ -190,21 +194,23 @@ constants or model labels as verified provider capabilities.
 | H | Model/provider comparison, malicious-data corpus, privacy terms and latency; PRD sections 4, 6 and 7 | Results and provider terms recorded; all PRD speed targets measured on staff hardware |
 | I | Sidecar, bundled/checksummed models, warmup and signed installer; DEP-1–2 | Clean Windows PC installs and starts offline, ready within 90 seconds |
 
-Phase A is in progress. A1 tooling and A2 settings/logging have passing hosted
-backend CI. A3 adds the SQLCipher store, native-vault key provider, checksummed
-migrations and retention cleanup, with 101 backend unit tests passing locally.
-Hosted backend CI and the Windows/macOS storage checks pass. Native vault
-authorization still needs manual platform smoke tests before deployment. A4
-adds interfaces, deterministic fakes and startup assembly, with 126 backend
-unit tests passing locally. It connects settings, logging and encrypted storage
-and schedules daily retention with safe shutdown. Hosted backend CI and the
-Windows/macOS storage, fake-adapter and startup checks pass.
-The CLI is foundation-only: it does not enable a voice loop or serve requests.
-Real adapters arrive in B/C/G; fake adapters are used only when explicitly
-injected or selected by `--fake`, which uses in-memory storage. A5 contract and
-mock handoff checks are next. Phase A's full gate has not passed.
-TypeScript generation/compilation requires coordination with the
-frontend-owned scaffold. Do not start Phase B until Phase A's gate passes.
+A1–A4 have passing hosted backend and Windows/macOS checks. A5 is implemented
+with 156 Python unit tests, two generator tests, strict TypeScript compilation,
+all four mock replay tests, and a successful live localhost policy replay.
+A5's hosted CI is pending, so the Phase A gate is not yet marked passed.
+
+Generated TypeScript lives alongside the JSON Schema. A separate tool package
+under scripts/contract verifies the types without building the frontend-owned
+app. FRONTEND_HANDOFF.md documents setup, auth, imports and response examples.
+The mock requires the documented session token and stops on decline/cancel;
+it still never runs tools, reads real files or contacts a model/mail provider.
+
+The real CLI remains foundation-only; real voice and request serving are
+planned B integration work (VOX-1–4/SYSX-1), followed by planner/gateway work in C.
+No requirement IDs move phases. The role's Phase A gate requires the mock and
+compiled types, not a finished desktop UI or real voice service. Native vault
+authorization and Windows installation still need manual deployment smoke tests.
+Do not start Phase B until the A5 backend/contract CI gate passes.
 
 ## Contract and test workflow
 

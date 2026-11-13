@@ -1,0 +1,2 @@
+apps/desktop/src/contract/*.ts text eol=lf
+scripts/contract/examples.generated.ts text eol=lf

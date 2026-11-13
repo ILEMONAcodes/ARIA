@@ -23,6 +23,8 @@ jobs:
         run: uv sync --locked --all-packages --all-extras
       - name: Backend checks (unit tests block network sockets)
         run: uv run --locked --all-packages --all-extras python scripts/check_backend.py
+      - name: Live localhost mock handoff (separate from network-blocked unit tests)
+        run: uv run --locked --all-packages --all-extras python scripts/smoke_mock.py
 
   store-platform:
     runs-on: ${{ matrix.os }}
@@ -43,4 +45,21 @@ jobs:
         run: uv sync --locked --all-packages --all-extras
       - name: Test storage and startup with fake credentials (network blocked)
         working-directory: services/agent
-        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py
+        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py tests/unit/test_mock_agent.py
+
+  contract:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: "9.15.9"
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "24"
+          cache: pnpm
+          cache-dependency-path: scripts/contract/pnpm-lock.yaml
+      - name: Install locked contract tools
+        run: pnpm --dir scripts/contract install --frozen-lockfile
+      - name: Check generator, committed types and frontend consumer examples
+        run: node scripts/contract/check.mjs
