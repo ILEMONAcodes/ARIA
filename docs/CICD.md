@@ -14,11 +14,17 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - The required job is `ci-backend / check`; update branch protection if it required the former matrix/contract jobs
 - `store-platform` additionally installs the locked dependencies on Windows and macOS and runs storage, key-provider, fake-adapter and startup lifecycle tests against real SQLCipher with fake vaults. Native OS vault authorization is reserved for manual platform smoke tests; unit tests never read real credentials.
 - Windows asyncio uses a local TCP pair internally. The unit-test harness supplies only that ephemeral loopback pair; application socket creation and DNS remain blocked, with IPv4/IPv6 guard regression tests. No real mail, model or other service is contacted.
+- `contract` installs pinned pnpm tools from `scripts/contract/pnpm-lock.yaml` on Node 24, checks generator failure paths and artifact freshness, and strictly compiles all fixture messages plus frontend consumer examples. It runs independently of the unfinished desktop app.
+- The Python `check` job also runs the separate live localhost mock handoff after its network-blocked unit tests. This integration process uses only its own mock server and fictional session credentials.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
 
 Install the local hook with `uv run --locked --all-packages --all-extras pre-commit install`.
 The hook checks the complete backend, including tests, even for documentation
 commits. Run it manually with `uv run --locked --all-packages --all-extras pre-commit run --all-files`.
+A second hook runs `node scripts/contract/check.mjs` for contract, mock, scenario
+and generator changes. Install Node 24 and the locked `scripts/contract` tools
+before committing these files. The `contract` CI job is an additional required
+foundation check. The live integration check is not part of the unit-test hook.
 Other workflow files below remain scaffolding and still use their original pip
 installation commands until their phase is implemented.
 

@@ -5,7 +5,7 @@
     {"send": {"v": 1, "type": "status", "state": "idle", "online": false, "profile": "hosted"}, "delay_ms": 100},
     {"send": {"v": 1, "type": "transcript.final", "text": "Send the reply.", "speaker": {"id": "u1", "name": "Amina", "confidence": 0.95}}, "delay_ms": 300},
     {"send": {"v": 1, "type": "confirm.request", "confirm_id": "c1", "task_id": "t1", "risk": "external_send", "dry_run_text": "Send the reply to Mr Bello. The internet is off, so it will wait in the outbox.", "details": {"recipients": ["bello@example.org"], "subject": "Re: Monday meeting", "attachments": []}, "needs_click": true}, "delay_ms": 300},
-    {"wait_for": "confirm.response"},
+    {"wait_for": "confirm.response", "match": {"v": 1, "type": "confirm.response", "confirm_id": "c1", "decision": "yes", "via": "click"}},
     {"send": {"v": 1, "type": "outbox.update", "items": [{"id": "o1", "status": "queued", "to": ["bello@example.org"], "subject": "Re: Monday meeting", "attempts": 0}]}, "delay_ms": 200},
     {"send": {"v": 1, "type": "reply.text", "task_id": "t1", "text": "No internet. Your reply is queued and will send when it returns.", "spoken": true}, "delay_ms": 100},
     {"send": {"v": 1, "type": "status", "state": "idle", "online": true, "profile": "hosted"}, "delay_ms": 1500},

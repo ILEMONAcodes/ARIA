@@ -204,6 +204,21 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 
 ## 8.3 End-to-end tests
 
+**Phase A mock handoff:** `test_every_mock_scenario_completes_with_its_documented_ui_responses`
+replays all four starter fixtures through the ASGI/WebSocket handler in-process.
+Additional mock tests cover token enforcement, invalid fixture shapes/delays,
+wrong response IDs, matching declines, keyboard confirmation, cancellation,
+unsupported versions and malformed/voice-only UI events. All are network-blocked.
+The separate `python scripts/smoke_mock.py` integration check starts its own
+temporary localhost process and verifies the live authenticated policy replay;
+it never contacts a real provider or reads real credentials.
+
+`node scripts/contract/check.mjs` runs generator freshness/failure tests and
+strictly compiles the generated types, every fixture's messages and frontend
+consumer examples. Expected TypeScript errors exercise unsupported versions,
+missing discriminators and missing/voice-only approval input methods.
+These checks establish the mock/type handoff, not the real feature e2e gates.
+
 Backend e2e (pytest): the real agent with fixture audio, a fake gateway and a fake network layer that can go down and come back.
 UI e2e (Playwright): the Vite UI against the mock agent for every scenario, and against the real agent with fixture audio for the smoke scenarios marked (smoke).
 

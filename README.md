@@ -11,6 +11,7 @@ What is in the pack:
 - `docs/ARCHITECTURE.md` existing and planned files, backend module boundaries and phase order
 - `docs/ROADMAP.md` phases, gates and the parallel work map
 - `docs/API_CONTRACT.md` events and REST between UI and agent
+- `docs/FRONTEND_HANDOFF.md` generated types, mock authentication and replay instructions
 - `docs/PROMPTS.md` prompt templates for the model
 - `docs/TESTING.md` named unit tests, e2e scenarios and evaluations
 - `docs/CICD.md` GitHub workflows
@@ -22,28 +23,38 @@ What is in the pack:
 
 ## Quick start
 
-Install Python 3.11 and uv 0.13.7, then run from the repository root:
+Install Python 3.11, uv 0.13.7, Node 24 and Corepack, then run from the repository root:
 
 ```sh
 uv sync --locked --all-packages --all-extras
+cd scripts/contract
+corepack pnpm install --frozen-lockfile
+cd ../..
 uv run --locked --all-packages --all-extras pre-commit install
 uv run --locked --all-packages --all-extras python scripts/check_backend.py
+node scripts/contract/check.mjs
 uv run --locked --all-packages --all-extras python -m agent.mock --scenario policy_question
 ```
 
-The mock agent binds to `127.0.0.1:8765`. The shared check command runs lint,
+The mock agent binds to `127.0.0.1:8765` and prints a token-bearing WebSocket
+URL; use that full URL. Its health endpoint requires the same token as a Bearer
+header. See `docs/FRONTEND_HANDOFF.md` for example responses and replay rules.
+The shared Python check command runs lint,
 format checks, strict types, both services' unit tests with network sockets
 blocked, and a read-only contract schema check. Pre-commit and backend CI use
-that same command. Activate `.venv` if you want `uv` and the other installed
+that same command. A separate pre-commit/CI check verifies generated TypeScript
+freshness and strict consumer compilation. Activate `.venv` if you want `uv` and the other installed
 tools on your shell's PATH.
 
 After an intentional contract update, regenerate the schema with
 `uv run --locked --all-packages --all-extras python scripts/gen_contract.py`.
+Then run `node scripts/contract/generate.mjs` and commit both generated formats.
 To update dependencies deliberately, use `uv lock` and review `uv.lock`;
 normal installs use `--locked` so dependency declarations cannot silently drift.
 
-Start with the phase order and file map in `docs/ARCHITECTURE.md`. Phase A is
-still in progress. A coding agent will ask which role you are working as.
+Start with the phase order and file map in `docs/ARCHITECTURE.md`. A5 handoff
+checks are implemented and awaiting hosted CI. A coding agent will ask which
+role you are working as. The desktop UI is still a frontend F0 task.
 
 ## Agent settings and diagnostic logs
 

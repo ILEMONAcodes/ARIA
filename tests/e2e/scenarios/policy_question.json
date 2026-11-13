@@ -7,10 +7,10 @@
     {"send": {"v": 1, "type": "transcript.final", "text": "What does the circular say about annual leave carry-over?", "speaker": {"id": "u1", "name": "Amina", "confidence": 0.96}}, "delay_ms": 300},
     {"send": {"v": 1, "type": "status", "state": "thinking", "online": true, "profile": "hosted"}, "delay_ms": 100},
     {"send": {"v": 1, "type": "cloud.approval_request", "approval_id": "a1", "payload_preview": "Question: What does the circular say about annual leave carry-over? Passages: Leave Circular 2024, page 3."}, "delay_ms": 400},
-    {"wait_for": "approval.response"},
+    {"wait_for": "approval.response", "match": {"v": 1, "type": "approval.response", "approval_id": "a1", "decision": "yes"}},
     {"send": {"v": 1, "type": "result.answer", "text": "Staff may carry over up to five unused leave days into the next year [Leave Circular 2024, page 3]. Days not used by 31 March lapse [Leave Circular 2024, page 3].", "citations": [{"doc": "Leave Circular 2024", "page": 3, "date": "2024-01-15", "passage": "Up to five unused days of annual leave may be carried over to the next calendar year. Carried-over days not used by 31 March lapse.", "file_path": "library/leave_circular_2024.pdf"}]}, "delay_ms": 600},
     {"send": {"v": 1, "type": "reply.text", "task_id": "t1", "text": "You can carry over up to five days. Say show me to open the circular.", "spoken": true}, "delay_ms": 100},
     {"send": {"v": 1, "type": "status", "state": "idle", "online": true, "profile": "hosted"}, "delay_ms": 100},
-    {"wait_for": "source.open"}
+    {"wait_for": "source.open", "match": {"v": 1, "type": "source.open", "file_path": "library/leave_circular_2024.pdf", "page": 3}}
   ]
 }
