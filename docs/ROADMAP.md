@@ -56,10 +56,14 @@ validation and tool registration/policy checks, using text inputs and fake tools
 while voice work stays open. See [PLAN_VALIDATION.md](PLAN_VALIDATION.md).
 C2 adds the internal [local keyword planner](KEYWORD_PLANNER.md) for configured
 apps, today's calendar and cancellation, with clarification and no-match outcomes.
-Next: gateway/model integration and router execution; real tool/runtime/UI
-integration and the Phase C acceptance gate remain open.
+C3 adds the [gateway client and approval/retry/fallback flow](GATEWAY_INTEGRATION.md),
+verified against the real gateway API with a fake provider. The user has also
+deferred live provider selection/setup (decision 30). Real provider calls,
+tool execution, dispatcher/UI integration and the Phase C acceptance gate remain open.
 
 ## Deferred work: return before the MVP pilot
+
+### Voice setup and evaluation
 
 At the user's request, postpone these Phase B tasks rather than marking them
 complete or moving them out of the MVP:
@@ -76,6 +80,21 @@ complete or moving them out of the MVP:
 Resume after the independent Phase C implementation, or earlier at the user's
 request. The Phase B/core-loop acceptance gate remains unpassed until these
 checks succeed; they are still required before the MVP pilot/release.
+
+### Live Gemma provider setup
+
+The user has no provider yet and asked to track this work for later:
+
+- [ ] Choose a Gemma API provider and verify its supported model IDs and capabilities.
+- [ ] Create the provider account and obtain its API key. Configure it only in
+  the gateway environment as `GATEWAY_PROVIDER_API_KEY`.
+- [ ] Check data-use terms, region and current pricing; choose a spending cap.
+- [ ] Implement/configure `ProviderLLM` for that provider and verify model/JSON-schema settings.
+- [ ] Set up the authenticated HTTPS gateway URL and desktop installation token.
+- [ ] Run explicitly approved live integration, timeout/fallback and model-quality
+  tests using fictional/public data and an agreed budget before the MVP pilot.
+
+Client integration and fake-provider tests can proceed while these stay open.
 
 ## Parallel work map
 

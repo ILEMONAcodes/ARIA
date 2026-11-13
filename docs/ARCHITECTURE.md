@@ -109,7 +109,7 @@ services/agent/
 │   ├── audio/                       [existing B] buffers, capture, local speech adapters, pipeline
 │   ├── voice/                       [existing B] authenticated echo transport and CLI
 │   ├── planner/                     [existing C1/C2] validation and local keywords; model work pending
-│   ├── llm/                         [planned C] gateway adapter and fake adapter
+│   ├── llm/                         [existing C3] gateway client, wire values, approval/retry flow
 │   ├── router/
 │   │   ├── decision.py              [existing] pure route decision
 │   │   └── executor.py              [planned C] approved execution/cancellation

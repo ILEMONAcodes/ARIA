@@ -151,5 +151,6 @@ types. `agent.fakes` provides deterministic audio, VAD, wake-word, transcription
 identity, speech, planner, model, network, clock, key, storage and tool doubles.
 They use fictional fixtures in memory and are explicitly injected in tests;
 production failures never select them automatically. Model source text stays
-in separate data blocks. Real provider prompt rendering and approvals follow
-in phase C.
+in separate data blocks. The [Phase C3 integration guide](docs/GATEWAY_INTEGRATION.md)
+documents the gateway client, approval and retry/fallback flow. Live provider
+setup and desktop dispatcher wiring remain pending.
