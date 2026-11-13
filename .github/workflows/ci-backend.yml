@@ -45,7 +45,23 @@ jobs:
         run: uv sync --locked --all-packages --all-extras
       - name: Test storage and startup with fake credentials (network blocked)
         working-directory: services/agent
-        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py tests/unit/test_mock_agent.py
+        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py tests/unit/test_mock_agent.py tests/unit/test_voice_buffers.py tests/unit/test_voice_pipeline.py tests/unit/test_voice_native.py tests/unit/test_voice_server.py tests/unit/test_voice_metrics.py
+
+  voice-windows:
+    runs-on: windows-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.7"
+          enable-cache: true
+      - name: Install optional locked Windows speech runtime
+        run: uv sync --locked --all-packages --all-extras --group voice
+      - name: Import native speech packages without models or microphone access
+        run: uv run --locked --all-packages --all-extras --group voice python -c "import sounddevice, onnxruntime, faster_whisper, piper; from openwakeword.model import Model"
 
   contract:
     runs-on: ubuntu-latest

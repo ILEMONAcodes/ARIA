@@ -297,6 +297,73 @@ export const agentExamples = [
     "state": "idle",
     "online": true,
     "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "listening",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "thinking",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.partial",
+    "text": "Open the policy folder."
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "Open the policy folder."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "voice-fixture",
+    "text": "Open the policy folder.",
+    "spoken": true
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "listening",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "voice-activity-fixture",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Voice echo completed.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
   }
 ] satisfies WireAgentEvent[];
 export const uiExamples = [
@@ -331,5 +398,13 @@ export const uiExamples = [
     "type": "source.open",
     "file_path": "library/leave_circular_2024.pdf",
     "page": 3
+  },
+  {
+    "v": 1,
+    "type": "ptt.start"
+  },
+  {
+    "v": 1,
+    "type": "ptt.stop"
   }
 ] satisfies WireUIEvent[];

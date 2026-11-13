@@ -46,6 +46,12 @@ Voice corrections and edits, PDF export, long documents, tone options, OCR, supe
 
 ## Parallel work map
 
+Backend status: Phase A's backend/contract gate passed CI. Phase B's offline
+echo pipeline, optional local-model adapters and authenticated transport are
+implemented; the actual Windows/network-off echo, model assets, Nigerian-English
+WER, latency, wake-word evaluation and frontend integration remain pending.
+See [VOICE_LOOP.md](VOICE_LOOP.md). Phase C has not started.
+
 | Backend and AI | Frontend | Join point |
 |---|---|---|
 | Contracts and mock agent (first) | Scaffold, generated types | Mock agent scenarios |
