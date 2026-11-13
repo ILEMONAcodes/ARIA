@@ -197,7 +197,10 @@ constants or model labels as verified provider capabilities.
 A1–A4 have passing hosted backend and Windows/macOS checks. A5 is implemented
 with 156 Python unit tests, two generator tests, strict TypeScript compilation,
 all four mock replay tests, and a successful live localhost policy replay.
-A5's hosted CI is pending, so the Phase A gate is not yet marked passed.
+A5's hosted CI passed: backend checks, the live localhost policy replay, strict
+TypeScript generation/consumer checks, and Windows/macOS mock/startup tests.
+The backend role's Phase A foundation gate is passed, and the implementation
+has been merged into main. This does not establish deployment readiness.
 
 Generated TypeScript lives alongside the JSON Schema. A separate tool package
 under scripts/contract verifies the types without building the frontend-owned
@@ -210,7 +213,7 @@ planned B integration work (VOX-1–4/SYSX-1), followed by planner/gateway work 
 No requirement IDs move phases. The role's Phase A gate requires the mock and
 compiled types, not a finished desktop UI or real voice service. Native vault
 authorization and Windows installation still need manual deployment smoke tests.
-Do not start Phase B until the A5 backend/contract CI gate passes.
+Phase B can now begin with the offline voice loop and its real transport.
 
 ## Contract and test workflow
 
