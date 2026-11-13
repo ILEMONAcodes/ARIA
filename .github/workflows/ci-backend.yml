@@ -23,3 +23,24 @@ jobs:
         run: uv sync --locked --all-packages --all-extras
       - name: Backend checks (unit tests block network sockets)
         run: uv run --locked --all-packages --all-extras python scripts/check_backend.py
+
+  store-platform:
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        os: [windows-latest, macos-latest]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+      - uses: astral-sh/setup-uv@v7
+        with:
+          version: "0.13.7"
+          enable-cache: true
+      - name: Install locked workspace dependencies
+        run: uv sync --locked --all-packages --all-extras
+      - name: Test native encryption with fake vault credentials (network blocked)
+        working-directory: services/agent
+        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py

@@ -44,3 +44,65 @@ normal installs use `--locked` so dependency declarations cannot silently drift.
 
 Start with the phase order and file map in `docs/ARCHITECTURE.md`. Phase A is
 still in progress. A coding agent will ask which role you are working as.
+
+## Agent settings and diagnostic logs
+
+The configuration module is `services/agent/src/agent/config.py`. It loads an
+explicit TOML file with an `[agent]` table; use `config/agent.example.toml` as a
+starting point and copy it to the ignored `config/agent.toml` for local values.
+Known `ARIA_*` environment variables override file values; defaults fill unspecified fields.
+It does not automatically load `.env` files. File paths are relative to the
+TOML file; paths from the environment or defaults use the working directory.
+
+```python
+from pathlib import Path
+
+from agent.config import load_settings
+from agent.logging_config import configure_logging
+
+settings = load_settings(Path("config/agent.toml"))
+logger = configure_logging(settings.log_level)
+logger.info("Settings loaded", extra={"event": "settings.loaded"})
+```
+
+Leave the gateway URL unset until a gateway is provisioned. A configured URL
+must use HTTPS without credentials, queries or fragments. Supply the install
+token through `ARIA_INSTALL_TOKEN`, never in TOML; the provider API key belongs
+only on the gateway. `ARIA_DB_KEY_SOURCE` currently accepts only `os_vault`;
+the store uses a native Windows or macOS vault through its key-provider interface.
+
+The agent logger writes JSON metadata to stderr without creating log files. It
+accepts fixed event names from `agent.logging_config.EVENTS`, UUID task IDs and
+finite nonnegative `duration_ms`. Messages, arguments, exception text and other
+extra fields are omitted so transcripts and credentials cannot be copied into
+these diagnostics. Non-UUID IDs are omitted from logs; this does not change
+the API contract. Real-agent startup will connect these modules in A4.
+
+## Encrypted local storage
+
+`services/agent/src/agent/store/` contains the SQLCipher connection factory,
+ordered migrations, history repository and retention cleanup.
+`agent.security.keys.OSVaultKeyProvider` retrieves a randomly generated 256-bit
+database key from Windows Credential Manager or macOS Keychain. Unsupported,
+plaintext or unavailable vault backends are rejected. Unit tests use fake
+vaults and the real SQLCipher engine, without accessing real credentials.
+
+The native SQLCipher driver is included in the locked Python dependencies.
+There is no plaintext SQLite fallback. Opening a database checks the engine,
+reads the schema with the key, applies migrations atomically, and purges
+transcripts older than 30 days and activity entries older than 90 days. Records
+at the exact cutoff remain. Timestamps are timezone-aware UTC microseconds.
+Recurring cleanup for an agent that stays open will be wired into A4.
+
+The Phase A schema contains profiles, settings, transcripts and activity history.
+Outbox, calendar and search tables will arrive with their feature migrations.
+Applied migration checksums must match the application; newer or modified
+migration histories are rejected instead of being rewritten.
+
+Keys are associated with the resolved database path. Existing files must have
+their matching vault key; a missing key never causes automatic replacement or
+re-encryption. Moving or restoring a database requires preserving that key and
+its association. Do not move a real database before a recovery workflow exists.
+Retention removes records from the live database, not external backups.
+Native vault authorization and Windows installation still require manual
+platform smoke testing before deployment.

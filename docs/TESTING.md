@@ -6,6 +6,22 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 
 ## 8.1 Backend unit tests (pytest)
 
+**Phase A settings and diagnostics** (DEP-1/DEP-4 foundations; PRD section 7)
+- `test_defaults_can_load_offline_without_creating_files`
+- `test_environment_overrides_file_then_defaults`
+- `test_file_paths_are_relative_to_settings_file_and_env_paths_to_cwd`
+- `test_install_token_is_environment_only_and_not_serialized`
+- `test_environment_reads_only_agent_variables_and_accepts_https_gateway`
+- `test_invalid_settings_fail_without_exposing_values` (profiles, bounds, booleans, HTTPS and embedded credentials)
+- `test_malformed_or_unknown_file_settings_are_rejected`
+- `test_missing_explicit_settings_file_is_an_error`
+- `test_real_environment_is_used_when_no_mapping_is_supplied`
+- `test_log_is_json_with_utc_time_and_expected_metadata`
+- `test_logs_omit_messages_args_exceptions_and_unapproved_fields`
+- `test_invalid_metadata_falls_back_to_safe_values`
+- `test_reconfiguration_does_not_duplicate_logs_and_respects_level`
+- `test_invalid_log_level_is_rejected`
+
 **Audio and VAD**
 - `test_vad_waits_configured_silence_before_endpoint` (500 to 800 ms setting respected)
 - `test_vad_does_not_cut_off_slow_speaker_with_long_pause`
@@ -116,7 +132,32 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 
 **Store and activity log**
 - `test_database_file_is_not_readable_as_plain_text`
+- `test_database_reopens_with_same_key_and_does_not_reapply_migrations`
+- `test_wrong_key_does_not_modify_existing_database`
+- `test_existing_plaintext_database_is_rejected_without_overwrite`
+- `test_existing_database_with_missing_key_is_never_rekeyed`
+- `test_missing_key_does_not_create_a_database`
+- `test_invalid_key_is_rejected_before_database_creation`
+- `test_plain_sqlite_driver_is_rejected_without_touching_keys_or_file`
+- `test_missing_sqlcipher_driver_is_a_safe_failure`
+- `test_failed_transaction_rolls_back_all_writes`
+- `test_foreign_keys_reject_orphaned_history`
+- `test_failed_migration_rolls_back_schema_and_version`
+- `test_migration_checksum_mismatch_is_rejected`
+- `test_newer_database_schema_is_rejected`
+- `test_migrations_must_have_contiguous_versions`
 - `test_retention_purges_transcripts_after_30_days_and_logs_after_90`
+- `test_opening_database_automatically_purges_expired_history`
+- `test_retention_is_atomic_if_second_delete_fails`
+- `test_naive_retention_time_is_rejected_before_deleting`
+- `test_utc_timestamp_preserves_offsets_and_microseconds`
+- `test_history_queries_are_parameterized_and_isolated_by_profile`
+- `test_vault_generates_persists_and_reuses_a_256_bit_key`
+- `test_missing_existing_key_is_never_replaced`
+- `test_corrupt_stored_key_is_not_overwritten_or_exposed`
+- `test_failed_vault_write_prevents_key_use`
+- `test_unpersisted_key_is_rejected`
+- `test_untrusted_or_plaintext_vault_backend_is_rejected`
 - `test_every_tool_run_writes_a_plain_language_log_entry` (SYSX-2)
 - `test_undo_reverts_a_draft`
 
