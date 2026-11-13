@@ -1,6 +1,6 @@
 # Roadmap
 
-No dates. Phases run in order, and a gate must pass before the next phase starts. Backend and frontend work in parallel tracks, joined through the contract (docs/API_CONTRACT.md) and the mock agent.
+No dates. Phases run in order, and a gate must pass before the next phase starts unless the user explicitly changes the order and it is recorded in docs/DECISIONS.md. Backend and frontend work in parallel tracks, joined through the contract (docs/API_CONTRACT.md) and the mock agent.
 
 ## Phases
 
@@ -44,13 +44,37 @@ Goal: two or three people recognised, each with their own settings.
 ### After the MVP (P1)
 Voice corrections and edits, PDF export, long documents, tone options, OCR, superseded circulars, calendar sync, the Local profile on Gemma 4 E4B or E2B, a phone browser client, up to 10 users, an admin console.
 
-## Parallel work map
+## Backend status
 
 Backend status: Phase A's backend/contract gate passed CI. Phase B's offline
 echo pipeline, optional local-model adapters and authenticated transport are
 implemented; the actual Windows/network-off echo, model assets, Nigerian-English
 WER, latency, wake-word evaluation and frontend integration remain pending.
-See [VOICE_LOOP.md](VOICE_LOOP.md). Phase C has not started.
+See [VOICE_LOOP.md](VOICE_LOOP.md). The user has deferred the remaining voice
+setup and evaluation (decision 26). Phase C has started with C1: strict plan
+validation and tool registration/policy checks, using text inputs and fake tools
+while voice work stays open. See [PLAN_VALIDATION.md](PLAN_VALIDATION.md).
+Next: the local keyword planner, then gateway integration and router execution.
+
+## Deferred work: return before the MVP pilot
+
+At the user's request, postpone these Phase B tasks rather than marking them
+complete or moving them out of the MVP:
+
+- [ ] Install the local Whisper, Piper and Silero speech models.
+- [ ] Verify real push-to-talk and spoken echo on Windows with internet disabled.
+- [ ] Train/export a custom HeyAria wake-word model using synthetic speech;
+  test with consenting Nigerian-English speakers before enabling it by default.
+- [ ] Collect 100–200 consented Nigerian-English sentences and measure WER.
+- [ ] Measure transcript latency, TTS startup latency and wake false accepts.
+- [ ] Verify the frontend hotkey, mic/Stop controls, captions and status against
+  both the mock and real agent, then complete the non-technical user smoke test.
+
+Resume after the independent Phase C implementation, or earlier at the user's
+request. The Phase B/core-loop acceptance gate remains unpassed until these
+checks succeed; they are still required before the MVP pilot/release.
+
+## Parallel work map
 
 | Backend and AI | Frontend | Join point |
 |---|---|---|
@@ -64,7 +88,9 @@ See [VOICE_LOOP.md](VOICE_LOOP.md). Phase C has not started.
 
 ## Build rules
 
-- Do not start a phase until the previous gate passes.
+- Do not start a phase until the previous gate passes, except for an explicit
+  user-directed sequencing change recorded in docs/DECISIONS.md (currently
+  decision 26 permits independent Phase C work while voice validation is deferred).
 - Do not build anything not in docs/PRD.md section 3.
 - A scenario file exists for every user-visible feature before either side builds it.
 - Move a requirement between phases only through a line in docs/DECISIONS.md.

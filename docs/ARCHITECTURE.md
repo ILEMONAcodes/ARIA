@@ -108,7 +108,7 @@ services/agent/
 │   ├── security/keys.py             [existing] native vault and key-provider interface
 │   ├── audio/                       [existing B] buffers, capture, local speech adapters, pipeline
 │   ├── voice/                       [existing B] authenticated echo transport and CLI
-│   ├── planner/                     [planned C] keyword path and plan validation
+│   ├── planner/                     [existing C1] strict plan validation; keyword/model work pending
 │   ├── llm/                         [planned C] gateway adapter and fake adapter
 │   ├── router/
 │   │   ├── decision.py              [existing] pure route decision
@@ -205,7 +205,8 @@ it still never runs tools, reads real files or contacts a model/mail provider.
 The original CLI remains foundation-only. `python -m agent.voice` runs the
 Phase B echo integration (VOX-1–4/SYSX-1); see VOICE_LOOP.md for its actual file
 map, startup, models, privacy boundaries and pending checks. Planner/gateway
-work follows in C after the B gate passes.
+work in C is next under the user's sequencing exception (decision 26), using
+text inputs and fake adapters while real speech setup/evaluation is deferred.
 No requirement IDs move phases. The role's Phase A gate requires the mock and
 compiled types, not a finished desktop UI or real voice service. Native vault
 authorization and Windows installation still need manual deployment smoke tests.
