@@ -95,12 +95,12 @@ services/agent/
 │   │   ├── __main__.py              [existing] mock CLI
 │   │   └── server.py                [existing] replay and validation
 │   ├── api/                         [planned A] authenticated localhost transport
-│   ├── store/                       [planned A] encrypted persistence boundary
+│   ├── store/                       [existing] encrypted persistence boundary
 │   │   ├── database.py              SQLCipher connections and transactions
 │   │   ├── migrations/              ordered schema migrations
 │   │   ├── repositories.py          persistence operations
 │   │   └── retention.py             30-day transcripts; 90-day activity
-│   ├── security/                    [planned A] credential vault/key interface
+│   ├── security/keys.py             [existing] native vault and key-provider interface
 │   ├── audio/                       [planned B] capture, VAD, wake word, buffers
 │   ├── stt/                         [planned B] faster-whisper adapter
 │   ├── tts/                         [planned B] Piper adapter and interruption
@@ -189,12 +189,15 @@ constants or model labels as verified provider capabilities.
 | H | Model/provider comparison, malicious-data corpus, privacy terms and latency; PRD sections 4, 6 and 7 | Results and provider terms recorded; all PRD speed targets measured on staff hardware |
 | I | Sidecar, bundled/checksummed models, warmup and signed installer; DEP-1–2 | Clean Windows PC installs and starts offline, ready within 90 seconds |
 
-Phase A is in progress. A1 has a workspace lockfile, shared check command,
-pre-commit hook and passing hosted backend CI. A2 adds validated TOML/environment
-settings and content-free JSON diagnostic logging, with 71 backend unit tests
-passing locally across the two services. A2 still needs hosted CI. This is not
-evidence that Phase A's full gate has passed. A3 is next, followed by A4–A5;
-A4 will wire settings/logging into real-agent startup.
+Phase A is in progress. A1 tooling and A2 settings/logging have passing hosted
+backend CI. A3 adds the SQLCipher store, native-vault key provider, checksummed
+migrations and retention cleanup, with 101 backend unit tests passing locally.
+Hosted backend CI and the Windows/macOS storage checks pass. Native vault
+authorization still needs manual platform smoke tests before deployment. This is not evidence
+that Phase A's full gate has passed. A4 interfaces, fakes and real-agent startup
+assembly are next, followed by A5. Startup will connect settings, logging and
+storage and schedule recurring retention cleanup; opening the database already
+runs cleanup automatically.
 TypeScript generation/compilation requires coordination with the
 frontend-owned scaffold. Do not start Phase B until Phase A's gate passes.
 
