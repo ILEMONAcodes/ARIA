@@ -8,6 +8,7 @@ raw audio to storage. External source text belongs in ModelRequest.data_blocks.
 
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
 from dataclasses import dataclass
 from datetime import datetime
 from typing import Protocol
@@ -26,19 +27,29 @@ class Component(Protocol):
 
 
 class AudioInput(Component, Protocol):
+    async def resume(self) -> None: ...
+
+    async def pause(self) -> None: ...
+
     async def read(self) -> bytes | None: ...
 
 
 class VoiceActivityDetector(Component, Protocol):
+    def reset(self) -> None: ...
+
     def is_speech(self, audio: bytes) -> bool: ...
 
 
 class WakeWordDetector(Component, Protocol):
+    def reset(self) -> None: ...
+
     def detected(self, audio: bytes) -> bool: ...
 
 
 class SpeechToText(Component, Protocol):
     async def transcribe(self, audio: bytes) -> str: ...
+
+    def stream(self, audio: bytes) -> AsyncIterator[str]: ...
 
 
 class SpeakerIdentifier(Component, Protocol):

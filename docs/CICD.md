@@ -17,6 +17,10 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - `contract` installs pinned pnpm tools from `scripts/contract/pnpm-lock.yaml` on Node 24, checks generator failure paths and artifact freshness, and strictly compiles all fixture messages plus frontend consumer examples. It runs independently of the unfinished desktop app.
 - The Python `check` job also runs the separate live localhost mock handoff after its network-blocked unit tests. This integration process uses only its own mock server and fictional session credentials.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
+- Phase B's stub-engine voice/controller/transport tests also run in the platform
+  matrix. `voice-windows` installs the opt-in locked speech dependency group and
+  checks native imports only; it downloads no models and opens no audio device.
+  WER, wake false accepts and real Windows audio/latency remain manual gates.
 
 Install the local hook with `uv run --locked --all-packages --all-extras pre-commit install`.
 The hook checks the complete backend, including tests, even for documentation

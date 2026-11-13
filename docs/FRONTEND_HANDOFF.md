@@ -7,8 +7,8 @@ opening occur in the mock.
 
 The Phase A foundation gate passed hosted backend/contract CI, including strict
 type compilation, a live localhost policy replay, and Windows/macOS mock tests.
-The implementation is merged into main; the actual app/voice loop and installer
-are not complete.
+The implementation is merged into main. Phase B's real echo service is described
+below; the desktop app, real speech gates and installer remain unfinished.
 
 ## Set up the development tools
 
@@ -138,12 +138,14 @@ Run the full mock tests without real network services:
 uv run --locked --all-packages --all-extras python -m pytest -c services/agent/pyproject.toml services/agent/tests/unit/test_mock_agent.py
 ```
 
-All four fixtures are replayed through the actual mock ASGI/WebSocket handler
+The four Phase A fixtures are replayed through the actual mock ASGI/WebSocket handler
 using an in-process test client. These checks prove the handoff and event flow,
 not the real policy, email, outbox or cloud implementations. The cited sample
 file paths are fixture data; the mock does not create or open those files.
-The real foundation CLI from A4 still does not serve the desktop API or voice
-loop. Those runtime adapters follow in their planned phases.
+The real foundation CLI from A4 remains unchanged. Phase B adds a separate
+`python -m agent.voice` echo service and `voice_echo` mock scenario using the
+same v1 contract. See [VOICE_LOOP.md](VOICE_LOOP.md) for models, exact origins,
+PTT/Stop controls, captions, microphone status and pending frontend checks.
 
 For a separate live loopback integration check, run
 `uv run --locked --all-packages --all-extras python scripts/smoke_mock.py`.

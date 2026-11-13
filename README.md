@@ -141,8 +141,9 @@ cancels cleanup, closes prepared adapters in reverse order, then closes storage.
 Failure during startup also releases resources already acquired; diagnostics
 omit exception text and configuration values.
 
-This CLI checks foundations only. Voice capture, model work and request serving
-are not enabled yet. The frontend can continue using the scenario mock:
+This CLI checks foundations only. The separate Phase B voice CLI is documented
+in [the voice pipeline guide](docs/VOICE_LOOP.md). It needs installed local
+speech models and currently supports spoken echo only. The frontend can also use the scenario mock:
 `python -m agent.mock --scenario policy_question`.
 
 `agent.interfaces` defines the dependency boundaries and internal request/value

@@ -98,7 +98,7 @@ services/agent/
 │   │   ├── __main__.py              [existing] mock CLI
 │   │   ├── server.py                [existing] replay and validation
 │   │   └── scenarios.py             [existing] typed fixture and response validation
-│   ├── api/                         [planned B] real-agent localhost transport and voice events
+│   ├── api/                         [planned C+] task/profile REST endpoints
 │   ├── store/                       [existing] encrypted persistence boundary
 │   │   ├── database.py              SQLCipher connections and transactions
 │   │   ├── local.py                 lifecycle adapter; open/purge/close
@@ -106,10 +106,8 @@ services/agent/
 │   │   ├── repositories.py          persistence operations
 │   │   └── retention.py             30-day transcripts; 90-day activity
 │   ├── security/keys.py             [existing] native vault and key-provider interface
-│   ├── audio/                       [planned B] capture, VAD, wake word, buffers
-│   ├── stt/                         [planned B] faster-whisper adapter
-│   ├── tts/                         [planned B] Piper adapter and interruption
-│   ├── voice/                       [planned B] voice-loop orchestration/PTT
+│   ├── audio/                       [existing B] buffers, capture, local speech adapters, pipeline
+│   ├── voice/                       [existing B] authenticated echo transport and CLI
 │   ├── planner/                     [planned C] keyword path and plan validation
 │   ├── llm/                         [planned C] gateway adapter and fake adapter
 │   ├── router/
@@ -194,13 +192,9 @@ constants or model labels as verified provider capabilities.
 | H | Model/provider comparison, malicious-data corpus, privacy terms and latency; PRD sections 4, 6 and 7 | Results and provider terms recorded; all PRD speed targets measured on staff hardware |
 | I | Sidecar, bundled/checksummed models, warmup and signed installer; DEP-1–2 | Clean Windows PC installs and starts offline, ready within 90 seconds |
 
-A1–A4 have passing hosted backend and Windows/macOS checks. A5 is implemented
-with 156 Python unit tests, two generator tests, strict TypeScript compilation,
-all four mock replay tests, and a successful live localhost policy replay.
-A5's hosted CI passed: backend checks, the live localhost policy replay, strict
-TypeScript generation/consumer checks, and Windows/macOS mock/startup tests.
-The backend role's Phase A foundation gate is passed, and the implementation
-has been merged into main. This does not establish deployment readiness.
+Phase A's backend/contract gate passed hosted CI and its implementation merged.
+Phase B adds the offline voice pipeline and local echo transport; model assets,
+hardware speech, accuracy, latency and frontend integration gates remain open.
 
 Generated TypeScript lives alongside the JSON Schema. A separate tool package
 under scripts/contract verifies the types without building the frontend-owned
@@ -208,12 +202,14 @@ app. FRONTEND_HANDOFF.md documents setup, auth, imports and response examples.
 The mock requires the documented session token and stops on decline/cancel;
 it still never runs tools, reads real files or contacts a model/mail provider.
 
-The real CLI remains foundation-only; real voice and request serving are
-planned B integration work (VOX-1–4/SYSX-1), followed by planner/gateway work in C.
+The original CLI remains foundation-only. `python -m agent.voice` runs the
+Phase B echo integration (VOX-1–4/SYSX-1); see VOICE_LOOP.md for its actual file
+map, startup, models, privacy boundaries and pending checks. Planner/gateway
+work follows in C after the B gate passes.
 No requirement IDs move phases. The role's Phase A gate requires the mock and
 compiled types, not a finished desktop UI or real voice service. Native vault
 authorization and Windows installation still need manual deployment smoke tests.
-Phase B can now begin with the offline voice loop and its real transport.
+Do not mark B complete from stub-engine tests alone.
 
 ## Contract and test workflow
 

@@ -58,6 +58,18 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 - `test_wer_function_matches_known_pairs`
 - `test_stt_runs_with_sockets_blocked` (VOX-2)
 
+Phase B controller tests use deterministic PCM and stub engines with sockets
+blocked. `test_voice_pipeline.py` covers offline PTT, wake pre-roll, silence,
+barge-in stop, cancellation, sanitized errors and audio cleanup.
+`test_voice_native.py` verifies native adapter arguments, reblocking, local-file
+guards, worker execution, microphone overflow/stale callback rejection and Piper
+chunk interruption without real models/devices. It does not establish speech
+accuracy or vocabulary preference. `test_voice_server.py` checks authenticated
+health/WS access, origin restrictions, one mic owner and disconnect/startup
+cleanup. Known-pair and weighted-corpus WER checks are in `test_voice_metrics.py`.
+Real speech tests named above remain pending models/consented recordings.
+See VOICE_LOOP.md for the separate `scripts/bench_voice.py` evaluation and gate.
+
 **Speaker ID**
 - `test_embedding_has_expected_shape_and_is_deterministic`
 - `test_cosine_match_above_threshold_returns_profile`

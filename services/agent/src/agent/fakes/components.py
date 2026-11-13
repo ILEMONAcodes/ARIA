@@ -2,6 +2,8 @@
 
 from __future__ import annotations
 
+from collections.abc import AsyncIterator
+
 from agent.contracts.events import SpeakerInfo
 from agent.contracts.plan import Plan
 from agent.interfaces.models import ModelRequest, ModelResponse
@@ -31,6 +33,14 @@ class FakeAudioInput(FakeComponent):
         super().__init__()
         self._frames = frames
         self._index = 0
+        self.capturing = False
+
+    async def resume(self) -> None:
+        self.require_active()
+        self.capturing = True
+
+    async def pause(self) -> None:
+        self.capturing = False
 
     async def start(self) -> None:
         await super().start()
@@ -46,6 +56,9 @@ class FakeAudioInput(FakeComponent):
 
 
 class FakeVAD(FakeComponent):
+    def reset(self) -> None:
+        pass
+
     def __init__(self, speech: bool = False) -> None:
         super().__init__()
         self.speech = speech
@@ -56,6 +69,9 @@ class FakeVAD(FakeComponent):
 
 
 class FakeWakeWord(FakeComponent):
+    def reset(self) -> None:
+        pass
+
     def __init__(self, match: bool = False) -> None:
         super().__init__()
         self.match = match
@@ -73,6 +89,9 @@ class FakeSpeechToText(FakeComponent):
     async def transcribe(self, audio: bytes) -> str:
         self.require_active()
         return self.text
+
+    async def stream(self, audio: bytes) -> AsyncIterator[str]:
+        yield await self.transcribe(audio)
 
 
 class FakeSpeakerIdentifier(FakeComponent):
