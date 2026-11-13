@@ -132,7 +132,32 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 
 **Store and activity log**
 - `test_database_file_is_not_readable_as_plain_text`
+- `test_database_reopens_with_same_key_and_does_not_reapply_migrations`
+- `test_wrong_key_does_not_modify_existing_database`
+- `test_existing_plaintext_database_is_rejected_without_overwrite`
+- `test_existing_database_with_missing_key_is_never_rekeyed`
+- `test_missing_key_does_not_create_a_database`
+- `test_invalid_key_is_rejected_before_database_creation`
+- `test_plain_sqlite_driver_is_rejected_without_touching_keys_or_file`
+- `test_missing_sqlcipher_driver_is_a_safe_failure`
+- `test_failed_transaction_rolls_back_all_writes`
+- `test_foreign_keys_reject_orphaned_history`
+- `test_failed_migration_rolls_back_schema_and_version`
+- `test_migration_checksum_mismatch_is_rejected`
+- `test_newer_database_schema_is_rejected`
+- `test_migrations_must_have_contiguous_versions`
 - `test_retention_purges_transcripts_after_30_days_and_logs_after_90`
+- `test_opening_database_automatically_purges_expired_history`
+- `test_retention_is_atomic_if_second_delete_fails`
+- `test_naive_retention_time_is_rejected_before_deleting`
+- `test_utc_timestamp_preserves_offsets_and_microseconds`
+- `test_history_queries_are_parameterized_and_isolated_by_profile`
+- `test_vault_generates_persists_and_reuses_a_256_bit_key`
+- `test_missing_existing_key_is_never_replaced`
+- `test_corrupt_stored_key_is_not_overwritten_or_exposed`
+- `test_failed_vault_write_prevents_key_use`
+- `test_unpersisted_key_is_rejected`
+- `test_untrusted_or_plaintext_vault_backend_is_rejected`
 - `test_every_tool_run_writes_a_plain_language_log_entry` (SYSX-2)
 - `test_undo_reverts_a_draft`
 
