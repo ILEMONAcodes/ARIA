@@ -101,7 +101,10 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None) -
         messages = [m.model_dump() for m in req.messages]
         for block in req.data_blocks:
             messages.append(
-                {"role": "user", "content": f'<data id="{block.id}" label="{block.label}">\n{block.text}\n</data>'}
+                {
+                    "role": "user",
+                    "content": f'<data id="{block.id}" label="{block.label}">\n{block.text}\n</data>',
+                }
             )
         result = llm.complete(messages, req.params.model_dump())
         cost = (
@@ -110,7 +113,13 @@ def create_app(settings: Settings | None = None, llm: LLMClient | None = None) -
         ) / 1_000_000
         state.spend_usd[token] += cost
         # Log usage only. Never log request or response content.
-        log.info("usage task=%s in=%d out=%d cost=%.6f", req.task, result.input_tokens, result.output_tokens, cost)
+        log.info(
+            "usage task=%s in=%d out=%d cost=%.6f",
+            req.task,
+            result.input_tokens,
+            result.output_tokens,
+            cost,
+        )
         return CompleteResponse(
             text=result.text,
             usage=Usage(input_tokens=result.input_tokens, output_tokens=result.output_tokens),

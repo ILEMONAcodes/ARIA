@@ -14,6 +14,8 @@ Add one line here whenever we make a choice or something surprises us. Move requ
 8. **Keep Whisper for speech-to-text** until a test shows Gemma 4 audio input does better on Nigerian-accented English.
 9. **RAG for policies, circulars and summaries, with cited answers.**
 10. **Use the existing `ILEMONAcodes/ARIA` GitHub repository.** Initialize the supplied project pack on `main` and connect it as `origin`; do not create a second repository.
+11. **Document the backend file architecture before expanding the skeleton.** `docs/ARCHITECTURE.md` separates existing starter files from planned phase A–I modules, defines runtime/security boundaries and lists phase gates. Planned modules are created only when their phase is reached; the UI contract remains unchanged.
+12. **Phase A uses a uv workspace and one committed lockfile.** Keep the agent and gateway as separate packages, share a Python 3.11 development environment, and run the same lint, format, type, offline unit-test and contract checks locally, in pre-commit and in backend CI. Later deployment workflows will adopt the lockfile when their packaging is implemented.
 
 ## To decide after testing
 

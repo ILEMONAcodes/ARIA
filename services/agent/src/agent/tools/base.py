@@ -3,6 +3,7 @@
 A tool declares its schemas, risk, network need and timeout, and must
 provide a dry_run() that describes what it would do without doing it.
 """
+
 from __future__ import annotations
 
 from abc import ABC, abstractmethod

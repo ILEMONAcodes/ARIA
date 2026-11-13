@@ -4,6 +4,7 @@ This module is the source of truth for docs/API_CONTRACT.md.
 Adding a field is fine. Renaming or removing one needs a version bump
 and a note in docs/DECISIONS.md.
 """
+
 from __future__ import annotations
 
 from typing import Annotated, Literal

@@ -7,7 +7,10 @@ from gateway.main import create_app
 TOKEN = "test-token"
 BODY = {
     "task": "answer",
-    "messages": [{"role": "system", "content": "Answer from passages."}, {"role": "user", "content": "Leave?"}],
+    "messages": [
+        {"role": "system", "content": "Answer from passages."},
+        {"role": "user", "content": "Leave?"},
+    ],
     "data_blocks": [{"id": "d1", "label": "passage", "text": "Five days carry over."}],
 }
 
@@ -57,7 +60,9 @@ def test_rate_limit_returns_429():
 
 
 def test_spending_cap_blocks_requests_when_exceeded():
-    c = client(daily_cap_usd_per_user=0.0000001, input_price_per_m=1000.0, output_price_per_m=1000.0)
+    c = client(
+        daily_cap_usd_per_user=0.0000001, input_price_per_m=1000.0, output_price_per_m=1000.0
+    )
     assert c.post("/v1/complete", json=BODY, headers=auth()).status_code == 200
     r = c.post("/v1/complete", json=BODY, headers=auth())
     assert r.status_code == 429

@@ -8,6 +8,7 @@ What is in the pack:
 
 - `docs/PRD.md` product requirements
 - `docs/TECH_SPEC.md` technical specification
+- `docs/ARCHITECTURE.md` existing and planned files, backend module boundaries and phase order
 - `docs/ROADMAP.md` phases, gates and the parallel work map
 - `docs/API_CONTRACT.md` events and REST between UI and agent
 - `docs/PROMPTS.md` prompt templates for the model
@@ -21,12 +22,25 @@ What is in the pack:
 
 ## Quick start
 
-```
-git init && git add . && git commit -m "Initial pack"
-cd services/agent && pip install -e ".[dev]" && pytest tests/unit
-cd ../gateway && pip install -e ".[dev]" && pytest tests/unit
-cd ../.. && python scripts/gen_contract.py
-cd services/agent && python -m agent.mock --scenario policy_question
+Install Python 3.11 and uv 0.13.7, then run from the repository root:
+
+```sh
+uv sync --locked --all-packages --all-extras
+uv run --locked --all-packages --all-extras pre-commit install
+uv run --locked --all-packages --all-extras python scripts/check_backend.py
+uv run --locked --all-packages --all-extras python -m agent.mock --scenario policy_question
 ```
 
-Then start a coding agent in the repo folder. It will ask which role you are working as.
+The mock agent binds to `127.0.0.1:8765`. The shared check command runs lint,
+format checks, strict types, both services' unit tests with network sockets
+blocked, and a read-only contract schema check. Pre-commit and backend CI use
+that same command. Activate `.venv` if you want `uv` and the other installed
+tools on your shell's PATH.
+
+After an intentional contract update, regenerate the schema with
+`uv run --locked --all-packages --all-extras python scripts/gen_contract.py`.
+To update dependencies deliberately, use `uv lock` and review `uv.lock`;
+normal installs use `--locked` so dependency declarations cannot silently drift.
+
+Start with the phase order and file map in `docs/ARCHITECTURE.md`. Phase A is
+still in progress. A coding agent will ask which role you are working as.

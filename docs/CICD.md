@@ -7,12 +7,18 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 
 ## Workflows in `.github/workflows`
 
-**`ci-backend.yml`** (on pull request, ubuntu-latest)
-- Set up Python 3.11 with dependency cache
-- ruff (lint and format check) and mypy (required)
-- pytest unit tests for `services/agent` and `services/gateway` with network sockets blocked (required)
-- Coverage report, fail below the agreed threshold
-- Check that generated contract files are up to date (required)
+**`ci-backend.yml`** (on pull request and pushes to `main`, ubuntu-latest)
+- Set up Python 3.11 and uv 0.13.7 with dependency cache
+- Install both workspace members and development tools from `uv.lock` using `uv sync --locked --all-packages --all-extras`
+- Run `scripts/check_backend.py`, also used locally and by pre-commit: ruff lint and format checks, mypy per service, pytest unit tests per service with network sockets blocked, and a read-only schema freshness check
+- The required job is `ci-backend / check`; update branch protection if it required the former matrix/contract jobs
+- Coverage reporting and a minimum threshold remain to be agreed and implemented
+
+Install the local hook with `uv run --locked --all-packages --all-extras pre-commit install`.
+The hook checks the complete backend, including tests, even for documentation
+commits. Run it manually with `uv run --locked --all-packages --all-extras pre-commit run --all-files`.
+Other workflow files below remain scaffolding and still use their original pip
+installation commands until their phase is implemented.
 
 **`ci-frontend.yml`** (on pull request, ubuntu-latest)
 - pnpm install with cache

@@ -21,7 +21,9 @@ class Settings:
 
     @classmethod
     def from_env(cls) -> Settings:
-        tokens = {t.strip() for t in os.environ.get("GATEWAY_INSTALL_TOKENS", "").split(",") if t.strip()}
+        tokens = {
+            t.strip() for t in os.environ.get("GATEWAY_INSTALL_TOKENS", "").split(",") if t.strip()
+        }
         return cls(
             install_tokens=tokens,
             model=os.environ.get("GATEWAY_MODEL", "gemma-4-26b-a4b"),
