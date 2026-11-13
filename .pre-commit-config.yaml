@@ -1,0 +1,9 @@
+repos:
+  - repo: local
+    hooks:
+      - id: backend-checks
+        name: Backend lint, format, types, tests and contract
+        entry: uv run --locked --all-packages --all-extras python scripts/check_backend.py
+        language: system
+        pass_filenames: false
+        always_run: true

@@ -5,6 +5,7 @@ A scenario is JSON: {"name": "...", "steps": [...]}. Each step is one of:
   {"wait_for": "confirm.response"}               the mock waits for this UI event type
 Run: python -m agent.mock --scenario policy_question
 """
+
 from __future__ import annotations
 
 import asyncio

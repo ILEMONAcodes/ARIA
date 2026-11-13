@@ -1,4 +1,3 @@
-
 import pytest
 from fastapi.testclient import TestClient
 
@@ -16,8 +15,24 @@ def test_mock_agent_replays_events_in_order():
     scenario = {
         "name": "t",
         "steps": [
-            {"send": {"v": 1, "type": "status", "state": "idle", "online": True, "profile": "hosted"}},
-            {"send": {"v": 1, "type": "reply.text", "task_id": "t1", "text": "hello", "spoken": True}},
+            {
+                "send": {
+                    "v": 1,
+                    "type": "status",
+                    "state": "idle",
+                    "online": True,
+                    "profile": "hosted",
+                }
+            },
+            {
+                "send": {
+                    "v": 1,
+                    "type": "reply.text",
+                    "task_id": "t1",
+                    "text": "hello",
+                    "spoken": True,
+                }
+            },
         ],
     }
     client = TestClient(create_app(scenario))
@@ -31,7 +46,15 @@ def test_mock_agent_waits_for_ui_event():
         "name": "t",
         "steps": [
             {"wait_for": "ptt.start"},
-            {"send": {"v": 1, "type": "reply.text", "task_id": "t1", "text": "ok", "spoken": False}},
+            {
+                "send": {
+                    "v": 1,
+                    "type": "reply.text",
+                    "task_id": "t1",
+                    "text": "ok",
+                    "spoken": False,
+                }
+            },
         ],
     }
     client = TestClient(create_app(scenario))

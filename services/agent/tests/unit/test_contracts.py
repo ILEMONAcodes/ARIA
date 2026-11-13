@@ -6,7 +6,11 @@ from agent.contracts.plan import Plan
 
 
 def test_valid_plan_parses():
-    plan = Plan(intent="open_app", confidence=0.9, steps=[{"tool": "apps.launch", "args": {"name": "excel"}}])
+    plan = Plan(
+        intent="open_app",
+        confidence=0.9,
+        steps=[{"tool": "apps.launch", "args": {"name": "excel"}}],
+    )
     assert plan.risk == "none"
 
 
@@ -33,7 +37,9 @@ def test_unknown_event_type_is_rejected():
 
 
 def test_confirm_request_defaults_to_needs_click():
-    ev = ConfirmRequest(confirm_id="c", task_id="t", risk="external_send", dry_run_text="Send email")
+    ev = ConfirmRequest(
+        confirm_id="c", task_id="t", risk="external_send", dry_run_text="Send email"
+    )
     assert ev.needs_click is True
 
 

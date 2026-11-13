@@ -1,4 +1,5 @@
 """Pure routing decision. See docs/TECH_SPEC.md section 6. No I/O here."""
+
 from __future__ import annotations
 
 from dataclasses import dataclass
