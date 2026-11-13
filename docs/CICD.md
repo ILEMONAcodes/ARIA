@@ -12,7 +12,7 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - Install both workspace members and development tools from `uv.lock` using `uv sync --locked --all-packages --all-extras`
 - Run `scripts/check_backend.py`, also used locally and by pre-commit: ruff lint and format checks, mypy per service, pytest unit tests per service with network sockets blocked, and a read-only schema freshness check
 - The required job is `ci-backend / check`; update branch protection if it required the former matrix/contract jobs
-- `store-platform` additionally installs the locked dependencies on Windows and macOS and runs storage/key-provider tests against real SQLCipher with fake vaults. Native OS vault authorization is reserved for manual platform smoke tests; unit tests never read real credentials.
+- `store-platform` additionally installs the locked dependencies on Windows and macOS and runs storage, key-provider, fake-adapter and startup lifecycle tests against real SQLCipher with fake vaults. Native OS vault authorization is reserved for manual platform smoke tests; unit tests never read real credentials.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
 
 Install the local hook with `uv run --locked --all-packages --all-extras pre-commit install`.

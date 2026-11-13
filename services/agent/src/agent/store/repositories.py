@@ -2,19 +2,14 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from uuid import uuid4
 
+from agent.interfaces.models import HistoryEntry
 from agent.store.database import Database
 from agent.store.retention import timestamp_us
 
-
-@dataclass(frozen=True)
-class HistoryEntry:
-    id: str
-    text: str
-    created_at: datetime
+__all__ = ["HistoryEntry", "HistoryRepository"]
 
 
 class HistoryRepository:

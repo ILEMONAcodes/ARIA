@@ -76,7 +76,7 @@ accepts fixed event names from `agent.logging_config.EVENTS`, UUID task IDs and
 finite nonnegative `duration_ms`. Messages, arguments, exception text and other
 extra fields are omitted so transcripts and credentials cannot be copied into
 these diagnostics. Non-UUID IDs are omitted from logs; this does not change
-the API contract. Real-agent startup will connect these modules in A4.
+the API contract. Foundation startup now connects these modules through `agent.bootstrap`.
 
 ## Encrypted local storage
 
@@ -92,7 +92,7 @@ There is no plaintext SQLite fallback. Opening a database checks the engine,
 reads the schema with the key, applies migrations atomically, and purges
 transcripts older than 30 days and activity entries older than 90 days. Records
 at the exact cutoff remain. Timestamps are timezone-aware UTC microseconds.
-Recurring cleanup for an agent that stays open will be wired into A4.
+Foundation startup repeats cleanup daily while the agent remains open.
 
 The Phase A schema contains profiles, settings, transcripts and activity history.
 Outbox, calendar and search tables will arrive with their feature migrations.
@@ -106,3 +106,37 @@ its association. Do not move a real database before a recovery workflow exists.
 Retention removes records from the live database, not external backups.
 Native vault authorization and Windows installation still require manual
 platform smoke testing before deployment.
+
+## Foundation startup and fake adapters
+
+Run an offline lifecycle check without a microphone, database file, vault access
+or cloud connection:
+
+```sh
+uv run --locked --all-packages --all-extras python -m agent --fake --check
+```
+
+To check the real encrypted store, use your local settings file instead:
+
+```sh
+uv run --locked --all-packages --all-extras python -m agent --settings config/agent.toml --check
+```
+
+The real check initializes the configured database using its native OS vault
+key, applies migrations and purges expired history. With `--check` omitted, the
+core stays running and repeats retention daily until interrupted. Shutdown
+cancels cleanup, closes prepared adapters in reverse order, then closes storage.
+Failure during startup also releases resources already acquired; diagnostics
+omit exception text and configuration values.
+
+This CLI checks foundations only. Voice capture, model work and request serving
+are not enabled yet. The frontend can continue using the scenario mock:
+`python -m agent.mock --scenario policy_question`.
+
+`agent.interfaces` defines the dependency boundaries and internal request/value
+types. `agent.fakes` provides deterministic audio, VAD, wake-word, transcription,
+identity, speech, planner, model, network, clock, key, storage and tool doubles.
+They use fictional fixtures in memory and are explicitly injected in tests;
+production failures never select them automatically. Model source text stays
+in separate data blocks. Real provider prompt rendering and approvals follow
+in phase C.

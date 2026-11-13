@@ -82,12 +82,12 @@ services/agent/
 ├── pyproject.toml                   [existing] package and test configuration
 ├── src/agent/
 │   ├── __init__.py                  [existing]
-│   ├── __main__.py                  [planned A] real agent entry point
-│   ├── bootstrap.py                 [planned A] dependency assembly/lifecycle
+│   ├── __main__.py                  [existing] foundation checks and lifecycle CLI
+│   ├── bootstrap.py                 [existing] dependency assembly/lifecycle
 │   ├── config.py                    [existing] validated file/env settings
 │   ├── logging_config.py            [existing] structured JSON logs
-│   ├── interfaces/                  [planned A] protocols and shared value types
-│   ├── fakes/                       [planned A] deterministic interface doubles
+│   ├── interfaces/                  [existing] protocols and shared value types
+│   ├── fakes/                       [existing] deterministic in-memory test adapters
 │   ├── contracts/                   [existing] public Pydantic contracts
 │   │   ├── events.py                [existing] UI and agent events
 │   │   └── plan.py                  [existing] plan and risk schema
@@ -97,6 +97,7 @@ services/agent/
 │   ├── api/                         [planned A] authenticated localhost transport
 │   ├── store/                       [existing] encrypted persistence boundary
 │   │   ├── database.py              SQLCipher connections and transactions
+│   │   ├── local.py                 lifecycle adapter; open/purge/close
 │   │   ├── migrations/              ordered schema migrations
 │   │   ├── repositories.py          persistence operations
 │   │   └── retention.py             30-day transcripts; 90-day activity
@@ -193,11 +194,14 @@ Phase A is in progress. A1 tooling and A2 settings/logging have passing hosted
 backend CI. A3 adds the SQLCipher store, native-vault key provider, checksummed
 migrations and retention cleanup, with 101 backend unit tests passing locally.
 Hosted backend CI and the Windows/macOS storage checks pass. Native vault
-authorization still needs manual platform smoke tests before deployment. This is not evidence
-that Phase A's full gate has passed. A4 interfaces, fakes and real-agent startup
-assembly are next, followed by A5. Startup will connect settings, logging and
-storage and schedule recurring retention cleanup; opening the database already
-runs cleanup automatically.
+authorization still needs manual platform smoke tests before deployment. A4
+adds interfaces, deterministic fakes and startup assembly, with 124 backend
+unit tests passing locally. It connects settings, logging and encrypted storage
+and schedules daily retention with safe shutdown. A4's platform CI is pending.
+The CLI is foundation-only: it does not enable a voice loop or serve requests.
+Real adapters arrive in B/C/G; fake adapters are used only when explicitly
+injected or selected by `--fake`, which uses in-memory storage. A5 contract and
+mock handoff checks are next. Phase A's full gate has not passed.
 TypeScript generation/compilation requires coordination with the
 frontend-owned scaffold. Do not start Phase B until Phase A's gate passes.
 
