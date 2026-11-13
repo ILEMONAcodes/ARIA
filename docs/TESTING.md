@@ -110,6 +110,16 @@ below remain later Phase C work; see PLAN_VALIDATION.md.
 - `test_model_switch_26b_to_31b_by_config`
 
 **Keyword path and router**
+
+`test_keywords.py` covers C2's internal offline matcher with registered stub
+tools: exact/alias/verb-typo commands, local-date rollover, ambiguity, missing
+information, cancellation/no-match signals, policy preservation and unavailable
+tools. Unknown-command handoff and cancellation are result signals only until
+the dispatcher exists. `opn exel` requires an explicitly configured `exel` alias;
+unconfigured app names are not guessed. The one-second test is a CPU regression
+check, not the Windows end-to-end acceptance measurement. Router/cloud/execution
+checks below remain later Phase C work.
+
 - `test_open_excel_maps_to_apps_launch`
 - `test_fuzzy_match_handles_misspelling_opn_exel`
 - `test_calendar_today_maps_to_cal_list`

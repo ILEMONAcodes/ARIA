@@ -73,7 +73,7 @@ mutation isolation and safe errors. Tools used there raise if any `run` or
 policy capture and schema export. All run with network sockets blocked.
 
 There is no UI-visible behavior change or transport wiring in C1, so no new
-scenario or contract fields are needed. Next is the local keyword planner,
-followed by model/gateway integration, retry-once/rephrase handling, approval
+scenario or contract fields are needed. C2 adds the local keyword planner
+(KEYWORD_PLANNER.md), followed by model/gateway integration, retry-once/rephrase handling, approval
 and execution. The voice-model and real speech tasks remain deferred as recorded
 in ROADMAP.md and decision 26.
