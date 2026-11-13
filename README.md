@@ -11,6 +11,7 @@ What is in the pack:
 - `docs/ARCHITECTURE.md` existing and planned files, backend module boundaries and phase order
 - `docs/ROADMAP.md` phases, gates and the parallel work map
 - `docs/API_CONTRACT.md` events and REST between UI and agent
+- `docs/FRONTEND_HANDOFF.md` generated types, mock authentication and replay instructions
 - `docs/PROMPTS.md` prompt templates for the model
 - `docs/TESTING.md` named unit tests, e2e scenarios and evaluations
 - `docs/CICD.md` GitHub workflows
@@ -22,28 +23,38 @@ What is in the pack:
 
 ## Quick start
 
-Install Python 3.11 and uv 0.13.7, then run from the repository root:
+Install Python 3.11, uv 0.13.7, Node 24 and Corepack, then run from the repository root:
 
 ```sh
 uv sync --locked --all-packages --all-extras
+cd scripts/contract
+corepack pnpm install --frozen-lockfile
+cd ../..
 uv run --locked --all-packages --all-extras pre-commit install
 uv run --locked --all-packages --all-extras python scripts/check_backend.py
+node scripts/contract/check.mjs
 uv run --locked --all-packages --all-extras python -m agent.mock --scenario policy_question
 ```
 
-The mock agent binds to `127.0.0.1:8765`. The shared check command runs lint,
+The mock agent binds to `127.0.0.1:8765` and prints a token-bearing WebSocket
+URL; use that full URL. Its health endpoint requires the same token as a Bearer
+header. See `docs/FRONTEND_HANDOFF.md` for example responses and replay rules.
+The shared Python check command runs lint,
 format checks, strict types, both services' unit tests with network sockets
 blocked, and a read-only contract schema check. Pre-commit and backend CI use
-that same command. Activate `.venv` if you want `uv` and the other installed
+that same command. A separate pre-commit/CI check verifies generated TypeScript
+freshness and strict consumer compilation. Activate `.venv` if you want `uv` and the other installed
 tools on your shell's PATH.
 
 After an intentional contract update, regenerate the schema with
 `uv run --locked --all-packages --all-extras python scripts/gen_contract.py`.
+Then run `node scripts/contract/generate.mjs` and commit both generated formats.
 To update dependencies deliberately, use `uv lock` and review `uv.lock`;
 normal installs use `--locked` so dependency declarations cannot silently drift.
 
-Start with the phase order and file map in `docs/ARCHITECTURE.md`. Phase A is
-still in progress. A coding agent will ask which role you are working as.
+Start with the phase order and file map in `docs/ARCHITECTURE.md`. A5 handoff
+checks are implemented and awaiting hosted CI. A coding agent will ask which
+role you are working as. The desktop UI is still a frontend F0 task.
 
 ## Agent settings and diagnostic logs
 
@@ -76,7 +87,7 @@ accepts fixed event names from `agent.logging_config.EVENTS`, UUID task IDs and
 finite nonnegative `duration_ms`. Messages, arguments, exception text and other
 extra fields are omitted so transcripts and credentials cannot be copied into
 these diagnostics. Non-UUID IDs are omitted from logs; this does not change
-the API contract. Real-agent startup will connect these modules in A4.
+the API contract. Foundation startup now connects these modules through `agent.bootstrap`.
 
 ## Encrypted local storage
 
@@ -92,7 +103,7 @@ There is no plaintext SQLite fallback. Opening a database checks the engine,
 reads the schema with the key, applies migrations atomically, and purges
 transcripts older than 30 days and activity entries older than 90 days. Records
 at the exact cutoff remain. Timestamps are timezone-aware UTC microseconds.
-Recurring cleanup for an agent that stays open will be wired into A4.
+Foundation startup repeats cleanup daily while the agent remains open.
 
 The Phase A schema contains profiles, settings, transcripts and activity history.
 Outbox, calendar and search tables will arrive with their feature migrations.
@@ -106,3 +117,37 @@ its association. Do not move a real database before a recovery workflow exists.
 Retention removes records from the live database, not external backups.
 Native vault authorization and Windows installation still require manual
 platform smoke testing before deployment.
+
+## Foundation startup and fake adapters
+
+Run an offline lifecycle check without a microphone, database file, vault access
+or cloud connection:
+
+```sh
+uv run --locked --all-packages --all-extras python -m agent --fake --check
+```
+
+To check the real encrypted store, use your local settings file instead:
+
+```sh
+uv run --locked --all-packages --all-extras python -m agent --settings config/agent.toml --check
+```
+
+The real check initializes the configured database using its native OS vault
+key, applies migrations and purges expired history. With `--check` omitted, the
+core stays running and repeats retention daily until interrupted. Shutdown
+cancels cleanup, closes prepared adapters in reverse order, then closes storage.
+Failure during startup also releases resources already acquired; diagnostics
+omit exception text and configuration values.
+
+This CLI checks foundations only. Voice capture, model work and request serving
+are not enabled yet. The frontend can continue using the scenario mock:
+`python -m agent.mock --scenario policy_question`.
+
+`agent.interfaces` defines the dependency boundaries and internal request/value
+types. `agent.fakes` provides deterministic audio, VAD, wake-word, transcription,
+identity, speech, planner, model, network, clock, key, storage and tool doubles.
+They use fictional fixtures in memory and are explicitly injected in tests;
+production failures never select them automatically. Model source text stays
+in separate data blocks. Real provider prompt rendering and approvals follow
+in phase C.

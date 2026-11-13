@@ -7,3 +7,9 @@ repos:
         language: system
         pass_filenames: false
         always_run: true
+      - id: contract-types
+        name: Generated TypeScript contract and consumer checks
+        entry: node scripts/contract/check.mjs
+        language: system
+        pass_filenames: false
+        files: ^(services/agent/src/agent/(contracts|mock)/|scripts/(gen_contract\.py|contract/)|apps/desktop/src/contract/|tests/e2e/scenarios/)
