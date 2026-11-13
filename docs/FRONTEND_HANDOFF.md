@@ -5,6 +5,11 @@ Tauri app are not scaffolded by this work. The API event schemas remain version
 1 and are unchanged. No real tools, model calls, audio capture, mail or file
 opening occur in the mock.
 
+The Phase A foundation gate passed hosted backend/contract CI, including strict
+type compilation, a live localhost policy replay, and Windows/macOS mock tests.
+The changes are in draft PRs for review; the actual app/voice loop and installer
+are not complete.
+
 ## Set up the development tools
 
 Use Python 3.11, uv 0.13.7, Node 24 and pnpm 9.15.9 (via Corepack). From the
@@ -92,6 +97,8 @@ Missing/wrong tokens are rejected. If a development harness needs a known token,
 set `ARIA_MOCK_TOKEN` to a URL-safe value of at least 16 characters in its process
 environment. This is a mock session token, never the gateway installation token.
 Request logging is suppressed so URLs do not copy the token into access logs.
+The mock exposes `/ws` and `/api/health` only; it does not implement the other
+REST endpoints listed for the eventual real agent.
 
 For browser REST fetches, pass `--allow-origin` with the exact origin printed
 by your frontend development server. For example, if it is

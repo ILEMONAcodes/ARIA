@@ -39,4 +39,4 @@ Add one line here whenever we make a choice or something surprises us. Move requ
 
 ## Learned
 
-(add lines as we go)
+- **Phase A foundation gate verified on the A5 handoff branch.** Hosted CI passed the Python checks, strict generated TypeScript/consumer checks, a real localhost policy replay and Windows/macOS mock/startup checks. This permits phase B work under the role guide; draft review, the frontend app, real voice service and deployment smoke tests remain separate work.
