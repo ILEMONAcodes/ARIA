@@ -22,6 +22,28 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 - `test_reconfiguration_does_not_duplicate_logs_and_respects_level`
 - `test_invalid_log_level_is_rejected`
 
+**Phase A interfaces and startup** (DEP-1/DEP-4 foundations)
+- `test_application_network_sockets_remain_blocked` (IPv4 and IPv6; Windows asyncio's internal numeric-loopback pair is the only TCP IPC exception)
+- `test_fake_adapters_run_deterministically_with_network_blocked`
+- `test_fake_audio_requires_start_and_replays_frames_on_restart`
+- `test_fake_model_keeps_source_data_separate_and_never_interprets_it` (fixed-response fixture, not a real model injection evaluation)
+- `test_fake_plan_and_speaker_results_are_copied_between_calls`
+- `test_fake_history_has_deterministic_ids_and_real_retention_boundaries`
+- `test_fake_keys_do_not_replace_missing_keys_for_existing_files`
+- `test_fake_tool_registers_without_computer_actions`
+- `test_startup_opens_real_encrypted_store_and_closes_it`
+- `test_startup_and_shutdown_prepare_each_adapter_once_without_running_requests`
+- `test_invalid_settings_fail_before_opening_storage_and_do_not_leak_values`
+- `test_partial_adapter_start_is_cleaned_up_in_reverse_order_without_leaking_errors`
+- `test_shutdown_continues_if_an_adapter_close_fails`
+- `test_failed_storage_open_still_closes_partial_store_and_never_starts_audio`
+- `test_recurring_retention_uses_injected_clock_and_stops_before_store_close`
+- `test_retention_failure_is_logged_safely_and_retried_next_interval`
+- `test_cancellation_closes_adapters_storage_and_retention_worker`
+- `test_invalid_retention_schedule_is_rejected_before_store_open`
+- `test_fake_startup_cli_leaves_no_files_and_reports_foundation_scope`
+- `test_cli_returns_failure_without_echoing_bad_configuration`
+
 **Audio and VAD**
 - `test_vad_waits_configured_silence_before_endpoint` (500 to 800 ms setting respected)
 - `test_vad_does_not_cut_off_slow_speaker_with_long_pause`
@@ -181,6 +203,21 @@ Every test name below maps to a requirement. Unit tests run on every pull reques
 - `generated contract types match the schema` (type check step)
 
 ## 8.3 End-to-end tests
+
+**Phase A mock handoff:** `test_every_mock_scenario_completes_with_its_documented_ui_responses`
+replays all four starter fixtures through the ASGI/WebSocket handler in-process.
+Additional mock tests cover token enforcement, invalid fixture shapes/delays,
+wrong response IDs, matching declines, keyboard confirmation, cancellation,
+unsupported versions and malformed/voice-only UI events. All are network-blocked.
+The separate `python scripts/smoke_mock.py` integration check starts its own
+temporary localhost process and verifies the live authenticated policy replay;
+it never contacts a real provider or reads real credentials.
+
+`node scripts/contract/check.mjs` runs generator freshness/failure tests and
+strictly compiles the generated types, every fixture's messages and frontend
+consumer examples. Expected TypeScript errors exercise unsupported versions,
+missing discriminators and missing/voice-only approval input methods.
+These checks establish the mock/type handoff, not the real feature e2e gates.
 
 Backend e2e (pytest): the real agent with fixture audio, a fake gateway and a fake network layer that can go down and come back.
 UI e2e (Playwright): the Vite UI against the mock agent for every scenario, and against the real agent with fixture audio for the smoke scenarios marked (smoke).

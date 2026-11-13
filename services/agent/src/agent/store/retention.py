@@ -2,9 +2,12 @@
 
 from __future__ import annotations
 
-from dataclasses import dataclass
 from datetime import UTC, datetime, timedelta
 from typing import TYPE_CHECKING
+
+from agent.interfaces.models import PurgeResult
+
+__all__ = ["PurgeResult", "purge_expired", "timestamp_us"]
 
 if TYPE_CHECKING:
     from agent.store.database import Database
@@ -15,12 +18,6 @@ def timestamp_us(value: datetime) -> int:
         raise ValueError("A timezone-aware timestamp is required")
     delta = value.astimezone(UTC) - datetime(1970, 1, 1, tzinfo=UTC)
     return (delta.days * 86400 + delta.seconds) * 1_000_000 + delta.microseconds
-
-
-@dataclass(frozen=True)
-class PurgeResult:
-    transcripts: int
-    activity_entries: int
 
 
 def purge_expired(database: Database, *, now: datetime) -> PurgeResult:
