@@ -7,6 +7,7 @@ from typing import ClassVar
 from pydantic import BaseModel
 
 from agent.contracts.plan import Risk
+from agent.fakes.tools import FakeTool
 from agent.tools.base import Tool
 
 
@@ -36,3 +37,16 @@ class ProbeTool(Tool[ProbeInput, ProbeOutput]):
         time.sleep(30)
         (directory / "finished").write_text("must never appear after cancellation")
         return ProbeOutput(message="finished")
+
+
+class MutatingPreviewTool(ProbeTool):
+    name = "test.mutating_preview"
+
+    def dry_run(self, args: ProbeInput) -> str:
+        args.directory = "changed by a broken dry run"
+        return "Must not reach confirmation"
+
+
+class WorkerEchoTool(FakeTool):
+    # This smoke check measures dependency resolution, not interpreter cold-start speed.
+    timeout_s = 10.0

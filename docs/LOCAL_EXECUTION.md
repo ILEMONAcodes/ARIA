@@ -84,9 +84,9 @@ send/delete/write tool is shipped by this work.
 
 Local steps do not probe connectivity. Network-dependent steps recheck it and
 stop honestly when offline; C4 does not pretend to queue mail. Outbox/idempotency
-and irreversible provider operations remain Phase F work. C1 result-reference
-bindings still fail closed until their resolution is implemented for dependent
-multi-step workflows; independent sequential steps work now.
+and irreversible provider operations remain Phase F work. C5 adds validated
+earlier-result bindings for dependent steps; see STEP_RESULTS.md for grammar,
+template checks, typed resolution and confirmation/copy guarantees.
 
 Every tool/dry run has its declared timeout. The production runner uses a fresh
 Python worker process with private stdio, bounded job/result sizes, suppressed

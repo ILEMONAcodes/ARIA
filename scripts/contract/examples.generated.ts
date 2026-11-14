@@ -40,6 +40,75 @@ export const agentExamples = [
   },
   {
     "v": 1,
+    "type": "plan.preview",
+    "task_id": "steps-task",
+    "summary": "Run 2 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "confirm.request",
+    "confirm_id": "steps-confirm-1",
+    "task_id": "steps-task",
+    "risk": "local_write",
+    "dry_run_text": "Produce the fictional document name.",
+    "details": {
+      "recipients": [],
+      "attachments": []
+    },
+    "needs_click": true
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "steps-activity-1",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed test.produce.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "confirm.request",
+    "confirm_id": "steps-confirm-2",
+    "task_id": "steps-task",
+    "risk": "local_write",
+    "dry_run_text": "Use fictional-report.docx.",
+    "details": {
+      "recipients": [],
+      "attachments": []
+    },
+    "needs_click": true
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "steps-activity-2",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed test.consume.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "steps-task",
+    "text": "Used fictional-report.docx.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
     "type": "status",
     "state": "listening",
     "online": true,
@@ -462,6 +531,20 @@ export const agentExamples = [
   }
 ] satisfies WireAgentEvent[];
 export const uiExamples = [
+  {
+    "v": 1,
+    "type": "confirm.response",
+    "confirm_id": "steps-confirm-1",
+    "decision": "yes",
+    "via": "click"
+  },
+  {
+    "v": 1,
+    "type": "confirm.response",
+    "confirm_id": "steps-confirm-2",
+    "decision": "yes",
+    "via": "click"
+  },
   {
     "v": 1,
     "type": "approval.response",

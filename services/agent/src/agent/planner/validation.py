@@ -10,6 +10,7 @@ from typing import Any
 from pydantic import ValidationError
 
 from agent.contracts.plan import Plan
+from agent.planner.references import references, validate_bindings, validate_template
 from agent.tools.base import ToolRegistry
 
 _RANK = {"none": 0, "local_write": 1, "external_send": 2, "destructive": 3}
@@ -43,10 +44,6 @@ def _object(pairs: list[tuple[str, Any]]) -> dict[str, Any]:
 
 
 def _finite(value: Any) -> None:
-    # Result bindings need an executor that resolves and revalidates each step.
-    # Until that exists, never treat a binding as an executable literal argument.
-    if isinstance(value, str) and value.startswith("$step"):
-        raise PlanValidationError()
     if isinstance(value, float) and not math.isfinite(value):
         raise PlanValidationError()
     if isinstance(value, dict):
@@ -65,9 +62,8 @@ def validate_plan(
 ) -> PlanReview:
     """Strictly validate shape, arguments and authoritative registered policy.
 
-    No dry runs, model requests, tool runs, approval or reference interpolation.
-    `$stepN.field` bindings fail closed until the executor can resolve and
-    revalidate them before each step. The public plan schema is unchanged.
+    No dry runs, model requests, tool runs or approval. Bindings are checked
+    structurally here; the executor resolves and fully validates before each step.
     """
     if (
         type(confidence_threshold) not in (int, float)
@@ -83,9 +79,18 @@ def validate_plan(
         plan = Plan.model_validate(raw, strict=True, extra="forbid")
         if not plan.intent.strip() or any(not name.strip() for name in plan.missing):
             raise PlanValidationError()
-        for step in plan.steps:
+        if (
+            any(references(plan.slots))
+            or "$step" in plan.intent
+            or any("$step" in m for m in plan.missing)
+        ):
+            raise PlanValidationError()
+        for position, step in enumerate(plan.steps, start=1):
             spec = registry.spec(step.tool)
-            registry.validate_args(step.tool, step.args)
+            if validate_bindings(step.args, position=position, plan=plan, registry=registry):
+                validate_template(spec.input_model, step.args)
+            else:
+                registry.validate_args(step.tool, step.args)
             if _RANK[plan.risk] < _RANK[spec.risk]:
                 raise PlanValidationError()
             if spec.needs_network and not plan.needs_network:

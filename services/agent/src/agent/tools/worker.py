@@ -28,9 +28,17 @@ def main() -> None:
             contextlib.redirect_stderr(sink),
         ):
             args = tool.input_model.model_validate(values, strict=True, extra="forbid")
+            canonical = json.dumps(args.model_dump(mode="json"), sort_keys=True, allow_nan=False)
+            if canonical != json.dumps(values, sort_keys=True, allow_nan=False):
+                raise ValueError("Worker validation changed normalized arguments")
             value: Any
             if mode == "dry_run":
                 value = tool.dry_run(args)
+                if (
+                    json.dumps(args.model_dump(mode="json"), sort_keys=True, allow_nan=False)
+                    != canonical
+                ):
+                    raise ValueError("Dry run changed arguments")
                 if not isinstance(value, str) or not value.strip() or len(value) > 16000:
                     raise ValueError("Invalid dry run")
             else:
