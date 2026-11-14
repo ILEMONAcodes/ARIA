@@ -66,7 +66,9 @@ The user's priority is to finish these non-model pieces before revisiting deferr
 setup. C5 adds [safe dependent step results](STEP_RESULTS.md), including graph
 validation, typed resolution and confirmation of actual values. Real staff-PC/frontend
 acceptance and durable profile history remain open; this does not mark the voice
-or live-provider gates passed.
+or live-provider gates passed. C6 connects [approved gateway plans](CLOUD_EXECUTION.md)
+to the executor through a session-owned, cancellable handoff. Fake-provider tests
+verify separate payload/action approvals; the local CLI still disables cloud use.
 
 ## Deferred work: return before the MVP pilot
 

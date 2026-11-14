@@ -40,6 +40,116 @@ export const agentExamples = [
   },
   {
     "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "cloud.approval_request",
+    "approval_id": "cloud-plan-approval",
+    "payload_preview": "{\n  \"client_request_id\": \"00000000-0000-4000-8000-000000000006\",\n  \"data_blocks\": [],\n  \"messages\": [\n    {\n      \"content\": \"Run the fictional two-step example.\",\n      \"role\": \"user\"\n    }\n  ],\n  \"params\": {\n    \"json_schema\": null,\n    \"max_tokens\": 600,\n    \"reasoning\": false,\n    \"temperature\": 0.2\n  },\n  \"task\": \"plan\"\n}"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "thinking",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "cloud-plan-task",
+    "summary": "Plan prepared; no actions have run."
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "fictional-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Cloud response received; no actions were run.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "execution-task",
+    "summary": "Run 2 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "confirm.request",
+    "confirm_id": "cloud-step-1",
+    "task_id": "execution-task",
+    "risk": "local_write",
+    "dry_run_text": "Echo fictional.",
+    "details": {
+      "recipients": [],
+      "attachments": []
+    },
+    "needs_click": true
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "fictional-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed test.echo.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "confirm.request",
+    "confirm_id": "cloud-step-2",
+    "task_id": "execution-task",
+    "risk": "local_write",
+    "dry_run_text": "Echo fictional.",
+    "details": {
+      "recipients": [],
+      "attachments": []
+    },
+    "needs_click": true
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "fictional-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed test.echo.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "execution-task",
+    "text": "Completed the task.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
     "type": "plan.preview",
     "task_id": "steps-task",
     "summary": "Run 2 registered step(s)."
@@ -531,6 +641,26 @@ export const agentExamples = [
   }
 ] satisfies WireAgentEvent[];
 export const uiExamples = [
+  {
+    "v": 1,
+    "type": "approval.response",
+    "approval_id": "cloud-plan-approval",
+    "decision": "yes"
+  },
+  {
+    "v": 1,
+    "type": "confirm.response",
+    "confirm_id": "cloud-step-1",
+    "decision": "yes",
+    "via": "click"
+  },
+  {
+    "v": 1,
+    "type": "confirm.response",
+    "confirm_id": "cloud-step-2",
+    "decision": "yes",
+    "via": "click"
+  },
   {
     "v": 1,
     "type": "confirm.response",

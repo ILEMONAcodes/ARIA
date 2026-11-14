@@ -14,10 +14,13 @@ from tempfile import TemporaryDirectory
 sys.path.insert(0, str(Path(__file__).resolve().parents[1]))
 
 from agent.config import Settings  # noqa: E402
-from agent.contracts.events import AgentEvent  # noqa: E402
+from agent.contracts.events import AgentEvent, ApprovalResponse  # noqa: E402
 from agent.contracts.plan import Plan  # noqa: E402
-from agent.fakes import FakeNetwork, FakeTool  # noqa: E402
+from agent.fakes import FakeLLMAdapter, FakeNetwork, FakeTool  # noqa: E402
+from agent.interfaces.models import KeywordResult, ModelMessage, ModelRequest  # noqa: E402
+from agent.llm.flow import CloudFlow  # noqa: E402
 from agent.router.executor import PlanExecutor  # noqa: E402
+from agent.router.session import LocalSession  # noqa: E402
 from agent.tools import ToolRegistry  # noqa: E402
 from agent.tools.runner import ProcessToolRunner, ToolFailure  # noqa: E402
 from scripts.worker_probe import MutatingPreviewTool, ProbeTool, WorkerEchoTool  # noqa: E402
@@ -51,6 +54,42 @@ async def main() -> None:
         assert outcome.outputs[-1] == {"text": "fictional"}
     finally:
         await executor.close()
+
+    # Approved fake model -> session handoff -> actual isolated dependent workers.
+    class NoMatch:
+        def match(self, text: str) -> KeywordResult:
+            return KeywordResult("no_match")
+
+    network = FakeNetwork(online=True)
+    adapter = FakeLLMAdapter(
+        Plan(
+            intent="cloud_dependent_echo",
+            confidence=1,
+            steps=[
+                {"tool": "test.echo", "args": {"text": "fictional cloud result"}},
+                {"tool": "test.echo", "args": {"text": "$step1.text"}},
+            ],
+        ).model_dump_json()
+    )
+    await adapter.start()
+    await network.start()
+    executor = PlanExecutor(registry, Settings(), network, discard, runner=runner)
+    cloud = CloudFlow(Settings(), adapter, network, discard, registry=registry)
+    session = LocalSession(NoMatch(), executor, discard, cloud=cloud)
+    try:
+        approval = await session.request_cloud(
+            ModelRequest(task="plan", messages=(ModelMessage("user", "Fictional echo"),))
+        )
+        assert approval is not None and adapter.requests == []
+        await session.handle(ApprovalResponse(approval_id=approval, decision="yes"))
+        await session.wait()
+        outcome = await executor.wait()
+        assert outcome is not None and outcome.completed_steps == 2
+        assert outcome.outputs[-1] == {"text": "fictional cloud result"}
+    finally:
+        await session.close()
+        await network.close()
+        await adapter.close()
     with TemporaryDirectory(prefix="aria-worker-smoke-") as folder:
         root = Path(folder)
         tool = ProbeTool()
@@ -88,7 +127,7 @@ async def main() -> None:
             except asyncio.CancelledError:
                 pass
         assert not (root / "finished").exists()
-    print("Worker execution, dry-run, timeout and cancellation checks passed.")
+    print("Worker execution, cloud handoff, dry-run, timeout and cancellation checks passed.")
 
 
 if __name__ == "__main__":
