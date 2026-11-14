@@ -4,10 +4,12 @@ from __future__ import annotations
 
 import tomllib
 from pathlib import Path
+from typing import Literal
 from zoneinfo import ZoneInfo
 
 from pydantic import BaseModel, ConfigDict
 
+from agent.kb.source import PolicySourceOpen, Viewer, WindowsSourceViewer
 from agent.kb.tool import PolicySearch
 from agent.tools.apps import AppLauncher
 from agent.tools.base import ToolRegistry
@@ -20,6 +22,12 @@ class App(BaseModel):
     aliases: tuple[str, ...] = ()
 
 
+class DocumentViewer(BaseModel):
+    model_config = ConfigDict(extra="forbid")
+    executable: Path
+    kind: Literal["file", "sumatra"] = "file"
+
+
 class LocalTools(BaseModel):
     model_config = ConfigDict(extra="forbid")
     timezone: str
@@ -27,6 +35,7 @@ class LocalTools(BaseModel):
     policy_folder: Path | None = None
     policy_database: Path | None = None
     apps: dict[str, App] = {}
+    source_viewers: dict[str, DocumentViewer] = {}
 
 
 def load_tools(path: Path) -> tuple[ToolRegistry, dict[str, tuple[str, ...]], ZoneInfo]:
@@ -49,6 +58,22 @@ def load_tools(path: Path) -> tuple[ToolRegistry, dict[str, tuple[str, ...]], Zo
         if config.policy_folder is not None and config.policy_database is not None:
             registry.register(
                 PolicySearch(root / config.policy_folder, root / config.policy_database)
+            )
+        if config.source_viewers:
+            if config.policy_folder is None or config.policy_database is None:
+                raise ValueError("Source viewers require a configured policy library")
+            viewers = {
+                "." + extension: Viewer(
+                    (root / viewer.executable).resolve(strict=True), viewer.kind
+                )
+                for extension, viewer in config.source_viewers.items()
+            }
+            registry.register(
+                PolicySourceOpen(
+                    root / config.policy_folder,
+                    root / config.policy_database,
+                    WindowsSourceViewer(viewers),
+                )
             )
         return registry, {name: app.aliases for name, app in config.apps.items()}, zone
     except (ValueError, OSError, KeyError):

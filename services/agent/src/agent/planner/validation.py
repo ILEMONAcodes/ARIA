@@ -72,7 +72,11 @@ def validate_plan(
     ):
         raise ValueError("Confidence threshold must be finite and between zero and one")
     try:
-        raw = payload.model_dump(mode="python") if isinstance(payload, Plan) else payload
+        raw = (
+            payload.model_dump(mode="python", warnings=False)
+            if isinstance(payload, Plan)
+            else payload
+        )
         if isinstance(raw, str):
             raw = json.loads(raw, object_pairs_hook=_object)
         _finite(raw)

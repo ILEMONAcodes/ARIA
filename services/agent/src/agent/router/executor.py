@@ -22,10 +22,12 @@ from agent.contracts.events import (
     PlanPreview,
     ReplyText,
     ResultAnswer,
+    SourceOpen,
     Status,
 )
 from agent.contracts.plan import Plan
 from agent.interfaces import Network
+from agent.kb.library import SourceReceipt
 from agent.planner.references import resolve_args
 from agent.planner.validation import PlanValidationError, validate_plan
 from agent.tools.base import Tool, ToolRegistry, ToolSpec
@@ -47,6 +49,7 @@ class ExecutionEngine(Protocol):
 
     async def status(self, working: bool) -> None: ...
     async def submit(self, plan: Plan) -> str: ...
+    async def open_source(self, request: SourceOpen) -> str | None: ...
     async def confirm(self, response: ConfirmResponse) -> bool: ...
     async def wait(self) -> ExecutionOutcome | None: ...
     async def cancel(self, *, announce: bool = True) -> None: ...
@@ -70,6 +73,7 @@ class PlanExecutor:
         self._confirmation: tuple[str, asyncio.Future[bool]] | None = None
         self._completed = 0
         self._running_step = False
+        self._sources: dict[tuple[str, int | None], SourceReceipt] = {}
 
     async def status(self, working: bool) -> None:
         await self.emit(
@@ -88,9 +92,12 @@ class PlanExecutor:
                 plan, self.registry, confidence_threshold=self.settings.confidence_threshold
             )
         except PlanValidationError:
+            self._sources.clear()
             await self.emit(ErrorEvent(code="invalid_plan", message="This plan cannot run."))
             await self.status(False)
             return self.task_id
+        if any(step.tool == "kb.search" for step in review.plan.steps):
+            self._sources.clear()
         if review.requires_clarification:
             await self.emit(
                 ReplyText(
@@ -106,6 +113,40 @@ class PlanExecutor:
         )
         self._task = asyncio.create_task(self._execute(review.plan, self.task_id))
         return self.task_id
+
+    async def open_source(self, request: SourceOpen) -> str | None:
+        source = self._sources.get((request.file_path, request.page))
+        if (
+            request.v != CONTRACT_VERSION
+            or source is None
+            or (request.page is not None and type(request.page) is not int)
+        ):
+            await self.emit(
+                ErrorEvent(
+                    code="source_invalid",
+                    message="Choose a source from the latest policy search results.",
+                )
+            )
+            await self.status(False)
+            return None
+        try:
+            self.registry.spec("files.open")
+        except KeyError:
+            await self.emit(
+                ErrorEvent(
+                    code="source_unavailable",
+                    message="The source viewer is unavailable. Check the configured document viewer.",
+                )
+            )
+            await self.status(False)
+            return None
+        return await self.submit(
+            Plan(
+                intent="open_policy_source",
+                confidence=1,
+                steps=[{"tool": "files.open", "args": {"source": source.model_dump(mode="json")}}],
+            )
+        )
 
     async def confirm(self, response: ConfirmResponse) -> bool:
         pending = self._confirmation
@@ -218,7 +259,29 @@ class PlanExecutor:
                     search = SearchOutput.model_validate(
                         result.model_dump(mode="json"), strict=True
                     )
+                    if len(search.sources) != len(search.citations) or any(
+                        (source.file_path, source.page) != (citation.file_path, citation.page)
+                        for source, citation in zip(search.sources, search.citations, strict=True)
+                    ):
+                        raise ValueError("Invalid source provenance")
+                    sources = {
+                        (source.file_path, source.page): source.model_copy(deep=True)
+                        for source in search.sources
+                    }
                     await self.emit(ResultAnswer(text=search.message, citations=search.citations))
+                    self._sources = sources
+                if step.tool == "files.open":
+                    from agent.kb.source import SourceOpenOutput
+
+                    opened = SourceOpenOutput.model_validate(
+                        result.model_dump(mode="json"), strict=True
+                    )
+                    if not opened.opened:
+                        await self.emit(
+                            ErrorEvent(code=f"source_{opened.code}", message=opened.message)
+                        )
+                        await self._activity("Source was not opened.")
+                        return ExecutionOutcome("failed", self._completed, tuple(outputs))
                 outputs.append(result.model_dump(mode="json"))
                 self._completed += 1
                 await self._activity(f"Completed {step.tool}.")
@@ -268,4 +331,5 @@ class PlanExecutor:
             await self.status(False)
 
     async def close(self) -> None:
+        self._sources.clear()
         await self.cancel(announce=False)

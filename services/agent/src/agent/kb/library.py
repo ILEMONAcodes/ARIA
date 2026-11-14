@@ -75,10 +75,24 @@ class SearchInput(BaseModel):
     circular_no: str | None = Field(default=None, min_length=1, max_length=120)
 
 
+class SourceReceipt(BaseModel):
+    """Internal provenance, never added to desktop citation/event fields."""
+
+    model_config = ConfigDict(extra="forbid", strict=True)
+    file_path: str = Field(min_length=1, max_length=4096)
+    page: int | None = Field(default=None, ge=1, le=256)
+    fingerprint: str = Field(pattern=r"^[0-9a-f]{64}$", repr=False)
+
+
+def document_fingerprint(content: bytes, meta: Metadata) -> str:
+    return hashlib.sha256(b"reader-v1\0" + content + meta.model_dump_json().encode()).hexdigest()
+
+
 class SearchOutput(BaseModel):
     message: str
     found: bool
     citations: list[Citation]
+    sources: list[SourceReceipt] = Field(default_factory=list, repr=False)
 
 
 _STOP = frozenset(
@@ -146,6 +160,9 @@ class PolicyLibrary:
             raise LibraryError()
         return result
 
+    def source_metadata(self, relative: str) -> Metadata:
+        return self._manifest().get(relative, Metadata(file=relative, title=Path(relative).name))
+
     def _files(self) -> list[Path]:
         result = []
         visited = 0
@@ -196,9 +213,7 @@ class PolicyLibrary:
                         content = stream.read(MAX_BYTES + 1)
                     if len(content) > MAX_BYTES:
                         raise LibraryError()
-                    fingerprint = hashlib.sha256(
-                        b"reader-v1\0" + content + meta.model_dump_json().encode()
-                    ).hexdigest()
+                    fingerprint = document_fingerprint(content, meta)
                     prior = self.db.fetch_all(
                         "SELECT fingerprint FROM kb_documents WHERE id=?", (identifier,)
                     )
@@ -289,7 +304,7 @@ class PolicyLibrary:
             def lookup(operator: str) -> list[tuple[Any, ...]]:
                 expression = operator.join('"' + t + '"' for t in tokens)
                 return self.db.fetch_all(
-                    "SELECT d.title,d.path,d.issue_date,p.page,p.section,p.text "
+                    "SELECT d.title,d.path,d.issue_date,p.page,p.section,p.text,d.fingerprint "
                     "FROM kb_passages p JOIN kb_documents d ON p.document_id=d.id "
                     "WHERE " + condition + " AND kb_passages MATCH ? "
                     "ORDER BY d.issue_date DESC,bm25(kb_passages),d.path,p.rowid LIMIT 8",
@@ -308,7 +323,7 @@ class PolicyLibrary:
                     page=page,
                     passage=(f"Section: {section}\n\n" if section else "") + text,
                 )
-                for title, path, issued, page, section, text in rows
+                for title, path, issued, page, section, text, _fingerprint in rows
             ]
             message = (
                 "Offline keyword matches; these passages are not a generated answer."
@@ -319,6 +334,10 @@ class PolicyLibrary:
                 message = "No matching passages found in the policy library."
             if self.status().failed:
                 message += " Some files could not be indexed; check library status."
-            return SearchOutput(message=message, found=found, citations=citations)
+            sources = [
+                SourceReceipt(file_path=str(self.root / path), page=page, fingerprint=fingerprint)
+                for _title, path, _issued, page, _section, _text, fingerprint in rows
+            ]
+            return SearchOutput(message=message, found=found, citations=citations, sources=sources)
         except Exception:  # noqa: BLE001
             raise LibraryError() from None
