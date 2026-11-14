@@ -136,6 +136,9 @@ def test_manifest_changes_refresh_dates_titles_and_circulars(library):
     [
         {"file": "../secret.txt", "title": "X"},
         {"file": "/secret.txt", "title": "X"},
+        {"file": "\\secret.txt", "title": "X"},
+        {"file": "C:secret.txt", "title": "X"},
+        {"file": "//server/share/secret.txt", "title": "X"},
         {"file": "leave.txt", "title": "X", "issue_date": "not-a-date"},
     ],
 )

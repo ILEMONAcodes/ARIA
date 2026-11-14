@@ -44,7 +44,14 @@ class Metadata(BaseModel):
     @field_validator("file")
     @classmethod
     def relative_file(cls, value: str) -> str:
-        if "\\" in value or ":" in value or Path(value).is_absolute() or ".." in Path(value).parts:
+        # A leading slash is drive-relative on Windows, not is_absolute().
+        if (
+            not value
+            or value.startswith("/")
+            or "\\" in value
+            or ":" in value
+            or ".." in Path(value).parts
+        ):
             raise ValueError("Manifest paths must stay within the policy folder")
         return value
 
