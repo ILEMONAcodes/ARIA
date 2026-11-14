@@ -17,6 +17,9 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - `contract` installs pinned pnpm tools from `scripts/contract/pnpm-lock.yaml` on Node 24, checks generator failure paths and artifact freshness, and strictly compiles all fixture messages plus frontend consumer examples. It runs independently of the unfinished desktop app.
 - The Python `check` job also runs the separate live localhost mock handoff after its network-blocked unit tests. This integration process uses only its own mock server and fictional session credentials.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
+- C6 session handoff tests also run in the platform matrix, including the real
+  in-memory gateway with a fake provider and cancellation/replacement regressions.
+  The worker smoke additionally checks session handoff into dependent workers.
 - C5's step-result tests also run in the platform matrix; the real worker smoke
   includes a three-step binding chain and a rejected mutating preview.
 - C4 local execution/calendar/text unit tests run in the platform matrix. The

@@ -109,8 +109,9 @@ paid model call occurs. They check exact-payload approval, replay/decline,
 policy/network rechecks, one shared timeout/retry budget, response limits,
 cancellation, invalid-plan retry/rephrase and the `gateway_retry_fallback`
 fixture's event flow. Gateway tests also check escaped source wrappers and
-sanitized provider errors. See GATEWAY_INTEGRATION.md; live provider setup,
-actual dispatcher/tool execution and real-model evaluation remain open.
+sanitized provider errors. See GATEWAY_INTEGRATION.md; live provider setup and
+real-model evaluation remain open. C6 now connects approved outcomes to the
+executor; see CLOUD_EXECUTION.md.
 
 - `test_request_without_valid_token_is_rejected`
 - `test_rate_limit_returns_429`
@@ -118,6 +119,14 @@ actual dispatcher/tool execution and real-model evaluation remain open.
 - `test_api_key_never_appears_in_responses_or_logs`
 - `test_usage_is_logged_without_request_content`
 - `test_model_switch_26b_to_31b_by_config`
+
+C6's `test_cloud_execution.py` verifies the session handoff with the actual
+in-memory gateway API and a fake provider. It matches `cloud_plan_execution`,
+requires separate payload/action approvals, and covers replay/decline, typed
+bindings, invalid/incomplete responses, retry/fallback, current registry/policy
+revalidation and cancellation/replacement during connectivity, gateway work,
+handoff and tool confirmation. Non-plan output never becomes actions. The separate
+worker smoke also runs fake-provider handoff through actual dependent workers.
 
 **Keyword path and router**
 

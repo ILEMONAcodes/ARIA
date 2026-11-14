@@ -62,6 +62,7 @@ class CloudFlow:
         self._pending: Pending | None = None
         self._task: asyncio.Task[CloudOutcome] | None = None
         self._epoch = 0
+        self.task_id: str | None = None
 
     def _allowed(self) -> bool:
         return self.settings.profile == "hosted" and self.settings.cloud_enabled
@@ -77,6 +78,7 @@ class CloudFlow:
         await self.cancel(announce=False)
         epoch = self._epoch
         task_id = str(uuid4())
+        self.task_id = task_id
         if not self._allowed():
             await self._fallback(
                 task_id, "cloud_disabled", "Cloud use is disabled for this profile."
@@ -274,6 +276,7 @@ class CloudFlow:
 
     async def cancel(self, *, announce: bool = True) -> None:
         self._epoch += 1
+        self.task_id = None
         self._pending = None
         task, self._task = self._task, None
         if task is not None and not task.done():

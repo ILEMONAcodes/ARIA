@@ -65,7 +65,9 @@ execution. Disconnect cancels active work before releasing ownership.
 `PlanExecutor`. Unknown/ambiguous commands produce a reply/question without an
 automatic upload. Stop/cancel controls remain local. An explicitly assembled
 cloud flow can be invoked through `request_cloud`; it still applies C3's payload
-approval and policy checks. The supplied local CLI disables cloud use entirely.
+approval and policy checks. C6 connects its validated plan outcomes to the same
+executor with owned cancellation/replacement and independent action confirmations;
+see CLOUD_EXECUTION.md. The supplied local CLI disables cloud use entirely.
 The existing voice echo server remains separate. The frontend owns its actual
 buttons, captions and activity view; it can use `local_command_execution` in
 the mock and the real local text service for its handoff tests.
