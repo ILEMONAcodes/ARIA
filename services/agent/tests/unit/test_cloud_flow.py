@@ -201,9 +201,33 @@ def test_gateway_client_times_out_after_shared_budget_and_falls_back():
             started = perf_counter()
             assert (await approve(flow, identifier)).kind == "fallback"
             assert perf_counter() - started < 0.3
-            assert len(adapter.requests) == 2
+            # The wall deadline takes precedence over scheduling a second attempt.
+            # Windows timer granularity can exhaust this intentionally tiny budget.
+            assert 1 <= len(adapter.requests) <= 2
             assert sum(e["type"] == "error" for e in events) == 1
         assert Settings().cloud_timeout_s == 8
+
+    asyncio.run(scenario())
+
+
+def test_expired_budget_during_backoff_never_starts_another_attempt(monkeypatch):
+    class Failed(FakeLLMAdapter):
+        async def complete(self, req):
+            self.requests.append(req)
+            raise GatewayFailure(retryable=True)
+
+    async def blocked_backoff(delay):
+        await asyncio.Event().wait()
+
+    async def scenario():
+        async with running(Failed(), cloud_timeout_s=0.04) as (flow, adapter, _, events):
+            identifier = await flow.submit(request())
+            # Simulate a backoff/scheduler delay consuming all remaining time.
+            monkeypatch.setattr("agent.llm.flow.asyncio.sleep", blocked_backoff)
+            outcome = await approve(flow, identifier)
+            assert outcome.kind == "fallback"
+            assert len(adapter.requests) == 1
+            assert sum(e["type"] == "error" for e in events) == 1
 
     asyncio.run(scenario())
 
