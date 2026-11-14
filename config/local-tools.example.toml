@@ -6,3 +6,7 @@ calendar = "../library/sample_calendar.ics"
 # [apps.excel]
 # executable = "C:/replace-with-your-installed-path/EXCEL.EXE"
 # aliases = ["microsoft excel"]
+
+# Optional offline policy search. Cache stays outside the source folder.
+# policy_folder = "../library/policies"
+# policy_database = "../data/aria.db"

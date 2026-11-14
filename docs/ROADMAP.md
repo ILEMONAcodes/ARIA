@@ -70,6 +70,12 @@ or live-provider gates passed. C6 connects [approved gateway plans](CLOUD_EXECUT
 to the executor through a session-owned, cancellable handoff. Fake-provider tests
 verify separate payload/action approvals; the local CLI still disables cloud use.
 
+D1 adds [offline policy ingestion and keyword search](OFFLINE_POLICY_SEARCH.md)
+with encrypted FTS5, PDF/DOCX/TXT provenance, refresh/watch maintenance, citations
+and explicit suggestions/no-match responses. This is a user-directed sequencing
+exception (decision 35). Vector/model work, the full policy quality gate and
+frontend/staff acceptance remain open.
+
 ## Deferred work: return before the MVP pilot
 
 ### Voice setup and evaluation

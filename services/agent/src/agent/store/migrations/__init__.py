@@ -7,6 +7,7 @@ from dataclasses import dataclass
 from typing import TYPE_CHECKING
 
 from agent.store.migrations.v001_foundations import STATEMENTS
+from agent.store.migrations.v002_policy import STATEMENTS as POLICY_STATEMENTS
 
 if TYPE_CHECKING:
     from agent.store.database import Connection
@@ -23,7 +24,7 @@ class Migration:
         return hashlib.sha256("\n".join(self.statements).encode()).hexdigest()
 
 
-MIGRATIONS = (Migration(1, "foundations", STATEMENTS),)
+MIGRATIONS = (Migration(1, "foundations", STATEMENTS), Migration(2, "policy", POLICY_STATEMENTS))
 
 
 def apply_migrations(

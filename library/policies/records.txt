@@ -1,0 +1,4 @@
+# Records storage
+Fictional policy records belong in the designated records folder.
+# Access
+Only authorised fictional staff may access restricted records.
