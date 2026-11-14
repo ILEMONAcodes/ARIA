@@ -194,6 +194,53 @@ export const agentExamples = [
   {
     "v": 1,
     "type": "transcript.final",
+    "text": "Open Excel"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "local-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "local-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed apps.launch.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "local-task",
+    "text": "Started excel.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
     "text": "Send the reply.",
     "speaker": {
       "id": "u1",
@@ -433,6 +480,11 @@ export const uiExamples = [
     "type": "approval.response",
     "approval_id": "gateway-fixture",
     "decision": "yes"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "Open Excel"
   },
   {
     "v": 1,

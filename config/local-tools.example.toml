@@ -1,0 +1,8 @@
+# Fictional demo calendar. Copy to local-tools.toml for your own installation.
+timezone = "Africa/Lagos"
+calendar = "../library/sample_calendar.ics"
+
+# Add installed apps explicitly, using their real executable paths:
+# [apps.excel]
+# executable = "C:/replace-with-your-installed-path/EXCEL.EXE"
+# aliases = ["microsoft excel"]

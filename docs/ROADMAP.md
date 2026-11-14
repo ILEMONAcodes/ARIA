@@ -58,8 +58,13 @@ C2 adds the internal [local keyword planner](KEYWORD_PLANNER.md) for configured
 apps, today's calendar and cancellation, with clarification and no-match outcomes.
 C3 adds the [gateway client and approval/retry/fallback flow](GATEWAY_INTEGRATION.md),
 verified against the real gateway API with a fake provider. The user has also
-deferred live provider selection/setup (decision 30). Real provider calls,
-tool execution, dispatcher/UI integration and the Phase C acceptance gate remain open.
+deferred live provider selection/setup (decision 30). Live provider verification
+and the full Phase C acceptance gate remain open. C4 adds the [local execution path](LOCAL_EXECUTION.md):
+router/executor, per-step confirmations, killable workers, configured Windows app
+launching, read-only ICS calendar, activity events and an authenticated text service.
+The user's priority is to finish these non-model pieces before revisiting deferred
+setup. Real staff-PC/frontend acceptance, durable profile history and dependent
+result-reference workflows remain open; this does not mark the voice or live-provider gates passed.
 
 ## Deferred work: return before the MVP pilot
 

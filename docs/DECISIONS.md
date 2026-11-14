@@ -41,6 +41,10 @@ Add one line here whenever we make a choice or something surprises us. Move requ
 
 30. **Defer live Gemma provider setup at the user's request.** The user has not chosen a provider and asked to add this to their later-work list. Record provider selection, account/key, model/API configuration, data terms, pricing/budget and approved live checks in ROADMAP.md. Complete C3's client/approval/retry flow with the actual gateway and fake providers; leave ProviderLLM unconfigured and make no paid/live calls or deployment-readiness claim. The API key belongs only in the gateway environment.
 
+31. **Finish local execution before revisiting deferred setup.** The user explicitly wants the non-model router/executor/tool work completed first. C4 adds session routing, per-step click/key confirmations, validation and activity events, an authenticated local text service/terminal command, configured Windows executable launching and read-only ICS listing. Classify cal.list as risk none because it reads only; future calendar mutations remain local_write/destructive as appropriate. Do not create guessed app paths, a default identity, a pretend outbox or automatic unknown-text uploads. Keep voice/live-provider gates open.
+
+32. **Use killable workers for synchronous tools.** Threads cannot enforce cancellation of synchronous side effects. Run trusted, importable registry tool objects in bounded private-stdio Python workers, suppress tool diagnostics, filter ARIA/GATEWAY environment secrets and terminate/await timed-out or cancelled workers. Never accept the worker pickle protocol from UI/model/network data. Report completed/uncertain effects honestly; do not retry actions or claim rollback. Worker isolation is not a sandbox, and sidecar worker packaging remains Phase I. Independent steps are supported; result bindings remain fail-closed until dependent workflow resolution is added. Session activity stays non-durable until profile integration exists.
+
 ## To decide after testing
 
 - Gemma 4 API provider and spending cap

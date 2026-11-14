@@ -108,15 +108,18 @@ services/agent/
 │   ├── security/keys.py             [existing] native vault and key-provider interface
 │   ├── audio/                       [existing B] buffers, capture, local speech adapters, pipeline
 │   ├── voice/                       [existing B] authenticated echo transport and CLI
+│   ├── local/                       [existing C4] explicit tool configuration, text server/CLI
 │   ├── planner/                     [existing C1/C2] validation and local keywords; model work pending
 │   ├── llm/                         [existing C3] gateway client, wire values, approval/retry flow
 │   ├── router/
 │   │   ├── decision.py              [existing] pure route decision
-│   │   └── executor.py              [planned C] approved execution/cancellation
+│   │   ├── executor.py              [existing C4] validation, per-step approval and execution
+│   │   └── session.py               [existing C4] local text/cancel routing and explicit cloud boundary
 │   ├── tools/
 │   │   ├── base.py                  [existing] Tool interface and registry
-│   │   ├── apps.py                  [planned C] allow-listed app launching
-│   │   ├── calendar.py              [planned C/F] listing, then confirmed changes
+│   │   ├── apps.py                  [existing C4] configured Windows executable launching
+│   │   ├── calendar.py              [existing C4] read-only ICS listing; changes remain F
+│   │   ├── runner.py, worker.py     [existing C4] killable private tool process boundary
 │   │   ├── knowledge.py             [planned D] policy retrieval/answer tools
 │   │   ├── documents.py             [planned E] memo/report/summary tools
 │   │   ├── mail.py                  [planned F] read, draft and confirmed queue
