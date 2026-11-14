@@ -1,0 +1,1125 @@
+{
+  "report_version": 1,
+  "scope": "offline_keyword_retrieval_only",
+  "corpus_sha256": "8062c25c8b81c927286276e757e8cfdb8ed8d4fd53b8ab78c69687cd7eba9f2d",
+  "golden_sha256": "562ee678f470876322a4f7121591d22fd033fbe9424e09c7ab7dd3e6e773c20a",
+  "documents": 11,
+  "passages": 262,
+  "questions": 30,
+  "configuration": {
+    "chunk_words": 400,
+    "overlap_words": 50,
+    "passage_limit": 8,
+    "candidate_limit": 64,
+    "ranking": "weighted_coverage_then_bm25; newest is explicit",
+    "query": "question-stopwords, bounded term families, IDF-weighted coverage >= 0.70",
+    "tokenizer": "porter unicode61; headings indexed"
+  },
+  "retriever_sha256": "5cddaf2a14e97bf7b7245ad69d70756827628b21057ffe60005fcb32132ac195",
+  "retrieval_strategy_sha256": "c5eb43965349999f37140c6c6800816cd8047b953215aece30a523ebe6dea57e",
+  "scorer_sha256": "42f147181a70b1d1a76060671a2f2e053d38130808be51239534f085e9d7e11b",
+  "metrics": {
+    "support_hits": 20,
+    "support_questions": 20,
+    "correct_not_found": 10,
+    "unsupported_questions": 10,
+    "case_passes": 30,
+    "case_pass_pct": 100.0,
+    "checked_citations": 157,
+    "invalid_citations": 0,
+    "citation_integrity_pct": 100.0
+  },
+  "phase_d_gate_passed": false,
+  "deferred": [
+    "generated_answer_correctness",
+    "semantic_retrieval_and_conflict_resolution",
+    "real_staff_pc_acceptance"
+  ],
+  "cases": [
+    {
+      "id": "Q001",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 32,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 6,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 42,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 37,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 12,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q002",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 6,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 32,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 42,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 2,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 3,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q003",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 18,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 22,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q004",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 29,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 5,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q005",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 14,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 10,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q006",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 13,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 4,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 2,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q007",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 2,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 1,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q008",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 3,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q009",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 12,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 15,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 7,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 19,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 23,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q010",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 33,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 32,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 8,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 34,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 31,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q011",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 15,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 16,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q012",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 43,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 18,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 34,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q013",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 24,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 18,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 25,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 26,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q014",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 36,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q015",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 1,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 2,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 6,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 13,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 4,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 11,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q016",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 15,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 5,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q017",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "fictional/leave.txt",
+          "page": null,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q018",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "fictional/leave.txt",
+          "page": null,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q019",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "fictional/travel.txt",
+          "page": null,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q020",
+      "answerable": true,
+      "found": true,
+      "support_hit_at_8": true,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "fictional/records.txt",
+          "page": null,
+          "valid": true
+        },
+        {
+          "file": "fictional/records.txt",
+          "page": null,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q021",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 35,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 31,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 19,
+          "valid": true
+        },
+        {
+          "file": "fictional/leave.txt",
+          "page": null,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 34,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 4,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q022",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 42,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 30,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 8,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 35,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 47,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 13,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 21,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q023",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 14,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 9,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 10,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 37,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 7,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q024",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 31,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 46,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 47,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 50,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 39,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 32,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q025",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 8,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 28,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 40,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 7,
+          "valid": true
+        },
+        {
+          "file": "fictional/leave.txt",
+          "page": null,
+          "valid": true
+        },
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 24,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q026",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 45,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 49,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 6,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 16,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 21,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 15,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 35,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 7,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q027",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 30,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 31,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 16,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 2,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 33,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 4,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 50,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q028",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 5,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 3,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 30,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 16,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 32,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 26,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 42,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q029",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 15,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 19,
+          "valid": true
+        },
+        {
+          "file": "public/ng-platform-code.pdf",
+          "page": 12,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 31,
+          "valid": true
+        },
+        {
+          "file": "public/ng-interoperability.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 16,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 21,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 36,
+          "valid": true
+        }
+      ]
+    },
+    {
+      "id": "Q030",
+      "answerable": false,
+      "found": false,
+      "support_hit_at_8": null,
+      "citation_integrity": true,
+      "passed": true,
+      "returned": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "page": 11,
+          "valid": true
+        },
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "page": 2,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 17,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 6,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 42,
+          "valid": true
+        },
+        {
+          "file": "public/ng-government-websites.pdf",
+          "page": 44,
+          "valid": true
+        },
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "page": 48,
+          "valid": true
+        },
+        {
+          "file": "public/ng-domain-management.pdf",
+          "page": 44,
+          "valid": true
+        }
+      ]
+    }
+  ]
+}

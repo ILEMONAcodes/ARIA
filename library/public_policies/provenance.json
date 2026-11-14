@@ -1,0 +1,89 @@
+{
+  "schema_version": 1,
+  "purpose": "Nigerian public-policy retrieval fixtures; source snapshots, not a claim of current legal applicability.",
+  "catalog_url": "https://nitda.gov.ng/regulations/",
+  "sources": [
+    {
+      "file": "ng-domain-management.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2020/11/govng-mil_ng-Domain-Management-Policy.pdf",
+      "sha256": "e128baf6560c46a79e3821510828741f7fd579ea9a75503d9633aea44c1dcd21",
+      "bytes": 846554,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Cover states Version 2.0, May 2019; no complete issue day is supplied."
+    },
+    {
+      "file": "ng-government-websites.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2021/06/StandardsGuidelinesforGovtWebsitesV321.pdf",
+      "sha256": "eccd21002b0b2a0773d42930689cd57283216083b34dad331e9834eb53f730c9",
+      "bytes": 540333,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "No complete issue date is stated in the reviewed title/introductory pages. URL upload month is not treated as issue date."
+    },
+    {
+      "file": "ng-public-social-media.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2020/11/FrameworkAndGuidelinesForTheUseOfSocialMediaPlatformsInPublicInstitutions1.pdf",
+      "sha256": "e48dce65a5d597469b40624a5fa79b8db02cdef45461ed7a9a4a5aff6c01c9f9",
+      "bytes": 509388,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Cover states 2019; no complete issue day/month is supplied."
+    },
+    {
+      "file": "ng-ict-service-providers.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2020/11/GuidelinesForRegistrationServiceProviders-311.pdf",
+      "sha256": "77a9aaf55c12c345e6a40473ded8914f6869c04cb4ed28def3f45197303abd64",
+      "bytes": 651692,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "No complete issue date is stated in the source; URL upload month is not treated as issue date."
+    },
+    {
+      "file": "ng-interoperability.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2020/11/Ne-GIFFinal1.pdf",
+      "sha256": "8cad20313b168f3cab3d264f2a4aa4458afc8236ba85750cd9e511502c34f22f",
+      "bytes": 1078861,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Cover/header says Release v1.2 July 2019, while the cover metadata also says August 2019. Preserve this discrepancy; no issue day is invented."
+    },
+    {
+      "file": "ng-data-protection.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2020/11/NigeriaDataProtectionRegulation11.pdf",
+      "sha256": "0d3422aa9e127dbf93aa0a9273fa52547d1fdabe0d78888f1226ab676d4ecb2a",
+      "bytes": 675477,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Cover identifies the 2019 regulation; no complete issue day/month is inferred."
+    },
+    {
+      "file": "ng-cloud-technical.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2026/08/NATIONAL-CLOUD-TECHNICAL-GUIDELINE-2026_-Final.pdf",
+      "sha256": "119e8a2990d598cfe1bae8ebe23e281a5fcff1913804f48e6ea80ba58aacebd5",
+      "bytes": 604174,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Document information on PDF page 2 gives approval and effective dates, not an issue date. This snapshot has an effective date after retrieval.",
+      "approval_date": "2026-08-04",
+      "effective_date": "2027-01-01"
+    },
+    {
+      "file": "ng-platform-code.pdf",
+      "url": "https://nitda.gov.ng/wp-content/uploads/2022/10/APPROVED-NITDA-CODE-OF-PRACTIVE-FOR-INTERACTIVE-COMPUTER-SERVICE-PLATFORMS-INTERNET-INTERMEDIARIES-2022-002.pdf",
+      "sha256": "af806f0267c2b1b7ff507af8cf8134d14ad98ce3b110231de396fd18541f678a",
+      "bytes": 4108865,
+      "retrieved_at": "2026-11-14",
+      "rights": "Official Nigerian administrative/regulatory text; see Copyright Act 2022 section 3(b).",
+      "rights_url": "https://www.copyright.gov.ng/CopyrightAct/CopyrightAct2023FinalPublication1.pdf",
+      "date_notes": "Publisher title identifies 2022; a full issue date is not inferred from its October 2022 upload path."
+    }
+  ]
+}

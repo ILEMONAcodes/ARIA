@@ -738,6 +738,67 @@ export const agentExamples = [
   },
   {
     "v": 1,
+    "type": "transcript.final",
+    "text": "search policy what proof is needed for fictional travel expense claims"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "policy-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Offline keyword matches; these passages are not a generated answer.",
+    "citations": [
+      {
+        "doc": "Fictional Travel Policy",
+        "page": null,
+        "date": "2025-02-01",
+        "passage": "Section: Receipts\n\nTravel expense claims require itemised receipts.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      }
+    ]
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "policy-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed kb.search.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "policy-task",
+    "text": "Offline keyword matches; these passages are not a generated answer.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
     "type": "status",
     "state": "listening",
     "online": false,
@@ -890,6 +951,11 @@ export const uiExamples = [
     "type": "source.open",
     "file_path": "library/leave_circular_2024.pdf",
     "page": 3
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "search policy what proof is needed for fictional travel expense claims"
   },
   {
     "v": 1,

@@ -189,6 +189,16 @@ cancellation, publication/selection cleanup and the authenticated
 `open_policy_source` scenario. The real-worker policy smoke verifies unchanged
 and changed source receipts without opening apps. See OPEN_POLICY_SOURCES.md.
 
+The Nigerian corpus tests in `test_policy_evaluation.py` verify original PDF
+hashes, source hosts, 20/10 balance, exact supporting labels, citation integrity,
+score accounting, output overwrite refusal and before/after comparability.
+`test_policy_retrieval.py` adds independent natural-language/negative cases,
+relevance versus explicit newest sorting and v2-to-v3 passage/stemming/heading
+preservation. Runtime retrieval never imports golden labels. The existing offline
+scenario and `policy_search_paraphrase` cover the real local session/mock handoff.
+CI runs `scripts/bench_policy.py --min-case-pass 100` and uploads the offline
+report; this is a keyword regression gate, not the full Phase D model-quality gate.
+
 **Tools**
 
 C5's `test_step_results.py` covers reference grammar/order/declared fields,

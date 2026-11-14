@@ -15,9 +15,10 @@ Then read, in this order:
    - frontend: `agents/frontend.md`
 4. `docs/API_CONTRACT.md` (the only way the two sides talk)
 5. `docs/ROADMAP.md` (what phase we are in)
-6. `docs/TESTING.md` and `docs/CICD.md` when writing tests or touching workflows
-7. `docs/PROMPTS.md` when touching anything that calls the model
-8. `docs/DECISIONS.md` (decisions so far)
+6. Backend and AI: `docs/BACKEND_HANDOFF.md` (implemented work, remaining tasks and current continuation point)
+7. `docs/TESTING.md` and `docs/CICD.md` when writing tests or touching workflows
+8. `docs/PROMPTS.md` when touching anything that calls the model
+9. `docs/DECISIONS.md` (decisions so far)
 
 Do not wait for sign-off from the other developer to continue your own work. Record choices in `docs/DECISIONS.md` and keep going. The one exception is the contract: tell the other developer before changing it.
 
