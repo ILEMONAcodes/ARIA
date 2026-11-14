@@ -57,9 +57,9 @@ review = validate_plan({
 assert not review.requires_clarification
 ```
 
-This performs no action. A review is not approval or execution authority. The
-future executor must revalidate arguments and current policy, honor cancellation,
-resolve references, enforce timeouts and require the applicable user approvals.
+This performs no action. A review is not approval or execution authority. C4's
+executor (LOCAL_EXECUTION.md) revalidates arguments/current policy, honors cancellation,
+enforces timeouts and requires applicable approvals. Reference resolution remains open.
 `$stepN.field` bindings currently fail closed until resolution and per-step
 validation exist. No input provenance/grounding check is claimed here: matching
 names, dates and amounts to transcript/contacts/calendar remains planner work.

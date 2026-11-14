@@ -165,6 +165,14 @@ checks below remain later Phase C work.
 - `test_offline_returns_passages_without_generated_answer`
 
 **Tools**
+
+C4 tests in `test_execution.py`, `test_local_tools.py` and `test_local_session.py`
+exercise confirmation, strict validation, no late steps, cancellation, timeouts,
+offline gating, read-only recurrence/timezone behavior and authenticated text
+routing with fictional data. App process calls are stubbed. The separate
+`scripts/smoke_execution.py` verifies actual worker shutdown using temporary
+markers only, never real applications or network access. See LOCAL_EXECUTION.md.
+
 - `test_every_tool_has_schema_risk_network_need_timeout`
 - `test_dry_run_has_no_side_effects` (temp folder unchanged)
 - `test_tool_timeout_is_enforced`

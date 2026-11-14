@@ -1,0 +1,14 @@
+{
+  "name": "local_command_execution",
+  "description": "C4: an offline local command completes through registered tools and records activity.",
+  "steps": [
+    {"send": {"v": 1, "type": "status", "state": "idle", "online": false, "profile": "hosted"}},
+    {"wait_for": "text.input", "match": {"v": 1, "type": "text.input", "text": "Open Excel"}},
+    {"send": {"v": 1, "type": "transcript.final", "text": "Open Excel"}},
+    {"send": {"v": 1, "type": "plan.preview", "task_id": "local-task", "summary": "Run 1 registered step(s)."}},
+    {"send": {"v": 1, "type": "status", "state": "working", "online": false, "profile": "hosted"}},
+    {"send": {"v": 1, "type": "activity.entry", "id": "local-activity", "ts": "2026-01-01T00:00:00Z", "text": "Completed apps.launch.", "undoable": false}},
+    {"send": {"v": 1, "type": "reply.text", "task_id": "local-task", "text": "Started excel.", "spoken": false}},
+    {"send": {"v": 1, "type": "status", "state": "idle", "online": false, "profile": "hosted"}}
+  ]
+}

@@ -25,6 +25,8 @@ jobs:
         run: uv run --locked --all-packages --all-extras python scripts/check_backend.py
       - name: Live localhost mock handoff (separate from network-blocked unit tests)
         run: uv run --locked --all-packages --all-extras python scripts/smoke_mock.py
+      - name: Isolated tool worker smoke (fictional temporary markers only)
+        run: uv run --locked --all-packages --all-extras python scripts/smoke_execution.py
 
   store-platform:
     runs-on: ${{ matrix.os }}
@@ -45,7 +47,9 @@ jobs:
         run: uv sync --locked --all-packages --all-extras
       - name: Test agent foundations and gateway flow (network blocked)
         working-directory: services/agent
-        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py tests/unit/test_mock_agent.py tests/unit/test_voice_buffers.py tests/unit/test_voice_pipeline.py tests/unit/test_voice_native.py tests/unit/test_voice_server.py tests/unit/test_voice_metrics.py tests/unit/test_gateway_client.py tests/unit/test_cloud_flow.py
+        run: uv run --locked --all-packages --all-extras python -m pytest tests/unit/test_store.py tests/unit/test_database_keys.py tests/unit/test_bootstrap.py tests/unit/test_fakes.py tests/unit/test_mock_agent.py tests/unit/test_voice_buffers.py tests/unit/test_voice_pipeline.py tests/unit/test_voice_native.py tests/unit/test_voice_server.py tests/unit/test_voice_metrics.py tests/unit/test_gateway_client.py tests/unit/test_cloud_flow.py tests/unit/test_execution.py tests/unit/test_local_tools.py tests/unit/test_local_session.py
+      - name: Check real worker timeout/cancellation without launching apps
+        run: uv run --locked --all-packages --all-extras python scripts/smoke_execution.py
 
   voice-windows:
     runs-on: windows-latest

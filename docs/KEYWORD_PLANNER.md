@@ -71,7 +71,7 @@ unavailable tools and preserved risk. Tests run with sockets blocked and never
 invoke tool code or write files. A generous one-second per-command CPU
 regression check is not an end-to-end Windows performance measurement.
 
-This internal component does not change UI behavior, so no scenario or event
-schema is added here. Real app/calendar adapters, dispatcher/runtime wiring,
-AI fallback, approvals and end-to-end activity events remain later Phase C work.
+This matcher does not change the event schema. C4 (LOCAL_EXECUTION.md) connects
+it to the local text service, executor, configured app/calendar adapters and
+activity events. AI fallback and voice/desktop UI integration remain later work.
 The voice assets and real speech evaluation stay on the deferred-work list.

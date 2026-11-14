@@ -153,4 +153,10 @@ They use fictional fixtures in memory and are explicitly injected in tests;
 production failures never select them automatically. Model source text stays
 in separate data blocks. The [Phase C3 integration guide](docs/GATEWAY_INTEGRATION.md)
 documents the gateway client, approval and retry/fallback flow. Live provider
-setup and desktop dispatcher wiring remain pending.
+setup and voice/desktop UI integration remain pending.
+
+The [local execution guide](docs/LOCAL_EXECUTION.md) covers the model-free text
+service, confirmations, configured Windows app launching, ICS calendar reading
+and a one-command fictional-calendar demo. Run `python -m agent.local --tools
+config/local-tools.example.toml --command "calendar today"` inside the installed
+workspace to try it without speech models or cloud setup.

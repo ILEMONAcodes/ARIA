@@ -1,5 +1,6 @@
 .env
 config/agent.toml
+config/local-tools.toml
 *.db
 *.db.lock
 *.db-journal

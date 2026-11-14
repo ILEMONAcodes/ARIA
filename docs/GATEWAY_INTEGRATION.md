@@ -101,8 +101,9 @@ finally:
 
 The per-session owner must authenticate UI events, route cancellation, deliver
 the emitted events, and render the preview without truncating it. The existing
-voice echo server is unchanged; text/voice dispatcher wiring is later Phase C
-work. No public desktop event fields or versions changed.
+voice echo server is unchanged. C4's local text dispatcher (LOCAL_EXECUTION.md)
+offers an explicit cloud-request boundary; automatic AI planning and voice/desktop
+integration remain pending. No public desktop event fields or versions changed.
 
 ## Gateway rendering and errors
 
