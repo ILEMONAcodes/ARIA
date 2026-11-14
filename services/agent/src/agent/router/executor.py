@@ -3,7 +3,9 @@
 from __future__ import annotations
 
 import asyncio
+import json
 from collections.abc import Awaitable, Callable
+from copy import deepcopy
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from typing import Any, Literal, Protocol
@@ -23,6 +25,7 @@ from agent.contracts.events import (
 )
 from agent.contracts.plan import Plan
 from agent.interfaces import Network
+from agent.planner.references import resolve_args
 from agent.planner.validation import PlanValidationError, validate_plan
 from agent.tools.base import Tool, ToolRegistry, ToolSpec
 from agent.tools.runner import Mode, ProcessToolRunner, ToolRunner
@@ -160,10 +163,15 @@ class PlanExecutor:
                 spec = self.registry.spec(step.tool)
                 tool = self.registry.get(step.tool)
                 self._check_policy(tool, spec)
-                args = self.registry.validate_args(step.tool, step.args).model_dump(mode="json")
+                resolved = resolve_args(step.args, outputs)
+                args = self.registry.validate_args(step.tool, resolved).model_dump(mode="json")
+                approved_args = json.dumps(args, sort_keys=True, allow_nan=False)
                 risk = plan.risk if plan.risk != "none" else spec.risk
                 if plan.needs_confirmation or risk != "none":
-                    preview = await self._invoke(tool, args, "dry_run", spec.timeout_s)
+                    preview_args = deepcopy(args)
+                    preview = await self._invoke(tool, preview_args, "dry_run", spec.timeout_s)
+                    if json.dumps(preview_args, sort_keys=True, allow_nan=False) != approved_args:
+                        raise ValueError("Dry run changed arguments")
                     if not isinstance(preview, str) or not preview.strip() or len(preview) > 16000:
                         raise ValueError("Invalid dry run")
                     confirmation = str(uuid4())
@@ -183,7 +191,9 @@ class PlanExecutor:
                         return ExecutionOutcome("declined", self._completed, tuple(outputs))
                 # Revalidate and recheck policy immediately before each step.
                 self._check_policy(tool, spec)
-                self.registry.validate_args(step.tool, args)
+                checked = self.registry.validate_args(step.tool, args).model_dump(mode="json")
+                if json.dumps(checked, sort_keys=True, allow_nan=False) != approved_args:
+                    raise ValueError("Arguments changed after preview")
                 if (spec.needs_network or plan.needs_network) and not await asyncio.wait_for(
                     self.network.is_online(), min(8.0, spec.timeout_s)
                 ):
@@ -198,7 +208,7 @@ class PlanExecutor:
                     )
                     return ExecutionOutcome("failed", self._completed, tuple(outputs))
                 self._running_step = True
-                value = await self._invoke(tool, args, "run", spec.timeout_s)
+                value = await self._invoke(tool, deepcopy(checked), "run", spec.timeout_s)
                 result = spec.output_model.model_validate(value, strict=True, extra="forbid")
                 self._running_step = False
                 outputs.append(result.model_dump(mode="json"))

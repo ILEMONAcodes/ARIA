@@ -59,9 +59,9 @@ assert not review.requires_clarification
 
 This performs no action. A review is not approval or execution authority. C4's
 executor (LOCAL_EXECUTION.md) revalidates arguments/current policy, honors cancellation,
-enforces timeouts and requires applicable approvals. Reference resolution remains open.
-`$stepN.field` bindings currently fail closed until resolution and per-step
-validation exist. No input provenance/grounding check is claimed here: matching
+enforces timeouts and requires applicable approvals. C5 extends it with result resolution.
+`$stepN.field` bindings now use C5's graph/template preflight and strict resolved
+input checks (STEP_RESULTS.md). No input provenance/grounding check is claimed here: matching
 names, dates and amounts to transcript/contacts/calendar remains planner work.
 
 ## Verification and next work

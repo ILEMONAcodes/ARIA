@@ -63,8 +63,10 @@ and the full Phase C acceptance gate remain open. C4 adds the [local execution p
 router/executor, per-step confirmations, killable workers, configured Windows app
 launching, read-only ICS calendar, activity events and an authenticated text service.
 The user's priority is to finish these non-model pieces before revisiting deferred
-setup. Real staff-PC/frontend acceptance, durable profile history and dependent
-result-reference workflows remain open; this does not mark the voice or live-provider gates passed.
+setup. C5 adds [safe dependent step results](STEP_RESULTS.md), including graph
+validation, typed resolution and confirmation of actual values. Real staff-PC/frontend
+acceptance and durable profile history remain open; this does not mark the voice
+or live-provider gates passed.
 
 ## Deferred work: return before the MVP pilot
 

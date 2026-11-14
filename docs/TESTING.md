@@ -166,6 +166,14 @@ checks below remain later Phase C work.
 
 **Tools**
 
+C5's `test_step_results.py` covers reference grammar/order/declared fields,
+partial template validation, complete resolved Pydantic validation, copied
+typed/container values, one-pass source-data handling and resolved confirmations.
+It checks producer failure/cancel, wrong/missing/null values, mutation and decline/
+replay without side effects. `dependent_steps.json` matches the real executor's
+event flow; the separate worker smoke executes three dependent steps and rejects
+a mutating dry run. These remain fictional/offline tests; see STEP_RESULTS.md.
+
 C4 tests in `test_execution.py`, `test_local_tools.py` and `test_local_session.py`
 exercise confirmation, strict validation, no late steps, cancellation, timeouts,
 offline gating, read-only recurrence/timezone behavior and authenticated text
