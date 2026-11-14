@@ -53,7 +53,10 @@ def main() -> int:
                         if args.query
                         else status
                     )
-                    print(json.dumps(output.model_dump(mode="json"), indent=2), flush=True)
+                    print(
+                        json.dumps(output.model_dump(mode="json", exclude={"sources"}), indent=2),
+                        flush=True,
+                    )
                     if not args.watch:
                         return 1 if status.failed else 0
                     time.sleep(5)

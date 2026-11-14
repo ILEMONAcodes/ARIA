@@ -118,5 +118,9 @@ folder through a real subprocess. CI runs both paths on Linux/Windows/macOS.
 
 Still open: vector embeddings/hybrid retrieval, generated grounded answers and
 conflict handling, the full public sample corpus and 30-question quality gate,
-source opening at a page, frontend index-status/settings controls, real staff/UI
+frontend index-status/settings controls, real staff/UI
 acceptance and performance evaluation. No model setup is needed for this slice.
+
+D2 adds opening the cited snapshot through explicitly configured Windows viewers;
+see [OPEN_POLICY_SOURCES.md](OPEN_POLICY_SOURCES.md). Its native viewer/frontend
+acceptance checks remain open.

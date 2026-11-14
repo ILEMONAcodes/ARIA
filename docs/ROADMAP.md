@@ -74,7 +74,9 @@ D1 adds [offline policy ingestion and keyword search](OFFLINE_POLICY_SEARCH.md)
 with encrypted FTS5, PDF/DOCX/TXT provenance, refresh/watch maintenance, citations
 and explicit suggestions/no-match responses. This is a user-directed sequencing
 exception (decision 35). Vector/model work, the full policy quality gate and
-frontend/staff acceptance remain open.
+frontend/staff acceptance remain open. D2 adds [source opening](OPEN_POLICY_SOURCES.md)
+for the latest session citations, with snapshot checks and explicitly configured
+Windows viewers. Real viewer/page-navigation and frontend acceptance remain open.
 
 ## Deferred work: return before the MVP pilot
 

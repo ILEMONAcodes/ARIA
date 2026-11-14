@@ -182,6 +182,13 @@ OFFLINE_POLICY_SEARCH.md.
 - `test_find_document_by_topic_number_and_year` (POL-5)
 - `test_offline_returns_passages_without_generated_answer`
 
+D2's `test_source_open.py` covers exact session citation/page selection, private
+snapshot receipts, stale/index/metadata/missing/outside/symlink rejection, native
+Windows argument/environment restrictions, fallback and failure messages,
+cancellation, publication/selection cleanup and the authenticated
+`open_policy_source` scenario. The real-worker policy smoke verifies unchanged
+and changed source receipts without opening apps. See OPEN_POLICY_SOURCES.md.
+
 **Tools**
 
 C5's `test_step_results.py` covers reference grammar/order/declared fields,

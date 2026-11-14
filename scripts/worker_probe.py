@@ -60,9 +60,10 @@ class PolicyProbeTool(ProbeTool):
     def run(self, args: ProbeInput) -> ProbeOutput:
         from agent.fakes import FakeDatabaseKeys
         from agent.kb.library import PolicyLibrary, SearchInput
+        from agent.kb.source import SourceIssue, validate_source
         from agent.store.database import open_database
 
-        root = Path(args.directory)
+        root = Path(args.directory).resolve()
         sources = root / "policies"
         sources.mkdir()
         (sources / "fictional.txt").write_text("# Eligibility\nFictional annual leave guidance.")
@@ -71,4 +72,12 @@ class PolicyProbeTool(ProbeTool):
             assert library.refresh().indexed == 1
             result = library.search(SearchInput(query="annual leave"))
             assert result.found and len(result.citations) == 1
+            assert validate_source(library, result.sources[0]) == sources / "fictional.txt"
+            (sources / "fictional.txt").write_text("Changed fictional source.")
+            try:
+                validate_source(library, result.sources[0])
+            except SourceIssue as exc:
+                assert exc.code == "changed"
+            else:
+                raise AssertionError("A changed source was accepted")
             return ProbeOutput(message=result.citations[0].passage)

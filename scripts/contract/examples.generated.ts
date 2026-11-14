@@ -573,6 +573,102 @@ export const agentExamples = [
   {
     "v": 1,
     "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "search policy annual leave"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "policy-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Offline keyword matches; these passages are not a generated answer.",
+    "citations": [
+      {
+        "doc": "Fictional Leave Policy",
+        "page": null,
+        "date": "2026-01-15",
+        "passage": "Section: Eligibility\n\nAnnual leave requires a completed request form.",
+        "file_path": "C:/fictional/policies/leave.txt"
+      }
+    ]
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "policy-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed kb.search.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "policy-task",
+    "text": "Offline keyword matches; these passages are not a generated answer.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "open-source-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "open-source-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed files.open.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "open-source-task",
+    "text": "Started the source viewer. Use the cited section to locate the passage.",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
     "state": "listening",
     "online": true,
     "profile": "hosted"
@@ -771,6 +867,17 @@ export const uiExamples = [
     "confirm_id": "c1",
     "decision": "yes",
     "via": "click"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "search policy annual leave"
+  },
+  {
+    "v": 1,
+    "type": "source.open",
+    "file_path": "C:/fictional/policies/leave.txt",
+    "page": null
   },
   {
     "v": 1,

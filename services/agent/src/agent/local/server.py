@@ -110,6 +110,12 @@ def create_app(
             async def receive() -> None:
                 while True:
                     raw = await socket.receive_json()
+                    if (
+                        raw.get("type") == "source.open"
+                        and raw.get("page") is not None
+                        and type(raw["page"]) is not int
+                    ):
+                        raise ValueError("Source page must be an integer")
                     await session.handle(_ui.validate_python(check_version(raw)))
 
             workers: list[asyncio.Task[None]] = []

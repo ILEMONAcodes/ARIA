@@ -2,11 +2,22 @@
 timezone = "Africa/Lagos"
 calendar = "../library/sample_calendar.ics"
 
+# Optional offline policy search. Cache stays outside the source folder.
+# policy_folder = "../library/policies"
+# policy_database = "../data/aria.db"
+
 # Add installed apps explicitly, using their real executable paths:
 # [apps.excel]
 # executable = "C:/replace-with-your-installed-path/EXCEL.EXE"
 # aliases = ["microsoft excel"]
 
-# Optional offline policy search. Cache stays outside the source folder.
-# policy_folder = "../library/policies"
-# policy_database = "../data/aria.db"
+# Source opening is opt-in. Configure installed Windows viewer executables:
+# [source_viewers.pdf]
+# executable = "C:/replace-with-your-installed-path/SumatraPDF.exe"
+# kind = "sumatra"  # enables fixed PDF page navigation; no custom command strings
+# [source_viewers.docx]
+# executable = "C:/replace-with-your-installed-path/WINWORD.EXE"
+# kind = "file"
+# [source_viewers.txt]
+# executable = "C:/Windows/System32/notepad.exe"  # verify your actual installed path
+# kind = "file"

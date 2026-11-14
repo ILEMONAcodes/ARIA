@@ -95,6 +95,9 @@ class LocalSession:
                     await self._stop(announce=True)
             elif event.type == "tts.stop":
                 await self._stop(announce=True)
+            elif event.type == "source.open":
+                await self._stop()
+                await self.executor.open_source(event)
             elif event.type == "text.input":
                 await self._stop()
                 await self.emit(TranscriptFinal(text=event.text))
