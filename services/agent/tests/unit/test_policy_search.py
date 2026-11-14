@@ -224,11 +224,16 @@ def test_policy_root_isolation_and_newest_first(library):
     PolicyLibrary(other, library.db).refresh()
     assert not library.search(SearchInput(query="moonbase")).citations
     assert PolicyLibrary(other, library.db).search(SearchInput(query="moonbase")).found
-    dates = [c.date for c in library.search(SearchInput(query="fictional")).citations if c.date]
+    dates = [
+        c.date
+        for c in library.search(SearchInput(query="fictional", sort="newest")).citations
+        if c.date
+    ]
     assert dates == sorted(dates, reverse=True)
 
 
-def test_offline_session_matches_policy_search_scenario(library, monkeypatch):
+@pytest.mark.parametrize("scenario_name", ["offline_policy_search", "policy_search_paraphrase"])
+def test_offline_session_matches_policy_search_scenario(library, monkeypatch, scenario_name):
     class Keys:
         def get_key(self, database_id, *, create):
             return bytes(range(32))  # Only this fictional fixture's database.
@@ -250,7 +255,7 @@ def test_offline_session_matches_policy_search_scenario(library, monkeypatch):
         time_zone=UTC,
         runner=MemoryRunner(),
     )
-    fixture = load_scenario("offline_policy_search")
+    fixture = load_scenario(scenario_name)
     with (
         TestClient(app) as client,
         client.websocket_connect("/ws?token=fictional-policy-token") as socket,
@@ -262,7 +267,9 @@ def test_offline_session_matches_policy_search_scenario(library, monkeypatch):
                 actual, expected = socket.receive_json(), step["send"]
                 dynamic = {"task_id", "id", "ts"}
                 if actual["type"] == "result.answer":
-                    assert actual["citations"][0]["file_path"] == str(library.root / "leave.txt")
+                    assert actual["citations"][0]["file_path"] == str(
+                        library.root / Path(expected["citations"][0]["file_path"]).name
+                    )
                     actual["citations"][0]["file_path"] = expected["citations"][0]["file_path"]
                 assert {k: v for k, v in actual.items() if k not in dynamic} == {
                     k: v for k, v in expected.items() if k not in dynamic
@@ -371,6 +378,7 @@ def test_version_one_database_upgrades_without_losing_settings(tmp_path):
         assert db.fetch_all("SELECT version FROM schema_migrations ORDER BY version") == [
             (1,),
             (2,),
+            (3,),
         ]
         assert db.fetch_all("SELECT count(*) FROM kb_passages") == [(0,)]
 

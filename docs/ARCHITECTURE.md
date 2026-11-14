@@ -1,5 +1,9 @@
 # Backend and AI file architecture
 
+For the current checked task list, implementation evidence and continuation point,
+read [BACKEND_HANDOFF.md](BACKEND_HANDOFF.md). Existing files do not imply
+production acceptance.
+
 This is the implementation map for `agents/backend-ai.md`, phases A to I.
 Requirements and phase gates remain in PRD.md and ROADMAP.md. API_CONTRACT.md
 defines the UI boundary; this document does not change that contract.
@@ -120,13 +124,13 @@ services/agent/
 │   │   ├── apps.py                  [existing C4] configured Windows executable launching
 │   │   ├── calendar.py              [existing C4] read-only ICS listing; changes remain F
 │   │   ├── runner.py, worker.py     [existing C4] killable private tool process boundary
-│   │   ├── knowledge.py             [planned D] policy retrieval/answer tools
+│   │   ├── knowledge.py             [not created] current search/source tools live under kb/
 │   │   ├── documents.py             [planned E] memo/report/summary tools
 │   │   ├── mail.py                  [planned F] read, draft and confirmed queue
 │   │   ├── files.py                 [planned F] local file search/open
 │   │   └── system.py                [planned F] volume, focus and print
-│   ├── confirmations/               [planned C] payload/action approval state
-│   ├── kb/                          [planned D] ingestion, indexing, retrieval
+│   ├── confirmations/               [not separate] state lives in llm/flow.py and router/executor.py
+│   ├── kb/                          [existing D] reading, encrypted indexing, retrieval, source opening and evaluation
 │   ├── documents/                   [planned E] templates, drafting, summaries
 │   ├── mail/                        [planned F] Graph/Gmail OAuth adapters
 │   ├── outbox/                      [planned F] durable queue/retries/idempotency
@@ -169,7 +173,7 @@ services/gateway/
 │   ├── limits.py                    [planned C] rate/spending enforcement
 │   ├── usage.py                     [planned C] content-free usage records
 │   └── providers/                   [planned C] chosen Gemma provider adapter
-└── tests/unit/                     [existing] 9 starter tests
+└── tests/unit/                     [existing] gateway unit tests
 ```
 
 The existing gateway is scaffolding: the real provider call is not implemented,
@@ -207,9 +211,10 @@ it still never runs tools, reads real files or contacts a model/mail provider.
 
 The original CLI remains foundation-only. `python -m agent.voice` runs the
 Phase B echo integration (VOX-1–4/SYSX-1); see VOICE_LOOP.md for its actual file
-map, startup, models, privacy boundaries and pending checks. Planner/gateway
-work in C is next under the user's sequencing exception (decision 26), using
-text inputs and fake adapters while real speech setup/evaluation is deferred.
+map, startup, models, privacy boundaries and pending checks. Phase C planning/execution and
+independent Phase D policy work are implemented under the user's sequencing
+exceptions, using text inputs/fake providers while real speech and live-provider
+setup/evaluation remain deferred.
 No requirement IDs move phases. The role's Phase A gate requires the mock and
 compiled types, not a finished desktop UI or real voice service. Native vault
 authorization and Windows installation still need manual deployment smoke tests.

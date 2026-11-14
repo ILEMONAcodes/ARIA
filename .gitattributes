@@ -1,2 +1,9 @@
 apps/desktop/src/contract/*.ts text eol=lf
 scripts/contract/examples.generated.ts text eol=lf
+library/public_policies/*.pdf binary
+library/policies/*.txt text eol=lf
+library/**/manifest.json text eol=lf
+library/public_policies/provenance.json text eol=lf
+tests/kb_questions/*.json text eol=lf
+tests/kb_questions/reports/*.json text eol=lf
+services/agent/src/agent/kb/*.py text eol=lf

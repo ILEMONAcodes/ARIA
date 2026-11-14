@@ -7,12 +7,16 @@ import os
 import re
 from datetime import UTC, date, datetime
 from pathlib import Path
-from typing import Any
+from typing import Any, Literal
 
 from pydantic import BaseModel, ConfigDict, Field, field_validator
 
 from agent.contracts.events import Citation
 from agent.kb.reader import MAX_BYTES, DocumentReader, LibraryError, LocalDocumentReader, Passage
+from agent.kb.retrieval import (
+    KeywordRetriever,
+    PolicyRetriever,
+)
 from agent.store.database import Connection, Database
 
 
@@ -71,6 +75,7 @@ class IndexStatus(BaseModel):
 class SearchInput(BaseModel):
     model_config = ConfigDict(extra="forbid")
     query: str = Field(min_length=1, max_length=512)
+    sort: Literal["relevance", "newest"] = "relevance"
     year: int | None = Field(default=None, ge=1900, le=9999)
     circular_no: str | None = Field(default=None, min_length=1, max_length=120)
 
@@ -95,56 +100,21 @@ class SearchOutput(BaseModel):
     sources: list[SourceReceipt] = Field(default_factory=list, repr=False)
 
 
-_STOP = frozenset(
-    [
-        "a",
-        "an",
-        "the",
-        "is",
-        "are",
-        "was",
-        "were",
-        "what",
-        "which",
-        "when",
-        "where",
-        "how",
-        "do",
-        "does",
-        "can",
-        "i",
-        "me",
-        "my",
-        "we",
-        "our",
-        "about",
-        "of",
-        "to",
-        "for",
-        "in",
-        "on",
-        "and",
-        "or",
-        "please",
-        "policy",
-        "policies",
-        "find",
-        "show",
-        "search",
-        "tell",
-    ]
-)
-
-
 class PolicyLibrary:
     def __init__(
-        self, root: Path, database: Database, *, reader: DocumentReader | None = None
+        self,
+        root: Path,
+        database: Database,
+        *,
+        reader: DocumentReader | None = None,
+        retriever: PolicyRetriever | None = None,
     ) -> None:
         self.root = root.resolve(strict=True)
         if not self.root.is_dir():
             raise LibraryError()
         self.db = database
         self.reader = reader if reader is not None else LocalDocumentReader()
+        self.retriever = retriever if retriever is not None else KeywordRetriever()
 
     def _manifest(self) -> dict[str, Metadata]:
         path = self.root / "manifest.json"
@@ -283,38 +253,23 @@ class PolicyLibrary:
 
     def search(self, args: SearchInput) -> SearchOutput:
         try:
-            tokens = list(
-                dict.fromkeys(
-                    t for t in re.findall(r"[^\W_]+", args.query.casefold()) if t not in _STOP
-                )
+            result = self.retriever.search(
+                self.db,
+                str(self.root),
+                args.query,
+                year=args.year,
+                circular_no=args.circular_no,
+                sort=args.sort,
             )
-            if not tokens or len(tokens) > 16 or any(len(t) > 64 for t in tokens):
+            if not result.valid_query:
                 return SearchOutput(
                     message="No searchable keywords were supplied.", found=False, citations=[]
                 )
-            parameters: list[Any] = [str(self.root)]
-            condition = "d.root=? AND d.error IS NULL"
-            if args.year is not None:
-                condition += " AND substr(d.issue_date,1,4)=?"
-                parameters.append(str(args.year))
-            if args.circular_no is not None:
-                condition += " AND d.circular_no=?"
-                parameters.append(args.circular_no)
-
-            def lookup(operator: str) -> list[tuple[Any, ...]]:
-                expression = operator.join('"' + t + '"' for t in tokens)
-                return self.db.fetch_all(
-                    "SELECT d.title,d.path,d.issue_date,p.page,p.section,p.text,d.fingerprint "
-                    "FROM kb_passages p JOIN kb_documents d ON p.document_id=d.id "
-                    "WHERE " + condition + " AND kb_passages MATCH ? "
-                    "ORDER BY d.issue_date DESC,bm25(kb_passages),d.path,p.rowid LIMIT 8",
-                    (*parameters, expression),
-                )
-
-            rows = lookup(" AND ")
-            found = bool(rows)
-            if not rows:
-                rows = lookup(" OR ")
+            found = result.found
+            rows = [
+                (h.title, h.path, h.issued, h.page, h.section, h.text, h.fingerprint)
+                for h in result.hits
+            ]
             citations = [
                 Citation(
                     doc=title,
