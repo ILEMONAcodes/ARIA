@@ -162,6 +162,15 @@ checks below remain later Phase C work.
 - `test_connectivity_probe_uses_endpoint_not_os_flag`
 
 **Knowledge base**
+
+D1's `test_policy_search.py` verifies real PDF/DOCX/TXT parsing, encrypted FTS5,
+explicit provenance and filters, unchanged/changed/deleted/failed files, atomic
+replacement, old-store migration, root isolation, input/traversal/symlink bounds,
+watch-mode refresh and the `offline_policy_search` real-session/mock handoff.
+The worker smoke independently checks actual subprocess indexing/search with
+fictional temporary sources. These tests establish keyword retrieval, not semantic
+confidence, generated answers or the full Phase D 30-question gate. See
+OFFLINE_POLICY_SEARCH.md.
 - `test_ingest_parses_docx_pdf_txt_and_extracts_metadata`
 - `test_chunks_are_300_to_500_tokens_with_overlap_and_keep_page_and_date`
 - `test_changed_file_is_reindexed`

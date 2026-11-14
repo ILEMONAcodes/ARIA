@@ -56,7 +56,9 @@ def test_database_reopens_with_same_key_and_does_not_reapply_migrations(tmp_path
         connection.execute("INSERT INTO settings VALUES ('fictional', 'saved')")
     with open_database(path, keys, now=NOW) as database:
         assert database.fetch_all("SELECT value FROM settings") == [("saved",)]
-        assert database.fetch_all("SELECT version FROM schema_migrations") == [(1,)]
+        assert database.fetch_all("SELECT version FROM schema_migrations") == [
+            (m.version,) for m in MIGRATIONS
+        ]
     assert [create for _, create in keys.calls] == [True, False]
     assert len({identity for identity, _ in keys.calls}) == 1
 
@@ -155,22 +157,28 @@ def test_foreign_keys_reject_orphaned_history(database):
 
 
 def test_failed_migration_rolls_back_schema_and_version(database):
-    broken = Migration(2, "broken", ("CREATE TABLE temporary_table (id TEXT)", "INVALID SQL"))
+    broken = Migration(
+        len(MIGRATIONS) + 1, "broken", ("CREATE TABLE temporary_table (id TEXT)", "INVALID SQL")
+    )
     with pytest.raises(OperationalError), database.transaction() as connection:
         apply_migrations(connection, (*MIGRATIONS, broken))
-    assert database.fetch_all("SELECT version FROM schema_migrations") == [(1,)]
+    assert database.fetch_all("SELECT version FROM schema_migrations") == [
+        (m.version,) for m in MIGRATIONS
+    ]
     assert database.fetch_all("SELECT name FROM sqlite_master WHERE name='temporary_table'") == []
 
 
 def test_migration_checksum_mismatch_is_rejected(database):
     with pytest.raises(ValueError, match="history"), database.transaction() as connection:
         apply_migrations(connection, (Migration(1, "foundations", ("SELECT 1",)),))
-    assert database.fetch_all("SELECT version FROM schema_migrations") == [(1,)]
+    assert database.fetch_all("SELECT version FROM schema_migrations") == [
+        (m.version,) for m in MIGRATIONS
+    ]
 
 
 def test_newer_database_schema_is_rejected(database):
     with database.transaction() as connection:
-        connection.execute("INSERT INTO schema_migrations VALUES (2, 'future', 'unknown')")
+        connection.execute("INSERT INTO schema_migrations VALUES (999, 'future', 'unknown')")
     with pytest.raises(ValueError, match="history"), database.transaction() as connection:
         apply_migrations(connection)
 

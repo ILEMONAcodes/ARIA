@@ -21,6 +21,7 @@ from agent.contracts.events import (
     ErrorEvent,
     PlanPreview,
     ReplyText,
+    ResultAnswer,
     Status,
 )
 from agent.contracts.plan import Plan
@@ -211,6 +212,13 @@ class PlanExecutor:
                 value = await self._invoke(tool, deepcopy(checked), "run", spec.timeout_s)
                 result = spec.output_model.model_validate(value, strict=True, extra="forbid")
                 self._running_step = False
+                if step.tool == "kb.search":
+                    from agent.kb.library import SearchOutput
+
+                    search = SearchOutput.model_validate(
+                        result.model_dump(mode="json"), strict=True
+                    )
+                    await self.emit(ResultAnswer(text=search.message, citations=search.citations))
                 outputs.append(result.model_dump(mode="json"))
                 self._completed += 1
                 await self._activity(f"Completed {step.tool}.")

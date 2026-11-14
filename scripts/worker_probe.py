@@ -50,3 +50,25 @@ class MutatingPreviewTool(ProbeTool):
 class WorkerEchoTool(FakeTool):
     # This smoke check measures dependency resolution, not interpreter cold-start speed.
     timeout_s = 10.0
+
+
+class PolicyProbeTool(ProbeTool):
+    """Only creates fictional sources/cache inside the smoke test's temporary folder."""
+
+    name = "test.policy_probe"
+
+    def run(self, args: ProbeInput) -> ProbeOutput:
+        from agent.fakes import FakeDatabaseKeys
+        from agent.kb.library import PolicyLibrary, SearchInput
+        from agent.store.database import open_database
+
+        root = Path(args.directory)
+        sources = root / "policies"
+        sources.mkdir()
+        (sources / "fictional.txt").write_text("# Eligibility\nFictional annual leave guidance.")
+        with open_database(root / "policy.db", FakeDatabaseKeys()) as database:
+            library = PolicyLibrary(sources, database)
+            assert library.refresh().indexed == 1
+            result = library.search(SearchInput(query="annual leave"))
+            assert result.found and len(result.citations) == 1
+            return ProbeOutput(message=result.citations[0].passage)

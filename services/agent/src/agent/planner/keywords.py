@@ -87,6 +87,11 @@ class KeywordPlanner:
         command = command.removesuffix(" please")
         if command in _CANCEL:
             return KeywordResult("cancel")
+        if command.startswith("search policy "):
+            query = command[len("search policy ") :].strip()
+            return self._plan("policy_search", "kb.search", {"query": query}, 1.0)
+        if command == "search policy":
+            return KeywordResult("clarify", question="What policy should I search for?")
         if command in _TODAY:
             now = self.clock.now()
             if now.tzinfo is None or now.utcoffset() is None:

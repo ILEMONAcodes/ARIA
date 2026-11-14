@@ -23,7 +23,12 @@ from agent.router.executor import PlanExecutor  # noqa: E402
 from agent.router.session import LocalSession  # noqa: E402
 from agent.tools import ToolRegistry  # noqa: E402
 from agent.tools.runner import ProcessToolRunner, ToolFailure  # noqa: E402
-from scripts.worker_probe import MutatingPreviewTool, ProbeTool, WorkerEchoTool  # noqa: E402
+from scripts.worker_probe import (  # noqa: E402
+    MutatingPreviewTool,
+    PolicyProbeTool,
+    ProbeTool,
+    WorkerEchoTool,
+)
 
 
 async def main() -> None:
@@ -92,10 +97,15 @@ async def main() -> None:
         await adapter.close()
     with TemporaryDirectory(prefix="aria-worker-smoke-") as folder:
         root = Path(folder)
+        policy = await runner.invoke(
+            PolicyProbeTool(), {"directory": folder}, mode="run", timeout_s=10
+        )
+        assert policy == {"message": "Section: Eligibility\n\nFictional annual leave guidance."}
         tool = ProbeTool()
+        before_preview = set(root.iterdir())
         preview = await runner.invoke(tool, {"directory": folder}, mode="dry_run", timeout_s=10)
         assert preview == "Write only the smoke test's temporary markers."
-        assert list(root.iterdir()) == []
+        assert set(root.iterdir()) == before_preview
         try:
             await runner.invoke(
                 MutatingPreviewTool(), {"directory": folder}, mode="dry_run", timeout_s=10
