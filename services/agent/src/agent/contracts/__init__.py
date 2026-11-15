@@ -1,4 +1,41 @@
 from agent.contracts.events import CONTRACT_VERSION, AgentEvent, UIEvent
 from agent.contracts.plan import Plan, PlanStep, Risk
+from agent.contracts.tools import (
+    DocDraftInput,
+    DocDraftMissing,
+    DocDraftOutput,
+    DocReportAssembleInput,
+    DocReportAssembleOutput,
+    DocReportCitation,
+    DocReportOutlineInput,
+    DocReportOutlineOutput,
+    DocReportSection,
+    DocReportSectionInput,
+    DocReportSectionOutput,
+    DocSummariseInput,
+    DocSummariseOutput,
+    PageRef,
+)
 
-__all__ = ["CONTRACT_VERSION", "AgentEvent", "Plan", "PlanStep", "Risk", "UIEvent"]
+__all__ = [
+    "CONTRACT_VERSION",
+    "AgentEvent",
+    "DocDraftInput",
+    "DocDraftMissing",
+    "DocDraftOutput",
+    "DocReportAssembleInput",
+    "DocReportAssembleOutput",
+    "DocReportCitation",
+    "DocReportOutlineInput",
+    "DocReportOutlineOutput",
+    "DocReportSection",
+    "DocReportSectionInput",
+    "DocReportSectionOutput",
+    "DocSummariseInput",
+    "DocSummariseOutput",
+    "PageRef",
+    "Plan",
+    "PlanStep",
+    "Risk",
+    "UIEvent",
+]

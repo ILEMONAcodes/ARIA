@@ -220,6 +220,95 @@ export const agentExamples = [
   {
     "v": 1,
     "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "summarise the travel policy in five bullets"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "summarise-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "• Travel expense claims require itemised receipts (Fictional Travel Policy, Section: Receipts)\n• Advances must be requested at least five business days before travel (Fictional Travel Policy, Section: Advances)\n• Meal allowances are capped at the published daily rate (Fictional Travel Policy, Section: Meals)\n• International travel requires director approval (Fictional Travel Policy, Section: International)\n• All claims must be submitted within thirty days of return (Fictional Travel Policy, Section: Submission)",
+    "citations": [
+      {
+        "doc": "Fictional Travel Policy",
+        "page": 1,
+        "date": "2025-02-01",
+        "passage": "Section: Receipts\n\nTravel expense claims require itemised receipts.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      },
+      {
+        "doc": "Fictional Travel Policy",
+        "page": 2,
+        "date": "2025-02-01",
+        "passage": "Section: Advances\n\nAdvances must be requested at least five business days before travel.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      },
+      {
+        "doc": "Fictional Travel Policy",
+        "page": 2,
+        "date": "2025-02-01",
+        "passage": "Section: Meals\n\nMeal allowances are capped at the published daily rate.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      },
+      {
+        "doc": "Fictional Travel Policy",
+        "page": 3,
+        "date": "2025-02-01",
+        "passage": "Section: International\n\nInternational travel requires director approval.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      },
+      {
+        "doc": "Fictional Travel Policy",
+        "page": 3,
+        "date": "2025-02-01",
+        "passage": "Section: Submission\n\nAll claims must be submitted within thirty days of return.",
+        "file_path": "C:/fictional/policies/travel.txt"
+      }
+    ]
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "summarise-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed docs.summarise (five_bullets).",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "summarise-task",
+    "text": "• Travel expense claims require itemised receipts (Fictional Travel Policy, Section: Receipts)\n• Advances must be requested at least five business days before travel (Fictional Travel Policy, Section: Advances)\n• Meal allowances are capped at the published daily rate (Fictional Travel Policy, Section: Meals)\n• International travel requires director approval (Fictional Travel Policy, Section: International)\n• All claims must be submitted within thirty days of return (Fictional Travel Policy, Section: Submission)",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
     "state": "listening",
     "online": true,
     "profile": "hosted"
@@ -408,6 +497,51 @@ export const agentExamples = [
     "type": "status",
     "state": "idle",
     "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "draft memo to team about new travel policy effective march first"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "draft-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "I need one clarification: who should the memo be from (your name/role)?",
+    "citations": []
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "draft-task",
+    "text": "I need one clarification: who should the memo be from (your name/role)?",
+    "spoken": true
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
     "profile": "hosted"
   },
   {
@@ -794,6 +928,51 @@ export const agentExamples = [
     "v": 1,
     "type": "status",
     "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "create a report on q1 travel expenses"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "report-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Proposed outline for Q1 Travel Expenses Report:\n1. Executive Summary — High-level totals and key findings\n2. Methodology — Data sources and scope\n3. Spend by Category — Flights, accommodation, meals, ground transport\n4. Spend by Department — Breakdown across teams\n5. Policy Compliance — Receipts, advances, submission timeliness\n6. Exceptions and Approvals — Director-approved international trips\n7. Recommendations — Policy adjustments for Q2\n\nShall I proceed with this outline?",
+    "citations": []
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "report-task",
+    "text": "Proposed outline for Q1 Travel Expenses Report:\n1. Executive Summary — High-level totals and key findings\n2. Methodology — Data sources and scope\n3. Spend by Category — Flights, accommodation, meals, ground transport\n4. Spend by Department — Breakdown across teams\n5. Policy Compliance — Receipts, advances, submission timeliness\n6. Exceptions and Approvals — Director-approved international trips\n7. Recommendations — Policy adjustments for Q2\n\nShall I proceed with this outline?",
+    "spoken": true
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
     "online": false,
     "profile": "hosted"
   },
@@ -895,6 +1074,11 @@ export const uiExamples = [
   },
   {
     "v": 1,
+    "type": "text.input",
+    "text": "summarise the travel policy in five bullets"
+  },
+  {
+    "v": 1,
     "type": "approval.response",
     "approval_id": "a1",
     "decision": "yes"
@@ -916,6 +1100,11 @@ export const uiExamples = [
     "v": 1,
     "type": "text.input",
     "text": "Open Excel"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "draft memo to team about new travel policy effective march first"
   },
   {
     "v": 1,
@@ -956,6 +1145,11 @@ export const uiExamples = [
     "v": 1,
     "type": "text.input",
     "text": "search policy what proof is needed for fictional travel expense claims"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "create a report on q1 travel expenses"
   },
   {
     "v": 1,
