@@ -214,17 +214,17 @@ class TestAppsLaunch:
 
     def test_dry_run(self):
         tool = AppsLaunch()
-        args = tool.input_model(app_name="notepad")
+        args = tool.input_model(app_name="safari")
         desc = tool.dry_run(args)
-        assert "notepad" in desc
+        assert "safari" in desc
 
     def test_run_launches_allowed_app(self):
         fake_launcher = _FakeAppLauncher()
         tool = AppsLaunch(app_launcher=fake_launcher)
-        args = tool.input_model(app_name="notepad")
+        args = tool.input_model(app_name="safari")
         result = tool.run(args)
         assert result.launched is True
-        assert "notepad" in result.message
+        assert "safari" in result.message
 
     def test_run_rejects_disallowed_app(self):
         tool = AppsLaunch()
@@ -235,7 +235,18 @@ class TestAppsLaunch:
 
     def test_allow_list_contains_common_apps(self):
         tool = AppsLaunch()
-        for app in ["notepad", "word", "excel", "powerpoint", "outlook", "chrome", "edge"]:
+        for app in [
+            "safari",
+            "chrome",
+            "firefox",
+            "mail",
+            "calendar",
+            "finder",
+            "terminal",
+            "code",
+            "word",
+            "excel",
+        ]:
             assert app in tool.ALLOWED_APPS
 
 

@@ -7,9 +7,11 @@ and a note in docs/DECISIONS.md.
 
 from __future__ import annotations
 
-from typing import Literal
+from typing import Any, Literal
 
 from pydantic import BaseModel, Field
+
+from agent.contracts.events import SpeakerInfo
 
 CONTRACT_VERSION = 1
 
@@ -316,3 +318,116 @@ FilesFindInput.model_rebuild()
 FilesFindOutput.model_rebuild()
 AppsLaunchInput.model_rebuild()
 AppsLaunchOutput.model_rebuild()
+
+
+# ---------------------------------------------------------------- speaker.enroll
+class SpeakerEnrollInput(_Base):
+    type: Literal["speaker.enroll.input"] = "speaker.enroll.input"
+    profile_id: str
+    name: str
+
+
+class SpeakerEnrollOutput(_Base):
+    type: Literal["speaker.enroll.output"] = "speaker.enroll.output"
+    profile_id: str
+    name: str
+    enrolled: bool
+
+
+# ---------------------------------------------------------------- speaker.identify
+class SpeakerIdentifyInput(_Base):
+    type: Literal["speaker.identify.input"] = "speaker.identify.input"
+    audio: str  # base64 encoded audio
+
+
+class SpeakerIdentifyOutput(_Base):
+    type: Literal["speaker.identify.output"] = "speaker.identify.output"
+    speaker: SpeakerInfo | None = None
+    needs_confirmation: bool = False
+
+
+# ---------------------------------------------------------------- speaker.confirm
+class SpeakerConfirmInput(_Base):
+    type: Literal["speaker.confirm.input"] = "speaker.confirm.input"
+    accept: bool
+
+
+class SpeakerConfirmOutput(_Base):
+    type: Literal["speaker.confirm.output"] = "speaker.confirm.output"
+    speaker: SpeakerInfo | None = None
+
+
+# ---------------------------------------------------------------- speaker.profile.create
+class SpeakerProfileCreateInput(_Base):
+    type: Literal["speaker.profile.create.input"] = "speaker.profile.create.input"
+    profile_id: str
+    name: str
+    settings: dict[str, Any] | None = None
+
+
+class SpeakerProfileCreateOutput(_Base):
+    type: Literal["speaker.profile.create.output"] = "speaker.profile.create.output"
+    profile_id: str
+    name: str
+    created: bool
+
+
+# ---------------------------------------------------------------- speaker.profile.update
+class SpeakerProfileUpdateInput(_Base):
+    type: Literal["speaker.profile.update.input"] = "speaker.profile.update.input"
+    profile_id: str
+    name: str | None = None
+    settings: dict[str, Any] | None = None
+
+
+class SpeakerProfileUpdateOutput(_Base):
+    type: Literal["speaker.profile.update.output"] = "speaker.profile.update.output"
+    profile_id: str
+    updated: bool
+
+
+# ---------------------------------------------------------------- speaker.profile.delete
+class SpeakerProfileDeleteInput(_Base):
+    type: Literal["speaker.profile.delete.input"] = "speaker.profile.delete.input"
+    profile_id: str
+    confirm: bool = False
+
+
+class SpeakerProfileDeleteOutput(_Base):
+    type: Literal["speaker.profile.delete.output"] = "speaker.profile.delete.output"
+    profile_id: str
+    deleted: bool
+
+
+# ---------------------------------------------------------------- speaker.profile.list
+class SpeakerProfileListInput(_Base):
+    type: Literal["speaker.profile.list.input"] = "speaker.profile.list.input"
+
+
+class SpeakerProfileInfo(BaseModel):
+    profile_id: str
+    name: str
+    has_embedding: bool
+    settings: dict[str, Any]
+    created_at: int
+
+
+class SpeakerProfileListOutput(_Base):
+    type: Literal["speaker.profile.list.output"] = "speaker.profile.list.output"
+    profiles: list[SpeakerProfileInfo]
+
+
+SpeakerEnrollInput.model_rebuild()
+SpeakerEnrollOutput.model_rebuild()
+SpeakerIdentifyInput.model_rebuild()
+SpeakerIdentifyOutput.model_rebuild()
+SpeakerConfirmInput.model_rebuild()
+SpeakerConfirmOutput.model_rebuild()
+SpeakerProfileCreateInput.model_rebuild()
+SpeakerProfileCreateOutput.model_rebuild()
+SpeakerProfileUpdateInput.model_rebuild()
+SpeakerProfileUpdateOutput.model_rebuild()
+SpeakerProfileDeleteInput.model_rebuild()
+SpeakerProfileDeleteOutput.model_rebuild()
+SpeakerProfileListInput.model_rebuild()
+SpeakerProfileListOutput.model_rebuild()

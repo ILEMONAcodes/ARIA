@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import sys
 import uuid
 from pathlib import Path
 from typing import Any, ClassVar, Protocol
@@ -24,6 +25,22 @@ from agent.contracts.tools import (
     FilesFindOutput,
 )
 from agent.tools.base import Tool
+
+# Import macOS implementations (lazy to avoid import errors on non-macOS)
+if sys.platform == "darwin":
+    try:
+        from agent.tools.macos_integration import (
+            CalDAVCalendar,
+            CalDAVConfig,
+            MacOSAppLauncher,
+            MacOSFileIndex,
+        )
+
+        _HAS_MACOS = True
+    except ImportError:
+        _HAS_MACOS = False
+else:
+    _HAS_MACOS = False
 
 
 class _LLMAdapter(Protocol):
@@ -57,6 +74,40 @@ class _AppLauncher(Protocol):
     def launch(self, app_name: str) -> tuple[bool, str]: ...  # returns (launched, message)
 
 
+def _get_default_calendar() -> _CalendarStore:
+    """Get platform-appropriate calendar backend."""
+    if _HAS_MACOS:
+        # Try to get config from keyring/env
+        import os
+
+        url = os.environ.get("ARIA_CALDAV_URL")
+        username = os.environ.get("ARIA_CALDAV_USER")
+        password = os.environ.get("ARIA_CALDAV_PASS")
+        if url and username and password:
+            return CalDAVCalendar(CalDAVConfig(url=url, username=username, password=password))
+    from agent.tools.cal_files_apps import _FakeCalendarStore
+
+    return _FakeCalendarStore()
+
+
+def _get_default_file_index() -> _FileIndex:
+    """Get platform-appropriate file index."""
+    if _HAS_MACOS:
+        return MacOSFileIndex()
+    from agent.tools.cal_files_apps import _FakeFileIndex
+
+    return _FakeFileIndex()
+
+
+def _get_default_app_launcher() -> _AppLauncher:
+    """Get platform-appropriate app launcher."""
+    if _HAS_MACOS:
+        return MacOSAppLauncher()
+    from agent.tools.cal_files_apps import _FakeAppLauncher
+
+    return _FakeAppLauncher()
+
+
 class CalList(Tool[CalListInput, CalListOutput]):
     name = "cal.list"
     risk: ClassVar[Risk] = "none"
@@ -69,7 +120,7 @@ class CalList(Tool[CalListInput, CalListOutput]):
         self,
         calendar: _CalendarStore | None = None,
     ) -> None:
-        self.calendar = calendar or _FakeCalendarStore()
+        self.calendar = calendar or _get_default_calendar()
 
     def dry_run(self, args: CalListInput) -> str:
         return f"List calendar events from {args.start} to {args.end}"
@@ -91,7 +142,7 @@ class CalCreate(Tool[CalCreateInput, CalCreateOutput]):
         self,
         calendar: _CalendarStore | None = None,
     ) -> None:
-        self.calendar = calendar or _FakeCalendarStore()
+        self.calendar = calendar or _get_default_calendar()
 
     def dry_run(self, args: CalCreateInput) -> str:
         return f"Create calendar event '{args.title}' from {args.start} to {args.end}"
@@ -119,7 +170,7 @@ class CalMove(Tool[CalMoveInput, CalMoveOutput]):
         self,
         calendar: _CalendarStore | None = None,
     ) -> None:
-        self.calendar = calendar or _FakeCalendarStore()
+        self.calendar = calendar or _get_default_calendar()
 
     def dry_run(self, args: CalMoveInput) -> str:
         return f"Move event {args.event_id} to {args.new_start}-{args.new_end}"
@@ -147,7 +198,7 @@ class CalCancel(Tool[CalCancelInput, CalCancelOutput]):
         self,
         calendar: _CalendarStore | None = None,
     ) -> None:
-        self.calendar = calendar or _FakeCalendarStore()
+        self.calendar = calendar or _get_default_calendar()
 
     def dry_run(self, args: CalCancelInput) -> str:
         return f"Cancel event {args.event_id} (confirm={args.confirm})"
@@ -172,7 +223,7 @@ class FilesFind(Tool[FilesFindInput, FilesFindOutput]):
         file_index: _FileIndex | None = None,
         llm: _LLMAdapter | None = None,
     ) -> None:
-        self.file_index = file_index or _FakeFileIndex()
+        self.file_index = file_index or _get_default_file_index()
         self.llm = llm or _SimpleFakeLLM()
 
     def dry_run(self, args: FilesFindInput) -> str:
@@ -209,24 +260,72 @@ class AppsLaunch(Tool[AppsLaunchInput, AppsLaunchOutput]):
     input_model = AppsLaunchInput
     output_model = AppsLaunchOutput
 
-    # Allow-listed apps for security
+    # Allow-listed apps for security (macOS names)
     ALLOWED_APPS: ClassVar[set[str]] = {
-        "notepad",
+        # Browsers
+        "safari",
+        "chrome",
+        "firefox",
+        "edge",
+        "brave",
+        "arc",
+        # Mail
+        "mail",
+        "outlook",
+        "spark",
+        "mimestream",
+        "thunderbird",
+        # Calendar
+        "calendar",
+        "fantastical",
+        "busycal",
+        "calendars",
+        # Files
+        "finder",
+        "path finder",
+        "forklift",
+        # Terminal
+        "terminal",
+        "iterm2",
+        "warp",
+        "kitty",
+        "alacritty",
+        # Notes
+        "notes",
+        "obsidian",
+        "notion",
+        "craft",
+        "bear",
+        "apple notes",
+        # Office
         "word",
         "excel",
         "powerpoint",
-        "outlook",
-        "teams",
-        "chrome",
-        "edge",
-        "firefox",
-        "explorer",
-        "cmd",
-        "powershell",
-        "calculator",
-        "snippingtool",
         "onenote",
-        "pdf",
+        # PDF
+        "preview",
+        "skim",
+        "pdfexpert",
+        "adobe acrobat",
+        # System
+        "calculator",
+        "screenshot",
+        "activity monitor",
+        "system settings",
+        "system preferences",
+        # Dev
+        "code",
+        "visual studio code",
+        "cursor",
+        "xcode",
+        "pycharm",
+        # Communication
+        "slack",
+        "teams",
+        "zoom",
+        "discord",
+        "signal",
+        "whatsapp",
     }
 
     def __init__(
@@ -234,7 +333,7 @@ class AppsLaunch(Tool[AppsLaunchInput, AppsLaunchOutput]):
         app_launcher: _AppLauncher | None = None,
         llm: _LLMAdapter | None = None,
     ) -> None:
-        self.app_launcher = app_launcher or _FakeAppLauncher()
+        self.app_launcher = app_launcher or _get_default_app_launcher()
         self.llm = llm or _SimpleFakeLLM()
 
     def dry_run(self, args: AppsLaunchInput) -> str:
@@ -314,6 +413,27 @@ class _FakeAppLauncher:
 
     def launch(self, app_name: str) -> tuple[bool, str]:
         return True, f"Launched {app_name}"
+
+
+class _FakeMailStore:
+    """Fake mail store for tests."""
+
+    def __init__(self) -> None:
+        self.threads: list[dict[str, Any]] = []
+
+    def list_threads(self, query: str, max_results: int) -> list[dict[str, Any]]:
+        return self.threads[:max_results]
+
+    def get_thread(self, thread_id: str) -> dict[str, Any] | None:
+        for t in self.threads:
+            if t.get("thread_id") == thread_id:
+                return t
+        return None
+
+    def send_message(
+        self, to: list[str], subject: str, body: str, attachments: list[bytes] | None = None
+    ) -> str:
+        return "fake-message-id@aria.local"
 
 
 def _parse_json(text: str) -> dict[str, Any]:
