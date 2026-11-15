@@ -95,19 +95,27 @@ are explicitly selected local sources.
 
 ## Retrieval and remaining work
 
-FTS5 matches bounded, quoted word tokens; raw FTS operators/SQL are never accepted.
-Common question/command words are removed. Require all remaining words for a
-keyword match; otherwise return any-word matches clearly labelled as closest
-suggestions. An empty match returns an honest no-match message. This is not a
-semantic confidence score or a claim that a passage answers the question.
-Keep at most eight passages, sorted by explicit issue date (newest first), then
-BM25 relevance and stable source order. Queries can filter date/year/circular
-metadata. Results from other configured library roots cannot cross into a search.
+The current lexical strategy is behind `PolicyRetriever` in `kb/retrieval.py`.
+FTS5 English stemming searches body text and headings. It removes common question
+words and uses bounded reusable lexical families (including British/American
+spelling, registration/movement terminology and financial proof/receipts).
+Raw FTS operators/SQL are never accepted from a query.
+
+At most 64 candidates receive IDF-weighted query-term coverage and BM25 ranking;
+coverage of at least 0.70 produces a keyword-match signal. Otherwise results remain
+closest suggestions. Temporal qualifiers such as "current" are not silently dropped,
+but literal keyword matching still does not establish legal currency or answer truth.
+Keep at most eight passages. Relevance is the default; `SearchInput.sort="newest"`
+or the CLI's `--newest` requests date-first listing explicitly. Year/circular filters
+still use explicit metadata. Unknown issue dates remain unknown. Roots stay isolated.
+This is a lexical heuristic, not a semantic probability or generated answer.
 
 Source text remains data even when it looks like instructions. It is only
 returned as citations; it cannot add tools or change confirmations. SQLCipher
 migration 2 stores metadata and FTS5 content together, preserving migration 1
-settings/history and refusing a plaintext fallback.
+settings/history and refusing a plaintext fallback. Migration 3 preserves existing
+passage rows while enabling English stemming and indexed headings; migrations 1
+and 2 remain unchanged.
 
 `test_policy_search.py` covers actual PDF/DOCX/TXT parsing, changed/deleted/failed
 files, provenance, filtering, closest/no-match behavior, encryption, atomic
@@ -117,10 +125,14 @@ The separate worker smoke also indexes/searches fictional data in its own tempor
 folder through a real subprocess. CI runs both paths on Linux/Windows/macOS.
 
 Still open: vector embeddings/hybrid retrieval, generated grounded answers and
-conflict handling, the full public sample corpus and 30-question quality gate,
+conflict handling, the full generated-answer 30-question quality gate,
 frontend index-status/settings controls, real staff/UI
 acceptance and performance evaluation. No model setup is needed for this slice.
 
 D2 adds opening the cited snapshot through explicitly configured Windows viewers;
 see [OPEN_POLICY_SOURCES.md](OPEN_POLICY_SOURCES.md). Its native viewer/frontend
 acceptance checks remain open.
+
+The bundled Nigerian corpus and fixed offline evaluation are documented in
+[tests/kb_questions/README.md](../tests/kb_questions/README.md). Its 30/30 keyword
+result does not close the full Phase D answer-quality/real-staff gate.

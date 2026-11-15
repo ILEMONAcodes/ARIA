@@ -20,6 +20,9 @@ def main() -> int:
     parser.add_argument("--query")
     parser.add_argument("--year", type=int)
     parser.add_argument("--circular-no")
+    parser.add_argument(
+        "--newest", action="store_true", help="List matches by issue date instead of relevance"
+    )
     parser.add_argument("--watch", action="store_true")
     parser.add_argument("--demo", action="store_true")
     args = parser.parse_args()
@@ -47,7 +50,10 @@ def main() -> int:
                     output = (
                         library.search(
                             SearchInput(
-                                query=args.query, year=args.year, circular_no=args.circular_no
+                                query=args.query,
+                                year=args.year,
+                                circular_no=args.circular_no,
+                                sort="newest" if args.newest else "relevance",
                             )
                         )
                         if args.query

@@ -78,6 +78,13 @@ frontend/staff acceptance remain open. D2 adds [source opening](OPEN_POLICY_SOUR
 for the latest session citations, with snapshot checks and explicitly configured
 Windows viewers. Real viewer/page-navigation and frontend acceptance remain open.
 
+The current Nigerian corpus/evaluation slice adds eight official NITDA PDFs,
+three fictional policies, fixed evidence-backed questions, before/after reports
+and improved lexical retrieval. The same 30 questions improve from 11/30 to
+30/30 keyword decisions; this is not the full generated-answer Phase D gate.
+See [the evaluation guide](../tests/kb_questions/README.md) and
+[backend handoff](BACKEND_HANDOFF.md) for checked work and all remaining tasks.
+
 ## Deferred work: return before the MVP pilot
 
 ### Voice setup and evaluation

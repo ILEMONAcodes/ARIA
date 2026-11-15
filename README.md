@@ -10,6 +10,7 @@ What is in the pack:
 - `docs/TECH_SPEC.md` technical specification
 - `docs/ARCHITECTURE.md` existing and planned files, backend module boundaries and phase order
 - `docs/ROADMAP.md` phases, gates and the parallel work map
+- `docs/BACKEND_HANDOFF.md` completed backend work, remaining task checklists and exact continuation steps
 - `docs/API_CONTRACT.md` events and REST between UI and agent
 - `docs/FRONTEND_HANDOFF.md` generated types, mock authentication and replay instructions
 - `docs/PROMPTS.md` prompt templates for the model
@@ -17,7 +18,7 @@ What is in the pack:
 - `docs/CICD.md` GitHub workflows
 - `docs/DECISIONS.md` running decision log
 - `agents/backend-ai.md`, `agents/frontend.md` role guides
-- A small working skeleton: contract models, a mock agent, a tool base class, a pure router function and a gateway with auth and a spending cap, all with passing tests
+- Implemented backend foundations, voice adapters, validated planning/execution, local tools and policy search; see the handoff for acceptance gaps and unfinished features
 - `.github/workflows` ready to run
 - `tests/e2e/scenarios` starter scenario files
 
@@ -107,7 +108,7 @@ at the exact cutoff remain. Timestamps are timezone-aware UTC microseconds.
 Foundation startup repeats cleanup daily while the agent remains open.
 
 The Phase A schema contains profiles, settings, transcripts and activity history.
-Outbox, calendar and search tables will arrive with their feature migrations.
+Policy metadata/FTS tables are implemented; outbox and calendar-write tables remain future feature migrations.
 Applied migration checksums must match the application; newer or modified
 migration histories are rejected instead of being rewritten.
 

@@ -184,7 +184,7 @@ def pdf_content():
 def test_pdf_opens_only_a_page_recorded_in_the_snapshot(library):
     (library.root / "sample.pdf").write_bytes(pdf_content())
     library.refresh()
-    source = library.search(SearchInput(query="eligibility")).sources[0]
+    source = library.search(SearchInput(query="sample eligibility")).sources[0]
     assert source.page == 2
     viewer = StubViewer()
     result = opener(library, viewer).run(SourceOpenInput(source=source))

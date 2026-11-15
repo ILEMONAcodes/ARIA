@@ -17,6 +17,12 @@ Trunk-based: short-lived branches from `main`, pull requests, one reviewer, squa
 - `contract` installs pinned pnpm tools from `scripts/contract/pnpm-lock.yaml` on Node 24, checks generator failure paths and artifact freshness, and strictly compiles all fixture messages plus frontend consumer examples. It runs independently of the unfinished desktop app.
 - The Python `check` job also runs the separate live localhost mock handoff after its network-blocked unit tests. This integration process uses only its own mock server and fictional session credentials.
 - Coverage reporting and a minimum threshold remain to be agreed and implemented
+- The Python check job also runs the offline Nigerian corpus benchmark with a
+  100% fixed-set keyword regression floor and uploads its JSON report. It uses
+  bundled original PDFs, fictional sources and temporary fake-key SQLCipher only;
+  no external downloads, real credentials or model calls occur. Full model/answer
+  quality remains the separate Phase D/H gate. Corpus/evaluator, additional
+  retrieval regressions and migration-3 tests also run on Windows/macOS.
 - D2 source-opening tests also run in the platform matrix, using fake viewers
   and native-launch stubs only. The worker smoke checks source snapshot validation
   and rejection after a fictional file changes. No CI job opens a real viewer.

@@ -1,0 +1,60 @@
+{
+  "documents": [
+    {
+      "file": "ng-domain-management.pdf",
+      "title": ".gov.ng and .mil.ng Domain Management Policy",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-government-websites.pdf",
+      "title": "Standards and Guidelines for Government Websites V3",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-public-social-media.pdf",
+      "title": "Framework and Guidelines for the Use of Social Media Platforms in Public Institutions",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-ict-service-providers.pdf",
+      "title": "Guidelines for Registration of ICT Service Providers/Contractors for Delivery of IT Services to MDAs",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-interoperability.pdf",
+      "title": "Nigeria e-Government Interoperability Framework (Ne-GIF)",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-data-protection.pdf",
+      "title": "Nigeria Data Protection Regulation 2019",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-cloud-technical.pdf",
+      "title": "National Cloud Technical Guideline 2026",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    },
+    {
+      "file": "ng-platform-code.pdf",
+      "title": "Code of Practice for Interactive Computer Service Platforms/Internet Intermediaries 2022",
+      "circular_no": null,
+      "issue_date": null,
+      "issuer": "National Information Technology Development Agency (NITDA), Nigeria"
+    }
+  ]
+}

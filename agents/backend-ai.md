@@ -4,6 +4,7 @@ You own `services/agent`, `services/gateway`, the contract models, `library/`, `
 
 Do the phases in order. Do not start one until the previous "done when" passes.
 
+
 ## Phase A: Foundations
 Requirement IDs: DEP-1, DEP-4
 - Create the repo, Python project (uv or poetry), ruff, mypy, pytest, pre-commit.
@@ -49,10 +50,15 @@ Requirement IDs: POL-1 to POL-5
 
 ## Phase E: Documents, reports and summaries
 Requirement IDs: DOC-1, DOC-2, RPT-1, RPT-2, SUM-1 to SUM-3
-- `docs.draft`: memo from a spoken brief into .docx with a template (python-docx), one clarifying question when something is missing, save to the user's folder with topic and date in the name.
-- `docs.report`: outline first, user approval, then section by section; redo one section.
-- `docs.summarise`: one line, five bullets, one page, for documents and email threads, with page or heading references.
-- Faithfulness check: every number, date and proper noun in a summary must appear in the source; flag the rest before showing.
+- [x] `docs.draft`: memo from a spoken brief into .docx with a template (python-docx), one clarifying question when something is missing, save to the user's folder with topic and date in the name.
+- [x] `docs.report`: outline first, user approval, then section by section; redo one section.
+- [x] `docs.summarise`: one line, five bullets, one page, for documents and email threads, with page or heading references.
+- [x] Faithfulness check: every number, date and proper noun in a summary must appear in the source; flag the rest before showing.
+- [x] E2E scenarios: memo_draft, document_summarise, report_generate
+- [x] Contracts: DocDraftInput/Output, DocReportOutlineInput/Output, DocReportSectionInput/Output, DocReportAssembleInput/Output, DocSummariseInput/Output, DocReportCitation, PageRef
+- [x] Tools: DocDraft, DocReportOutline, DocReportSectionTool, DocReportAssemble, DocSummarise
+- [x] Prompt templates: draft.txt, summarise.txt, report_outline.txt, report_section.txt
+- [x] Unit tests: test_docs_draft.py (16 tests passing)
 - Done when: a memo opens in Word with correct styles; 9 of 10 reviewed summaries have no invented facts.
 
 ## Phase F: Mail, calendar and outbox

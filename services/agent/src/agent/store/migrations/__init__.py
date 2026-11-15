@@ -8,6 +8,7 @@ from typing import TYPE_CHECKING
 
 from agent.store.migrations.v001_foundations import STATEMENTS
 from agent.store.migrations.v002_policy import STATEMENTS as POLICY_STATEMENTS
+from agent.store.migrations.v003_retrieval import STATEMENTS as RETRIEVAL_STATEMENTS
 
 if TYPE_CHECKING:
     from agent.store.database import Connection
@@ -24,7 +25,11 @@ class Migration:
         return hashlib.sha256("\n".join(self.statements).encode()).hexdigest()
 
 
-MIGRATIONS = (Migration(1, "foundations", STATEMENTS), Migration(2, "policy", POLICY_STATEMENTS))
+MIGRATIONS = (
+    Migration(1, "foundations", STATEMENTS),
+    Migration(2, "policy", POLICY_STATEMENTS),
+    Migration(3, "retrieval", RETRIEVAL_STATEMENTS),
+)
 
 
 def apply_migrations(

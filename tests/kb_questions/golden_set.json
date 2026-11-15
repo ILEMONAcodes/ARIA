@@ -1,15 +1,433 @@
 {
+  "schema_version": 1,
+  "scope": "Nigerian source snapshots and explicitly fictional office policies. Labels describe these documents, not current legal advice.",
   "questions": [
     {
       "id": "Q001",
-      "question": "What does the circular say about annual leave carry-over?",
+      "question": "What does the domain management policy say about the fee for registering a .gov.ng domain?",
       "answerable": true,
-      "expected_points": ["up to five days carried over", "unused days lapse after 31 March"],
-      "expected_citations": [{"doc": "Leave Circular 2024", "page": 3}]
+      "expected_points": [
+        "The policy states that .gov.ng domain registration is free."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-domain-management.pdf",
+          "doc": ".gov.ng and .mil.ng Domain Management Policy",
+          "page": 6,
+          "date": null,
+          "section": null,
+          "evidence": "The registration of .gov.ng domain name is free and will always be free."
+        }
+      ]
+    },
+    {
+      "id": "Q002",
+      "question": "Where must the administrative contact for a .gov.ng domain reside?",
+      "answerable": true,
+      "expected_points": [
+        "The administrative contact must reside within the requesting organisation."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-domain-management.pdf",
+          "doc": ".gov.ng and .mil.ng Domain Management Policy",
+          "page": 6,
+          "date": null,
+          "section": null,
+          "evidence": "The administrative contact must reside within the organization who is requesting for the domain."
+        }
+      ]
+    },
+    {
+      "id": "Q003",
+      "question": "What contact details should a government website contact page provide?",
+      "answerable": true,
+      "expected_points": [
+        "The contact page should include a functional phone number and a monitored email address."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "doc": "Standards and Guidelines for Government Websites V3",
+          "page": 17,
+          "date": null,
+          "section": null,
+          "evidence": "a functional phone number and a monitored email address"
+        }
+      ]
+    },
+    {
+      "id": "Q004",
+      "question": "Must discussion forums on government websites be moderated?",
+      "answerable": true,
+      "expected_points": [
+        "The website guidelines require discussion forums to be moderated."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-government-websites.pdf",
+          "doc": "Standards and Guidelines for Government Websites V3",
+          "page": 29,
+          "date": null,
+          "section": null,
+          "evidence": "It is MANDATORY that discussion forums be moderated"
+        }
+      ]
+    },
+    {
+      "id": "Q005",
+      "question": "May government officials use personal social media accounts for official engagement?",
+      "answerable": true,
+      "expected_points": [
+        "The framework says officials shall not use personal social media accounts for official engagement."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "doc": "Framework and Guidelines for the Use of Social Media Platforms in Public Institutions",
+          "page": 14,
+          "date": null,
+          "section": null,
+          "evidence": "not use personal Social Media accounts for official engagement"
+        }
+      ]
+    },
+    {
+      "id": "Q006",
+      "question": "What social media usage objectives should a public institution define?",
+      "answerable": true,
+      "expected_points": [
+        "Each public institution shall define its social media usage objectives."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-public-social-media.pdf",
+          "doc": "Framework and Guidelines for the Use of Social Media Platforms in Public Institutions",
+          "page": 9,
+          "date": null,
+          "section": null,
+          "evidence": "Every PI shall define their Social Media usage objectives."
+        }
+      ]
+    },
+    {
+      "id": "Q007",
+      "question": "What website domain is required for an indigenous ICT service provider seeking registration?",
+      "answerable": true,
+      "expected_points": [
+        "Applicants must have their website hosted on the .ng domain."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "doc": "Guidelines for Registration of ICT Service Providers/Contractors for Delivery of IT Services to MDAs",
+          "page": 3,
+          "date": null,
+          "section": null,
+          "evidence": "that have their website hosted on the .ng domain"
+        }
+      ]
+    },
+    {
+      "id": "Q008",
+      "question": "How early must an ICT service provider submit a registration renewal application?",
+      "answerable": true,
+      "expected_points": [
+        "Renewals must be submitted at least three months before the certificate expires."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-ict-service-providers.pdf",
+          "doc": "Guidelines for Registration of ICT Service Providers/Contractors for Delivery of IT Services to MDAs",
+          "page": 5,
+          "date": null,
+          "section": null,
+          "evidence": "at least 3months before the expiration"
+        }
+      ]
+    },
+    {
+      "id": "Q009",
+      "question": "What two technical requirements does Ne-GIF identify for achieving interoperability?",
+      "answerable": true,
+      "expected_points": [
+        "The framework specifies adoption of open standards and definition of metadata standards."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "doc": "Nigeria e-Government Interoperability Framework (Ne-GIF)",
+          "page": 10,
+          "date": null,
+          "section": null,
+          "evidence": "1. Adoption of Open Standards; and 2. Metadata Standards Definition."
+        }
+      ]
+    },
+    {
+      "id": "Q010",
+      "question": "Who coordinates the Nigerian e-Government Interoperability Framework?",
+      "answerable": true,
+      "expected_points": [
+        "Stakeholders are co-owners while NITDA coordinates the framework."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-interoperability.pdf",
+          "doc": "Nigeria e-Government Interoperability Framework (Ne-GIF)",
+          "page": 8,
+          "date": null,
+          "section": null,
+          "evidence": "all stakeholders are regarded as co-owners of the framework while NITDA coordinates"
+        }
+      ]
+    },
+    {
+      "id": "Q011",
+      "question": "What must a data subject be told about withdrawing consent under the 2019 regulation?",
+      "answerable": true,
+      "expected_points": [
+        "The data subject must be informed of the right and method to withdraw consent."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "doc": "Nigeria Data Protection Regulation 2019",
+          "page": 9,
+          "date": null,
+          "section": null,
+          "evidence": "informed of his right and method to withdraw his consent at any given time"
+        }
+      ]
+    },
+    {
+      "id": "Q012",
+      "question": "How should a privacy policy be displayed where personal data is collected?",
+      "answerable": true,
+      "expected_points": [
+        "The medium must display a simple and conspicuous privacy policy understandable to the target data subjects."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-data-protection.pdf",
+          "doc": "Nigeria Data Protection Regulation 2019",
+          "page": 10,
+          "date": null,
+          "section": null,
+          "evidence": "shall display a simple and conspicuous privacy policy"
+        }
+      ]
+    },
+    {
+      "id": "Q013",
+      "question": "Which encryption standard does the 2026 cloud guideline specify for data at rest and in transit?",
+      "answerable": true,
+      "expected_points": [
+        "The guideline specifies AES-256 encryption or higher."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "doc": "National Cloud Technical Guideline 2026",
+          "page": 18,
+          "date": null,
+          "section": null,
+          "evidence": "Encryption for data at rest and in transit must utilise AES-256 encryption or higher."
+        }
+      ]
+    },
+    {
+      "id": "Q014",
+      "question": "What should a cloud service agreement exit strategy cover?",
+      "answerable": true,
+      "expected_points": [
+        "The exit strategy should cover secure data repatriation and deletion when the contract terminates."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-cloud-technical.pdf",
+          "doc": "National Cloud Technical Guideline 2026",
+          "page": 36,
+          "date": null,
+          "section": null,
+          "evidence": "Procedures for secure data repatriation and deletion upon contract termination."
+        }
+      ]
+    },
+    {
+      "id": "Q015",
+      "question": "What defines a Large Service Platform in the 2022 code of practice?",
+      "answerable": true,
+      "expected_points": [
+        "The definition uses more than one million registered users in Nigeria."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-platform-code.pdf",
+          "doc": "Code of Practice for Interactive Computer Service Platforms/Internet Intermediaries 2022",
+          "page": 5,
+          "date": null,
+          "section": null,
+          "evidence": "registered Users in Nigeria are more than one million (1,000,000)"
+        }
+      ]
+    },
+    {
+      "id": "Q016",
+      "question": "What Nigerian presence is required of Large Service Platforms?",
+      "answerable": true,
+      "expected_points": [
+        "Large Service Platforms shall have a physical contact address in Nigeria."
+      ],
+      "expected_citations": [
+        {
+          "file": "public/ng-platform-code.pdf",
+          "doc": "Code of Practice for Interactive Computer Service Platforms/Internet Intermediaries 2022",
+          "page": 10,
+          "date": null,
+          "section": null,
+          "evidence": "Have a physical contact address in Nigeria."
+        }
+      ]
+    },
+    {
+      "id": "Q017",
+      "question": "What does the fictional leave policy require for annual leave?",
+      "answerable": true,
+      "expected_points": [
+        "A completed request form is required."
+      ],
+      "expected_citations": [
+        {
+          "file": "fictional/leave.txt",
+          "doc": "Fictional Leave Policy",
+          "page": null,
+          "date": "2026-01-15",
+          "section": "Eligibility",
+          "evidence": "Annual leave requires a completed request form."
+        }
+      ]
+    },
+    {
+      "id": "Q018",
+      "question": "Who reviews fictional leave requests before dates are booked?",
+      "answerable": true,
+      "expected_points": [
+        "A fictional supervisor reviews the leave requests."
+      ],
+      "expected_citations": [
+        {
+          "file": "fictional/leave.txt",
+          "doc": "Fictional Leave Policy",
+          "page": null,
+          "date": "2026-01-15",
+          "section": "Approval",
+          "evidence": "A fictional supervisor reviews leave requests before dates are booked."
+        }
+      ]
+    },
+    {
+      "id": "Q019",
+      "question": "What evidence is required for fictional travel expense claims?",
+      "answerable": true,
+      "expected_points": [
+        "Travel expense claims require itemised receipts."
+      ],
+      "expected_citations": [
+        {
+          "file": "fictional/travel.txt",
+          "doc": "Fictional Travel Policy",
+          "page": null,
+          "date": "2025-02-01",
+          "section": "Receipts",
+          "evidence": "Travel expense claims require itemised receipts."
+        }
+      ]
+    },
+    {
+      "id": "Q020",
+      "question": "Where should fictional policy records be stored?",
+      "answerable": true,
+      "expected_points": [
+        "Fictional policy records belong in the designated records folder."
+      ],
+      "expected_citations": [
+        {
+          "file": "fictional/records.txt",
+          "doc": "Fictional Records Policy",
+          "page": null,
+          "date": "2024-03-01",
+          "section": "Records storage",
+          "evidence": "Fictional policy records belong in the designated records folder."
+        }
+      ]
     },
     {
       "id": "Q021",
-      "question": "What is the policy on staff parking fees?",
+      "question": "How many days of annual leave can staff carry over into the next year?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q022",
+      "question": "What domestic duty tour allowance applies to a Grade Level 08 officer?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q023",
+      "question": "Which bank account receives our staff union dues?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q024",
+      "question": "What is the retirement age for federal university lecturers?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q025",
+      "question": "Which form number is required on return from maternity leave?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q026",
+      "question": "How many hours of overtime attract a meal subsidy for clerical staff?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q027",
+      "question": "What procurement approval threshold applies to buying office chairs?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q028",
+      "question": "Who is the current payroll officer for our office?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q029",
+      "question": "What is our internal deadline for Christmas bonus applications?",
+      "answerable": false,
+      "expected_points": [],
+      "expected_citations": []
+    },
+    {
+      "id": "Q030",
+      "question": "What is our staff car-parking permit fee in naira?",
       "answerable": false,
       "expected_points": [],
       "expected_citations": []
