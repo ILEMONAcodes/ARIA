@@ -1,0 +1,88 @@
+{
+  "name": "email_draft_reply",
+  "description": "REPLY-1 to REPLY-3: draft reply from thread with tone/signature, read-back, explicit confirmation before send",
+  "steps": [
+    {
+      "send": {
+        "v": 1,
+        "type": "status",
+        "state": "idle",
+        "online": true,
+        "profile": "hosted"
+      }
+    },
+    {
+      "wait_for": "text.input",
+      "match": {
+        "v": 1,
+        "type": "text.input",
+        "text": "reply to Mr Bello saying we will meet on Monday at 10am"
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "transcript.final",
+        "text": "reply to Mr Bello saying we will meet on Monday at 10am"
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "plan.preview",
+        "task_id": "reply-task",
+        "summary": "Run 2 registered step(s)."
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "status",
+        "state": "working",
+        "online": true,
+        "profile": "hosted"
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "result.answer",
+        "text": "Draft reply to Mr Bello <bello@company.ng>:\n\nSubject: Re: Monday meeting\n\nDear Mr Bello,\n\nThank you for your email. I confirm we will meet on Monday at 10am as scheduled.\n\nBest regards,\nARIA User\nManager",
+        "citations": []
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "confirm.request",
+        "confirm_id": "confirm-1",
+        "task_id": "reply-task",
+        "risk": "external_send",
+        "dry_run_text": "Send email to Mr Bello <bello@company.ng> with subject 'Re: Monday meeting'",
+        "details": {
+          "recipients": ["bello@company.ng"],
+          "subject": "Re: Monday meeting"
+        },
+        "needs_click": true
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "reply.text",
+        "task_id": "reply-task",
+        "text": "Draft ready. Shall I send this reply to Mr Bello?",
+        "spoken": true
+      }
+    },
+    {
+      "send": {
+        "v": 1,
+        "type": "status",
+        "state": "idle",
+        "online": true,
+        "profile": "hosted"
+      }
+    }
+  ]
+}
