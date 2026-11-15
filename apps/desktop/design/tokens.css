@@ -1,0 +1,28 @@
+/* ARIA proposed design tokens. Keep aligned with design-tokens.json. */
+:root {
+  --aria-brand: #0B5A32;
+  --aria-brand-hover: #074526;
+  --aria-forest: #103C2F;
+  --aria-forest-deep: #0A2921;
+  --aria-accent: #BCE5C7;
+  --aria-canvas: #F5F6F2;
+  --aria-surface: #FFFFFF;
+  --aria-surface-muted: #EAF1EB;
+  --aria-ink: #172D24;
+  --aria-muted: #56685E;
+  --aria-border: #D5DFD7;
+  --aria-control-border: #74867B;
+  --aria-on-forest: #F5FAF5;
+  --aria-on-forest-muted: #C3D4C8;
+  --aria-warning: #805000;
+  --aria-warning-surface: #FFF3DA;
+  --aria-danger: #A52828;
+  --aria-danger-surface: #FCEDED;
+  --aria-focus: #0B5A32;
+  --aria-font-ui: "Segoe UI", system-ui, sans-serif;
+  --aria-font-display: Georgia, "Times New Roman", serif;
+  --aria-radius-control: 10px;
+  --aria-radius-card: 16px;
+  --aria-radius-panel: 24px;
+  --aria-target: 44px;
+}
