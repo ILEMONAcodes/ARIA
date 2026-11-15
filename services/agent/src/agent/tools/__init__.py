@@ -6,6 +6,12 @@ from agent.tools.docs import (
     DocReportSectionTool,
     DocSummarise,
 )
+from agent.tools.mail import (
+    MailAttach,
+    MailDraftReply,
+    MailQueueSend,
+    MailReadThread,
+)
 
 __all__ = [
     "DocDraft",
@@ -13,6 +19,10 @@ __all__ = [
     "DocReportOutline",
     "DocReportSectionTool",
     "DocSummarise",
+    "MailAttach",
+    "MailDraftReply",
+    "MailQueueSend",
+    "MailReadThread",
     "Tool",
     "ToolRegistry",
 ]

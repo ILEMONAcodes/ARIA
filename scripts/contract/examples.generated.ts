@@ -309,6 +309,187 @@ export const agentExamples = [
   {
     "v": 1,
     "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "reply to Mr Bello saying we will meet on Monday at 10am"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "reply-task",
+    "summary": "Run 2 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Draft reply to Mr Bello <bello@company.ng>:\n\nSubject: Re: Monday meeting\n\nDear Mr Bello,\n\nThank you for your email. I confirm we will meet on Monday at 10am as scheduled.\n\nBest regards,\nARIA User\nManager",
+    "citations": []
+  },
+  {
+    "v": 1,
+    "type": "confirm.request",
+    "confirm_id": "confirm-1",
+    "task_id": "reply-task",
+    "risk": "external_send",
+    "dry_run_text": "Send email to Mr Bello <bello@company.ng> with subject 'Re: Monday meeting'",
+    "details": {
+      "recipients": [
+        "bello@company.ng"
+      ],
+      "subject": "Re: Monday meeting"
+    },
+    "needs_click": true
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "reply-task",
+    "text": "Draft ready. Shall I send this reply to Mr Bello?",
+    "spoken": true
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "find email from Mr Bello about Monday meeting"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "email-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Found 1 thread matching 'Mr Bello Monday meeting':\nFrom: Mr Bello <bello@company.ng>\nSubject: Monday meeting\nDate: 2026-01-12\nPreview: Please confirm our Monday 10am meeting...",
+    "citations": []
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "email-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Completed mail.read_thread.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "email-task",
+    "text": "Found 1 thread matching 'Mr Bello Monday meeting':\nFrom: Mr Bello <bello@company.ng>\nSubject: Monday meeting\nDate: 2026-01-12\nPreview: Please confirm our Monday 10am meeting...",
+    "spoken": false
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": true,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "transcript.final",
+    "text": "send the reply to Mr Bello"
+  },
+  {
+    "v": 1,
+    "type": "plan.preview",
+    "task_id": "send-task",
+    "summary": "Run 1 registered step(s)."
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "working",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "result.answer",
+    "text": "Network is offline. Reply queued in outbox. Will send when connection returns.",
+    "citations": []
+  },
+  {
+    "v": 1,
+    "type": "outbox.update",
+    "items": [
+      {
+        "id": "outbox-1",
+        "status": "queued",
+        "to": [
+          "bello@company.ng"
+        ],
+        "subject": "Re: Monday meeting",
+        "attempts": 0
+      }
+    ]
+  },
+  {
+    "v": 1,
+    "type": "activity.entry",
+    "id": "outbox-activity",
+    "ts": "2026-01-01T00:00:00Z",
+    "text": "Queued email to Mr Bello for sending when online.",
+    "undoable": false
+  },
+  {
+    "v": 1,
+    "type": "reply.text",
+    "task_id": "send-task",
+    "text": "Network is offline. Reply queued in outbox. Will send when connection returns.",
+    "spoken": true
+  },
+  {
+    "v": 1,
+    "type": "status",
+    "state": "idle",
+    "online": false,
+    "profile": "hosted"
+  },
+  {
+    "v": 1,
+    "type": "status",
     "state": "listening",
     "online": true,
     "profile": "hosted"
@@ -1076,6 +1257,21 @@ export const uiExamples = [
     "v": 1,
     "type": "text.input",
     "text": "summarise the travel policy in five bullets"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "reply to Mr Bello saying we will meet on Monday at 10am"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "find email from Mr Bello about Monday meeting"
+  },
+  {
+    "v": 1,
+    "type": "text.input",
+    "text": "send the reply to Mr Bello"
   },
   {
     "v": 1,
