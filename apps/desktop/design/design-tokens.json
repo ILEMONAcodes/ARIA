@@ -1,0 +1,88 @@
+{
+  "name": "ARIA / Forest & Paper",
+  "status": "proposed implementation direction; no public contract changes",
+  "color": {
+    "brand": "#0B5A32",
+    "brandHover": "#074526",
+    "forest": "#103C2F",
+    "forestDeep": "#0A2921",
+    "accent": "#BCE5C7",
+    "canvas": "#F5F6F2",
+    "surface": "#FFFFFF",
+    "surfaceMuted": "#EAF1EB",
+    "ink": "#172D24",
+    "muted": "#56685E",
+    "border": "#D5DFD7",
+    "controlBorder": "#74867B",
+    "onForest": "#F5FAF5",
+    "onForestMuted": "#C3D4C8",
+    "warning": "#805000",
+    "warningSurface": "#FFF3DA",
+    "danger": "#A52828",
+    "dangerSurface": "#FCEDED",
+    "focus": "#0B5A32"
+  },
+  "font": {
+    "ui": "\"Segoe UI\", system-ui, sans-serif",
+    "display": "Georgia, \"Times New Roman\", serif",
+    "mono": "Consolas, ui-monospace, monospace"
+  },
+  "type": {
+    "display": {
+      "size": 48,
+      "line": 54
+    },
+    "greeting": {
+      "size": 36,
+      "line": 44
+    },
+    "title": {
+      "size": 24,
+      "line": 32
+    },
+    "body": {
+      "size": 16,
+      "line": 24
+    },
+    "label": {
+      "size": 14,
+      "line": 20
+    }
+  },
+  "space": [
+    4,
+    8,
+    12,
+    16,
+    24,
+    32,
+    48,
+    64
+  ],
+  "radius": {
+    "control": 10,
+    "card": 16,
+    "panel": 24,
+    "pill": 999
+  },
+  "layout": {
+    "referenceWidth": 1280,
+    "referenceHeight": 800,
+    "minWidth": 900,
+    "minHeight": 600,
+    "sidebar": 208,
+    "header": 64,
+    "contextPanel": 320,
+    "target": 44
+  },
+  "motion": {
+    "feedbackMs": 160,
+    "stateMs": 220,
+    "listeningCycleMs": 1800,
+    "reduceMotion": "static mark and text; no repeated animation"
+  },
+  "shadow": {
+    "panel": "0 16px 48px rgba(16,60,47,.08)",
+    "dialog": "0 24px 80px rgba(10,41,33,.18)"
+  }
+}

@@ -13,6 +13,8 @@ What is in the pack:
 - `docs/BACKEND_HANDOFF.md` completed backend work, remaining task checklists and exact continuation steps
 - `docs/API_CONTRACT.md` events and REST between UI and agent
 - `docs/FRONTEND_HANDOFF.md` generated types, mock authentication and replay instructions
+- `docs/FRONTEND_DESIGN.md` desktop design, screen behaviour and frontend implementation brief
+- `apps/desktop/design/presentation.html` twelve-slide design presentation, with PDF, SVG logo assets and shared tokens beside it
 - `docs/PROMPTS.md` prompt templates for the model
 - `docs/TESTING.md` named unit tests, e2e scenarios and evaluations
 - `docs/CICD.md` GitHub workflows

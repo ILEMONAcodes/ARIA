@@ -61,6 +61,10 @@ Add one line here whenever we make a choice or something surprises us. Move requ
 
 40. **Maintain one readable backend continuation checklist.** The user requested a document any future agent can use to understand goals, completed work and all remaining backend tasks. BACKEND_HANDOFF.md separates implementation from real acceptance, lists phases/requirement IDs, current files/commands, deferred assets/provider work and the user's standing preferences. Link it from AGENTS.md/README, preserve unrelated role-file edits and update its evidence/next tasks with each significant completed slice.
 
+41. **Provide an independent frontend design and implementation handoff.** The user asked for a desktop design presentation, a refined ARIA logo and updated guides so the frontend developer can begin while backend work continues; the user will push these changes. Recommend Forest & Paper: warm-white content, forest sidebar, a separate listening motif and the Signal A vector mark. Package an offline twelve-slide HTML/PDF presentation, logo variants and reusable tokens. Use the supplied NITDA/NCAIR image as a colour/identity reference only, replacing its Telegram symlink with the same image bytes for portability. Do not claim official endorsement, add unapproved requirement IDs or assume audio.level/mute/outbox/profile APIs exist. Keep v1 unchanged, use the authenticated mock for F0 and distinguish design targets from implemented features. Preserve concurrent backend changes; no commit, push or PR is part of this design handoff.
+
+42. **Publish the design handoff separately after explicit authorisation.** The user subsequently requested pushing the completed work. The refreshed main includes policy evaluation and the separate Phase E commit through PR #21, so base the design-only branch on that main and open a normal PR without auto-merging. Preserve the existing backend branch. This supersedes decision 41's initial local-only delivery instruction.
+
 ## To decide after testing
 
 - Gemma 4 API provider and spending cap

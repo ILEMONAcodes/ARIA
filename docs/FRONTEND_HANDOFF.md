@@ -1,4 +1,25 @@
-# Phase A contract and mock-agent handoff
+# Frontend integration and mock-agent handoff
+
+## Design and starting point
+
+Read [FRONTEND_DESIGN.md](FRONTEND_DESIGN.md) for the recommended Forest & Paper
+desktop design, screen/event mappings and the distinction between available and
+pending capabilities. Open the [presentation](../apps/desktop/design/presentation.html)
+or its PDF; use the SVG logo assets and tokens in `apps/desktop/design/`.
+[agents/frontend.md](../agents/frontend.md) contains the ordered frontend checklist.
+
+The user has explicitly asked for the frontend developer to begin independently
+while backend work continues. Start with F0 against the mock, not live models.
+Backend work can advance independently. Check the actual branch and the mock's
+`--list` on your checkout before depending on any new scenario.
+
+The mock still exposes only `/ws` and `/api/health`. Settings, library status,
+profile enrollment, outbox mutations and durable history need later backend
+implementations. The current v1 contract has no `audio.level` event or general
+microphone mute command. Keep unsupported controls visibly unavailable, rather
+than inventing a frontend API or performing those operations in Tauri/React.
+
+## Existing foundation handoff
 
 Backend-owned handoff artifacts are ready for frontend F0. The desktop UI and
 Tauri app are not scaffolded by this work. The API event schemas remain version

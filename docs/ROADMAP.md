@@ -85,6 +85,18 @@ and improved lexical retrieval. The same 30 questions improve from 11/30 to
 See [the evaluation guide](../tests/kb_questions/README.md) and
 [backend handoff](BACKEND_HANDOFF.md) for checked work and all remaining tasks.
 
+## Frontend starting point
+
+The user requested an independent frontend start while backend work continues.
+The Forest & Paper design proposal, twelve-slide presentation/PDF, Signal A SVG
+assets and tokens are ready for review in `apps/desktop/design/`. Read
+[FRONTEND_DESIGN.md](FRONTEND_DESIGN.md), then
+[FRONTEND_HANDOFF.md](FRONTEND_HANDOFF.md) and the frontend role checklist.
+F0–F6 implementation remains open: begin with the scaffold, authenticated mock
+transport and idle workspace. No model/provider setup is needed for mock-driven
+UI work. This does not mark any product acceptance gate passed or add contract
+events, supported endpoints or capabilities.
+
 ## Deferred work: return before the MVP pilot
 
 ### Voice setup and evaluation

@@ -4,6 +4,13 @@ Tauri shell and React/TypeScript UI. Owned by the frontend engineer.
 
 Not scaffolded yet. Start from agents/frontend.md phase F0:
 
+The design handoff is ready: open [design/presentation.html](design/presentation.html)
+or [the PDF](design/ARIA-desktop-design.pdf), then read
+[FRONTEND_DESIGN.md](../../docs/FRONTEND_DESIGN.md). Reuse the logo SVGs and tokens
+in `design/`; the inspiration folder is reference material. The presentation is
+a design specification, not the production frontend. Keep the handoff separate
+from concurrent backend changes.
+
 1. Create the Vite + React + TypeScript app here and add the Tauri shell (`src-tauri/`).
 2. Add scripts: `gen:types` (turn `src/contract/schema.json` into TypeScript types with json-schema-to-typescript), `lint`, `typecheck`, `test` (Vitest), `e2e` (Playwright), `tauri`.
 3. Run the mock agent from `services/agent`: `python -m agent.mock --scenario policy_question`.

@@ -16,6 +16,7 @@ Then read, in this order:
 4. `docs/API_CONTRACT.md` (the only way the two sides talk)
 5. `docs/ROADMAP.md` (what phase we are in)
 6. Backend and AI: `docs/BACKEND_HANDOFF.md` (implemented work, remaining tasks and current continuation point)
+   Frontend: `docs/FRONTEND_DESIGN.md`, then `docs/FRONTEND_HANDOFF.md` (design direction, assets, mock setup and capability gaps)
 7. `docs/TESTING.md` and `docs/CICD.md` when writing tests or touching workflows
 8. `docs/PROMPTS.md` when touching anything that calls the model
 9. `docs/DECISIONS.md` (decisions so far)
