@@ -1,4 +1,12 @@
 from agent.tools.base import Tool, ToolRegistry
+from agent.tools.cal_files_apps import (
+    AppsLaunch,
+    CalCancel,
+    CalCreate,
+    CalList,
+    CalMove,
+    FilesFind,
+)
 from agent.tools.docs import (
     DocDraft,
     DocReportAssemble,
@@ -14,11 +22,17 @@ from agent.tools.mail import (
 )
 
 __all__ = [
+    "AppsLaunch",
+    "CalCancel",
+    "CalCreate",
+    "CalList",
+    "CalMove",
     "DocDraft",
     "DocReportAssemble",
     "DocReportOutline",
     "DocReportSectionTool",
     "DocSummarise",
+    "FilesFind",
     "MailAttach",
     "MailDraftReply",
     "MailQueueSend",
